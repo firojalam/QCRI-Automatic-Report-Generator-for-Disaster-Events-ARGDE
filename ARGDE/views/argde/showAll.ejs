@@ -1,0 +1,17 @@
+<div>This is the table of our data</div>
+<br>
+<hr>
+<table border=1>
+  <tr>
+    <th>ID</th>
+    <th>AIDR</th>
+    <th>Code</th>
+  </tr>
+  <% entries.forEach(function(entry){ %>
+    <tr>
+      <td><%= entry.id %></td>
+      <td><%= entry.aidr %></td>
+      <td><%= entry.code %></td>
+    </tr>
+  <% }) %>
+</table>
