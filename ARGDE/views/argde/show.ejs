@@ -1,0 +1,17 @@
+<h1>This is the table of our data</h1>
+<hr>
+<br>
+<table border="1" cellpadding="25em" cellspacing="1em">
+  <tr>
+    <th>Id</th>
+    <th>Crisis Name</th>
+    <th>Code</th>
+  </tr>
+  <% entries.forEach(function(entry){ %>
+    <tr>
+      <td><%= entry.id %></td>
+      <td><%= entry.aidr.crisis_name %></td>
+      <td><%= entry.code %></td>
+    </tr>
+  <% }) %>
+</table>

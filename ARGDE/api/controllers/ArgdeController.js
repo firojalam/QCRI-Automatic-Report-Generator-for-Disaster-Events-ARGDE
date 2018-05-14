@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	showAll: function(req, res){
+	/*showAll: function(req, res){
 		Argde.find({}).exec(function(err, result){
 			if(err)
 			{
@@ -14,6 +14,16 @@ module.exports = {
 			}
 			res.view('argde/showAll',{entries: result});
 		})
+	},*/
+	showMany: async function(req, res){
+		let records = await Argde.find({}).limit(req.param('limit'));
+		if(records)
+		{
+			res.view('argde/show',{entries: records});
+		}
+		else
+		{
+			res.send(500, {error: 'Database Error'});
+		}
 	}
-
 };
