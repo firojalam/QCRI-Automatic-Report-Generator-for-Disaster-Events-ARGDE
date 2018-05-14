@@ -16,14 +16,17 @@ module.exports = {
 		})
 	},*/
 	showMany: async function(req, res){
-		let records = await Argde.find({}).limit(req.param('limit'));
-		if(records)
-		{
-			res.view('argde/show',{entries: records});
-		}
-		else
-		{
-			res.send(500, {error: 'Database Error'});
-		}
-	}
+		await Argde.find({}).limit(req.param('limit')).exec(function(err, records){
+			if(err)
+			{
+				return res.serverError(err);
+			}
+
+			if(records.length==0)
+			{
+				return res.view('argde/noData');
+			}
+			return res.view('argde/show', {entries: records});
+		});
+	},
 };

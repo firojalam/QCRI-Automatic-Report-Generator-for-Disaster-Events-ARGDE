@@ -6,60 +6,12 @@
     <th>ID</th>
     <th>AIDR</th>
     <th>Code</th>
-    <th>Created At</th>
-    <th>Feed</th>
-    <th>Geo</th>
-    <th>Place</th>
-    <th>Source</th>
-    <th>Updated At</th>
-    <th>Tweet ID</th>
-    <th>AIDR Class Label</th>
-    <th>AIDR Class Label Conf</th>
-    <th>Sentiment</th>
-    <th>Sentiment Conf</th>
-    <th>Image Damage Class</th>
-    <th>Image Damage Class Conf</th>
-    <th>Image Relevancy</th>
-    <th>Image Relevancy Conf Score</th>
-    <th>Image Sensitive</th>
-    <th>Image Sensitive Conf Score</th>
-    <th>Image Physical Location</th>
-    <th>Image URL</th>
-    <th>Tweet Text</th>
-    <th>Latitude</th>
-    <th>Longitude</th>
-    <th>Place Name</th>
-    <th>Country Name</th>
   </tr>
   <% entries.forEach(function(entry){ %>
     <tr>
       <td><%= entry.id %></td>
       <td><%- JSON.stringify(entry.aidr) %></td>
       <td><%= entry.code %></td>
-      <td><%= entry.created_at %></td>
-      <td><%- JSON.stringify(entry.feed) %></td>
-      <td><%- JSON.stringify(entry.geo) %></td>
-      <td><%- JSON.stringify(entry.place) %></td>
-      <td><%= entry.source %></td>
-      <td><%= entry.updated_at %></td>
-      <td><%= entry.tweet_id %></td>
-      <td><%= entry.aidr_class_label %></td>
-      <td><%= entry.aidr_class_label_conf %></td>
-      <td><%= entry.sentiment %></td>
-      <td><%= entry.sentiment_conf %></td>
-      <td><%= entry.image_damage_class %></td>
-      <td><%= entry.image_damage_class_conf %></td>
-      <td><%= entry.image_relevancy %></td>
-      <td><%= entry.image_relevancy_conf_score %></td>
-      <td><%= entry.image_sensitive %></td>
-      <td><%= entry.image_sensitive_conf_score %></td>
-      <td><%= entry.image_physical_location %></td>
-      <td><%= entry.image_url %></td>
-      <td><%= entry.tweet_text %></td>
-      <td><%= entry.latitude %></td>
-      <td><%= entry.longitude %></td>
-      <td><%= entry.place_name %></td>
-      <td><%= entry.country_name %></td>
     </tr>
   <% }) %>
 </table>
