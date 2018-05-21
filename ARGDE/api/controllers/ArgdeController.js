@@ -1,5 +1,7 @@
 var hourController = require('./Hour_frequencyController');
 var dayController = require('./Day_frequencyController');
+var minuteController = require('./Minute_frequencyController');
+var labelController = require('./Label_frequencyController');
 module.exports = {
 	/*showMany: async function(req, res){
 		await Argde.find({}).limit(req.param('limit')).exec(function(err, records){
@@ -37,6 +39,8 @@ module.exports = {
 					paramList={'min':min_date, 'max':max_date, 'diff':date_diff, 'collection': req.param('collection')};
 					hourController.createPreHours(paramList);
 					dayController.createPreDays(paramList);
+					minuteController.createPreMinutes(paramList);
+					//labelController.createPreLabels(paramList);
           res.send(200);
 				});
 			});
