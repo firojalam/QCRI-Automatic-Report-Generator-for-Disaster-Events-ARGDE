@@ -11,6 +11,7 @@ module.exports = {
 				}
 				else
 				{
+					sails.log.info("Minute data retrieved, passing to view");
 					return res.view('Dashboard/minute_freq', {minute_data: records});
 				}
 			});
@@ -27,6 +28,7 @@ module.exports = {
 				}
 				else
 				{
+					sails.log.info("Hour data retrieved, passing to view");
 					return res.view('Dashboard/hour_freq', {hour_data: records});
 				}
 			});
@@ -43,6 +45,7 @@ module.exports = {
 				}
 				else
 				{
+					sails.log.info("Day data retrieved, passing to view");
 					return res.view('Dashboard/day_freq', {day_data: records});
 				}
 			});
