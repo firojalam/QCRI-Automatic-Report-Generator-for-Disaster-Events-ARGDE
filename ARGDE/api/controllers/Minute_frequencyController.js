@@ -33,18 +33,15 @@ module.exports = {
       Argde.query(sql_query,function(err, result){
 				if(err)
 				{
-					console.log("Error name: "+err.name);
-					console.log("Error code: "+err.code);
+					sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 				}
         else
         {
-          date_val = _date;
 					let date_query = "select date(timestamp '"+_date+"'+interval '"+(i-1)+" minutes');";
           Argde.query(date_query, function(_err, newDate){
             if(err)
             {
-              console.log("Error name: "+_err.name);
-              console.log("Error code: "+_err.code);
+              sails.log.error("Error name: "+_err.name+" 	"+"Error code: "+_err.code);
             }
 						else
 						{
@@ -56,14 +53,16 @@ module.exports = {
 							Argde.query("select timestamp '"+_date+"'+interval '"+(i-1)+" minutes';",function(errVal, newHour){
 								if(errVal)
 								{
-									console.log("Error name: "+errVal.name);
-		              console.log("Error code: "+errVal.code);
+									sails.log.error("Error name: "+errVal.name+"	"+"Error code: "+errVal.code);
 								}
 								else
 								{
 									let newTime = new Date(newHour.rows[0]['?column?']);
 									let _hour = newTime.getHours();
 									let _minute = (i+start_mins-1)%60;
+
+									sails.log.info("Writing to database, minute-wise for "+date_val+" "+_hour+":"+_minute+":00");
+
 									Minute_frequency.query("update "+Minute_frequency.tableName+" set "
 									+Minute_frequency.attributes.frequency.columnName+"="+result.rows[0].count+" where "
 									+Minute_frequency.attributes.date.columnName+"='"+date_val+"' and "
@@ -80,12 +79,11 @@ module.exports = {
 										flag = false;
 										if(err)
 										{
-											console.log("Error name: "+err.name);
-											console.log("Error code: "+err.code);
+											sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 										}
 										else
 										{
-											console.log("Minute-wise: OK. No errors.");
+											sails.log.info("Minute "+date_val+" "+_hour+":"+_minute+":00"+" OK");
 										}
 									});
 								}

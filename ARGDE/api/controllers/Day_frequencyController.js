@@ -13,11 +13,12 @@ module.exports = {
 			+Argde.attributes.code.columnName+"='"+params['collection']+"';",function(err, result){
 				if(err)
 				{
-					console.log("Error name: "+err.name);
-					console.log("Error code: "+err.code);
+					sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 				}
 				else
 				{
+					sails.log.info("Writing to database, day-wise for "+_date_without_time);
+
 					Day_frequency.query("update "+Day_frequency.tableName+" set "
 					+Day_frequency.attributes.frequency.columnName+"="+result.rows[0].count+" where "
 					+Day_frequency.attributes.date.columnName+"='"+_date_without_time+"' and "
@@ -28,12 +29,11 @@ module.exports = {
 					+Day_frequency.attributes.code.columnName+"='"+params['collection']+"');",function(err, retVal){
 						if(err)
 						{
-							console.log("Error name: "+err.name);
-							console.log("Error code: "+err.code);
+							sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 						}
 						else
 						{
-							console.log("Day-wise: OK. No errors.");
+							sails.log.info("Date "+_date_without_time+" OK");
 						}
 					});
 				}

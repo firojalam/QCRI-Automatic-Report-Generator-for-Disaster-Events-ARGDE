@@ -21,18 +21,15 @@ module.exports = {
       Argde.query(sql_query,function(err, result){
 				if(err)
 				{
-					console.log("Error name: "+err.name);
-					console.log("Error code: "+err.code);
+					sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 				}
         else
         {
-          date_val = _date;
 					let query = "select date(date '"+_date_without_time+"'+interval '"+(i-1)+" minutes');";
           Argde.query(query, function(_err, newDate){
             if(err)
             {
-              console.log("Error name: "+_err.name);
-              console.log("Error code: "+_err.code);
+              sails.log.error("Error name: "+_err.name+"	"+"Error code: "+_err.code);
             }
 						else
 						{
@@ -44,8 +41,7 @@ module.exports = {
 							Argde.query("select timestamp '"+_date+"'+interval '"+(i-1)+" minutes';",function(errVal, newHour){
 								if(errVal)
 								{
-									console.log("Error name: "+errVal.name);
-		              console.log("Error code: "+errVal.code);
+									sails.log.error("Error name: "+errVal.name+"	"+"Error code: "+errVal.code);
 								}
 								else
 								{
@@ -64,8 +60,7 @@ module.exports = {
 										function(err,count){
 											if(err)
 											{
-												console.log("Error1 name: "+err.name);
-												console.log("Error1 code: "+err.code);
+												sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 											}
 											else
 											{
@@ -90,12 +85,11 @@ module.exports = {
 												function(err, retVal){
 													if(err)
 													{
-														console.log("Error name: "+err.name);
-														console.log("Error code: "+err.code);
+														sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 													}
 													else
 													{
-														console.log("Label-wise: OK. No errors.");
+														sails.log.info("Label "+class_name+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
 													}
 												});
 											}
@@ -111,8 +105,7 @@ module.exports = {
 										function(err,count){
 											if(err)
 											{
-												console.log("Error name: "+err.name);
-												console.log("Error code: "+err.code);
+												sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 											}
 											else
 											{
@@ -137,12 +130,11 @@ module.exports = {
 												function(err, retVal){
 													if(err)
 													{
-														console.log("Error name: "+err.name);
-														console.log("Error code: "+err.code);
+														sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 													}
 													else
 													{
-														console.log("Label-wise: OK. No errors.");
+														sails.log.info("Label "+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
 													}
 												});
 											}
