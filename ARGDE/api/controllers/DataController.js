@@ -11,7 +11,7 @@ module.exports = {
 				}
 				else
 				{
-						return res.view('Dashboard/minute_freq', {minute_data: records});
+					return res.view('Dashboard/minute_freq', {minute_data: records});
 				}
 			});
 	},
