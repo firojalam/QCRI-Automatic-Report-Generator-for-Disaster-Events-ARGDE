@@ -69,7 +69,8 @@ module.exports = {
 	},
 	retrieveSentiment: function(req, res){
 		Argde.query("select distinct "+Argde.attributes.sentiment.columnName+" from "
-		+Argde.tableName+" where "+Argde.attributes.sentiment.columnName+" is not NULL;",function(err, sentiments){
+		+Argde.tableName+" where "+Argde.attributes.sentiment.columnName+" is not NULL;",
+		function(err, sentiments){
 				if(err)
 				{
 					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
@@ -82,7 +83,7 @@ module.exports = {
 						sentiment_values.push(String(sentiment['sentiment']));
 					});
 
-					var query = "select * from "+Label_frequency.tableName+" where ";
+					var query = "select * from "+Label_frequency.tableName+" where (";
 
 					for(i in sentiment_values)
 					{
@@ -95,7 +96,8 @@ module.exports = {
 							query = query + Label_frequency.attributes.class_label.columnName+"='"+sentiment_values[i]+"' or ";
 						}
 					}
-					query = query + "order by "+Label_frequency.attributes.date.columnName+","
+					query = query + ") and "+Label_frequency.attributes.code.columnName+"='"
+					+req.param('collection')+"' order by "+Label_frequency.attributes.date.columnName+","
 					+Label_frequency.attributes.hour.columnName+","
 					+Label_frequency.attributes.minute.columnName+";";
 
@@ -131,7 +133,7 @@ module.exports = {
 						class_values.push(String(eachclass['aidr_class_label']));
 					});
 
-					var query = "select * from "+Label_frequency.tableName+" where ";
+					var query = "select * from "+Label_frequency.tableName+" where (";
 
 					for(i in class_values)
 					{
@@ -144,7 +146,8 @@ module.exports = {
 							query = query + Label_frequency.attributes.class_label.columnName+"='"+class_values[i]+"' or ";
 						}
 					}
-					query = query + "order by "+Label_frequency.attributes.date.columnName+","
+					query = query + ") and "+Label_frequency.attributes.code.columnName+"='"
+					+req.param('collection')+"' order by "+Label_frequency.attributes.date.columnName+","
 					+Label_frequency.attributes.hour.columnName+","
 					+Label_frequency.attributes.minute.columnName+";";
 
