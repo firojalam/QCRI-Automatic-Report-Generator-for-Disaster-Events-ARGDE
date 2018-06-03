@@ -167,4 +167,55 @@ module.exports = {
 			}
 		);
 	},
+	retrieveDamage: function(req, res){
+		Argde.query("select distinct "+Argde.attributes.image_damage_class.columnName+" from "
+		+Argde.tableName+" where "+Argde.attributes.image_damage_class.columnName+" is not NULL;",
+		function(err, damage_classes){
+				if(err)
+				{
+					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
+					return res.serverError(err);
+				}
+				else
+				{
+					var damage_values = [];
+					damage_classes.rows.forEach(function(eachclass){
+						damage_values.push(String(eachclass['image_damage_class']));
+					});
+
+					var query = "select * from "+Label_frequency.tableName+" where (";
+
+					for(i in damage_values)
+					{
+						if(i == (damage_values.length-1))
+						{
+							query = query + Label_frequency.attributes.class_label.columnName+"='"+damage_values[i]+"'";
+						}
+						else
+						{
+							query = query + Label_frequency.attributes.class_label.columnName+"='"+damage_values[i]+"' or ";
+						}
+					}
+					query = query + ") and "+Label_frequency.attributes.code.columnName+"='"
+					+req.param('collection')+"' order by "+Label_frequency.attributes.date.columnName+","
+					+Label_frequency.attributes.hour.columnName+","
+					+Label_frequency.attributes.minute.columnName+";";
+
+					Label_frequency.query(query,function(err, records){
+						if(err)
+						{
+							sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
+							return res.serverError(err);
+						}
+						else
+						{
+							sails.log.info("Image Damage Class data retrieved, passing to view");
+							console.log(records.rows);
+							//return res.view('argde/class_freq', {class_data: records.rows});
+						}
+					});
+				}
+			}
+		);
+	},
 };
