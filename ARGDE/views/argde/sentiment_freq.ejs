@@ -67,9 +67,10 @@ var time;
   /*String(year)+"-"+String(month)+"-"+String(day)+" "+hour+":"+String(minute)*/
   final_data.push(obj);
 <%});%>
+var graph_type = 'stacked-bar';
 var chart = new tauCharts.Chart({
             data: final_data,
-            type: 'stacked-bar',
+            type: graph_type,
             x: 'compiled_time',
             y: 'frequency',
             color: 'sentiment',
@@ -79,9 +80,9 @@ var chart = new tauCharts.Chart({
               color:{
                 brewer:
                 {
-                  'Very positive':'#673ab7',
-                  'Positive':'#0f0',
-                  'Neutral':'#00f',
+                  'Very positive':'#0f0',
+                  'Positive':'#00f',
+                  'Neutral':'#666',
                   'Negative':'#fc8d59',
                   'Very negative':'#f00',
                 }
