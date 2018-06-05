@@ -1,0 +1,45 @@
+<html>
+<head>
+  Hello World!
+</head>
+<body onload='data()'>
+  <script>
+  var allData = { minute_data: null, hour_data: null, day_data: null, sentiment_data: null, intervalId: null};
+  function data()
+  {
+    sockets = {
+      minute_socket: io.sails.connect(),
+      hour_socket: io.sails.connect(),
+      day_socket: io.sails.connect(),
+      sentiment_socket: io.sails.connect(),
+    };
+    sockets.minute_socket.get('/data/retrieveMinute?collection=170826213907_hurricane_harvey_2017',function(resData, jwres){
+      allData.minute_data = resData;
+    });
+    sockets.hour_socket.get('/data/retrieveHour?collection=170826213907_hurricane_harvey_2017',function(resData, jwres){
+      allData.hour_data = resData;
+    });
+    sockets.day_socket.get('/data/retrieveDay?collection=170826213907_hurricane_harvey_2017',function(resData, jwres){
+      allData.day_data = resData;
+    });
+    sockets.sentiment_socket.get('/data/retrieveSentiment?collection=170826213907_hurricane_harvey_2017',function(resData, jwres){
+      allData.sentiment_data = resData;
+    });
+    allData.intervalId = setInterval(function (){
+      if(allData.minute_data!=null && allData.hour_data!=null && allData.day_data!=null && allData.sentiment_data!=null)
+      {
+        show();
+        clearInterval(allData.intervalId);
+      }
+    },1000);
+  }
+  function show()
+  {
+    console.log(allData.minute_data);
+    console.log(allData.hour_data);
+    console.log(allData.day_data);
+    console.log(allData.sentiment_data);
+  }
+  </script>
+</body>
+</html>

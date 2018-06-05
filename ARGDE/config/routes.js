@@ -36,7 +36,7 @@ module.exports.routes = {
     view: 'homepage'
   },
   '/test': {
-    view: 'argde/test1',
+    view: 'argde/mySocket',
   },
 
   /***************************************************************************
