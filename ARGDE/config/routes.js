@@ -38,7 +38,7 @@ module.exports.routes = {
   '/test': {
     view: 'argde/test1',
   },
-
+  
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
