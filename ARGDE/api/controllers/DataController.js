@@ -110,7 +110,7 @@ module.exports = {
 						else
 						{
 							sails.log.info("Sentiment data retrieved, passing to view");
-							return res.view('argde/sentiment_freq', {sentiment_data: records.rows});
+							return res.view('Dashboard/sentiment_freq', {sentiment_data: records.rows});
 						}
 					});
 				}
@@ -211,7 +211,7 @@ module.exports = {
 						{
 							sails.log.info("Image Damage Class data retrieved, passing to view");
 							console.log(records.rows);
-							//return res.view('argde/class_freq', {class_data: records.rows});
+							//return res.view('Dashboard/class_freq', {class_data: records.rows});
 						}
 					});
 				}
