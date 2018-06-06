@@ -1,3 +1,16 @@
+var DataControllerInfo = {
+	'model': 'data',
+	'methods': {
+		minute_wise: 'retrieveMinute',
+		hour_wise: 'retrieveHour',
+		day_wise: 'retrieveDay',
+		label_wise: 'retrieveLabel',
+		class_wise: 'retrieveClass',
+		sentiment_wise: 'retrieveSentiment',
+		damage_wise: 'retrieveDamage',
+		all: 'retrieveAll',
+	},
+};
 module.exports = {
 	retrieveMinute: async function(req, res){
 			await Minute_frequency.find({
@@ -210,12 +223,44 @@ module.exports = {
 						else
 						{
 							sails.log.info("Image Damage Class data retrieved, passing to view");
-							console.log(records.rows);
-							res.send({class_data: records.rows});
+							res.send({damage_data: records.rows});
 						}
 					});
 				}
 			}
 		);
+	},
+	retrieveAll: function(req,res){
+		var queries = {
+		  minute: "/"+DataControllerInfo.model+"/"
+		  +DataControllerInfo.methods['minute_wise']
+	    +"?collection="+req.param('collection'),
+
+	    hour: "/"+DataControllerInfo.model+"/"
+	    +DataControllerInfo.methods['hour_wise']
+	    +"?collection="+req.param('collection'),
+
+	    day: "/"+DataControllerInfo.model+"/"
+	    +DataControllerInfo.methods['day_wise']
+	    +"?collection="+req.param('collection'),
+
+	    label: "/"+DataControllerInfo.model+"/"
+	    +DataControllerInfo.methods['label_wise']
+	    +"?collection="+req.param('collection'),
+
+	    class: "/"+DataControllerInfo.model+"/"
+	    +DataControllerInfo.methods['class_wise']
+	    +"?collection="+req.param('collection'),
+
+	    sentiment: "/"+DataControllerInfo.model+"/"
+	    +DataControllerInfo.methods['sentiment_wise']
+	    +"?collection="+req.param('collection'),
+
+	    damage: "/"+DataControllerInfo.model+"/"
+	    +DataControllerInfo.methods['damage_wise']
+	    +"?collection="+req.param('collection'),
+		};
+
+		res.view('argde/mySocket', { queries: queries });
 	},
 };

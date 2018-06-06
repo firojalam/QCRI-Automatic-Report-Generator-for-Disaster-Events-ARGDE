@@ -1,45 +1,118 @@
-<html>
-<head>
-  Hello World!
-</head>
-<body onload='data()'>
-  <script>
-  var allData = { minute_data: null, hour_data: null, day_data: null, sentiment_data: null, intervalId: null};
-  function data()
-  {
-    sockets = {
-      minute_socket: io.sails.connect(),
-      hour_socket: io.sails.connect(),
-      day_socket: io.sails.connect(),
-      sentiment_socket: io.sails.connect(),
-    };
-    sockets.minute_socket.get('/data/retrieveMinute?collection=170826213907_hurricane_harvey_2017',function(resData, jwres){
-      allData.minute_data = resData;
-    });
-    sockets.hour_socket.get('/data/retrieveHour?collection=170826213907_hurricane_harvey_2017',function(resData, jwres){
-      allData.hour_data = resData;
-    });
-    sockets.day_socket.get('/data/retrieveDay?collection=170826213907_hurricane_harvey_2017',function(resData, jwres){
-      allData.day_data = resData;
-    });
-    sockets.sentiment_socket.get('/data/retrieveSentiment?collection=170826213907_hurricane_harvey_2017',function(resData, jwres){
-      allData.sentiment_data = resData;
-    });
-    allData.intervalId = setInterval(function (){
-      if(allData.minute_data!=null && allData.hour_data!=null && allData.day_data!=null && allData.sentiment_data!=null)
-      {
-        show();
-        clearInterval(allData.intervalId);
-      }
-    },1000);
-  }
-  function show()
-  {
-    console.log(allData.minute_data);
-    console.log(allData.hour_data);
-    console.log(allData.day_data);
-    console.log(allData.sentiment_data);
-  }
-  </script>
-</body>
-</html>
+<script>
+var queries = <%- JSON.stringify(queries) %>;
+var sockets = {
+  minute: io.sails.connect(),
+  hour: io.sails.connect(),
+  day: io.sails.connect(),
+  label: io.sails.connect(),
+  class: io.sails.connect(),
+  sentiment: io.sails.connect(),
+  damage: io.sails.connect(),
+};
+var allData = {
+  minute_data: null,
+  hour_data: null,
+  day_data: null,
+  label_data: null,
+  class_data: null,
+  sentiment_data: null,
+  damage_data: null,
+};
+var intervals = {
+  minuteId: null,
+  houtId: null,
+  dayId: null,
+  labelId: null,
+  classId: null,
+  sentimentId: null,
+  damageId: null,
+};
+function data()
+{
+  sockets.minute.get(queries['minute'], function(data, json_obj){
+    allData.minute_data = data;
+  });
+  sockets.hour.get(queries['hour'], function(data, json_obj){
+    allData.hour_data = data;
+  });
+  sockets.day.get(queries['day'], function(data, json_obj){
+    allData.day_data = data;
+  });
+  sockets.label.get(queries['label'], function(data, json_obj){
+    allData.label_data = data;
+  });
+  sockets.class.get(queries['class'], function(data, json_obj){
+    allData.class_data = data;
+  });
+  sockets.sentiment.get(queries['sentiment'],function(data, json_obj){
+    allData.sentiment_data = data;
+  });
+  sockets.damage.get(queries['damage'],function(data, json_obj){
+    allData.damage_data = data;
+  });
+  intervals.minuteId = setInterval(function(){
+    if(allData.minute_data!=null)
+    {
+      /*
+      * View Code goes here
+      */
+      clearInterval(intervals.minuteId);
+    }
+  },1);
+  intervals.hourId = setInterval(function(){
+    if(allData.hour_data!=null)
+    {
+      /*
+      * View Code goes here
+      */
+      clearInterval(intervals.hourId);
+    }
+  },1);
+  intervals.dayId = setInterval(function(){
+    if(allData.day_data!=null)
+    {
+      console.log("Hello");
+      /*
+      * View Code goes here
+      */
+      clearInterval(intervals.dayId);
+    }
+  },1);
+  intervals.labelId = setInterval(function(){
+    if(allData.label_data!=null)
+    {
+      /*
+      * View Code goes here
+      */
+      clearInterval(intervals.labelId);
+    }
+  },1);
+  intervals.classId = setInterval(function(){
+    if(allData.class_data!=null)
+    {
+      /*
+      * View Code goes here
+      */
+      clearInterval(intervals.classId);
+    }
+  },1);
+  intervals.sentimentId = setInterval(function(){
+    if(allData.sentiment_data!=null)
+    {
+      /*
+      * View Code goes here
+      */
+      clearInterval(intervals.sentimentId);
+    }
+  },1);
+  intervals.damageId = setInterval(function(){
+    if(allData.damage_data!=null)
+    {
+      /*
+      * View Code goes here
+      */
+      clearInterval(intervals.damageId);
+    }
+  },1);
+}
+</script>
