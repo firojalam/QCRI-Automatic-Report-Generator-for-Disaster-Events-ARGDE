@@ -1,8 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%=typeof title == 'undefined' ? 'ARGDE' : title%></title>
-    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="//cdn.jsdelivr.net/d3js/3.5.17/d3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.0/underscore-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/taucharts@1/build/production/tauCharts.min.js" type="text/javascript"></script>
+  
+  <style>
+
+  .color-blue {
+    stroke:blue
+  }
+  .color-red {
+    stroke:red
+  }
+  .color-green {
+    stroke:green
+  }
+  .color-orange {
+    stroke: darkorange
+  }
+  .color-purple {
+    stroke: purple
+  }
+  #myAreaChart > svg {
+    display: block;
+  }
+
+  .graphical-report__svg{
+      width: auto;
+  }
+
+  body{
+    height:100%;
+  }
+
+   #myAreaChart, 
+   #myAreaChart2
+   {
+      position:relative;
+      height: 100%;
+      width: 150%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #myAreaChart2 > svg {
+      overflow-x: auto;
+      display: block;
+    }
+
+    }
+
+  </style>
+
+
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/taucharts@1/build/production/tauCharts.min.css">
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin.css" rel="stylesheet">
+  <title><%=typeof title == 'undefined' ? 'ARGDE' : title%></title>
+  <script src="/js/dependencies/sails.io.js"></script>
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -61,7 +120,7 @@
     -->
 
     <!--TEMPLATES-->
-
+    
     <!--TEMPLATES END-->
 
 
