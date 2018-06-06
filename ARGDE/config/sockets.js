@@ -111,7 +111,7 @@ module.exports.sockets = {
   //   return cb(null, true);
   //
   //   // (`false` would reject the connection)
-  // },
+  // }, 
 
 
   /***************************************************************************

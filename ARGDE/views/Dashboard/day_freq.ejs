@@ -14,14 +14,6 @@
       height: 100%
       }
 
-      .color-us {
-      stroke: blue
-      }
-
-      .color-bug {
-      stroke: red
-      }
-
   </style>
   <title>Minute Based - TauCharts</title>
 </head>
@@ -63,6 +55,8 @@ for(i in freqData){
 
   data[i] = {date: d, frequency: formatFreq ,code: '170826213907_hurricane_harvey_2017'};
 };
+
+console.log(data);
 new tauCharts.Chart({
     data: data,
     dimensions: {
