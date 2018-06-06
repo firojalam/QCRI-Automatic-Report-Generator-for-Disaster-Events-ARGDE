@@ -1,55 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
+  
     <script src="//cdn.jsdelivr.net/d3js/3.5.17/d3.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.0/underscore-min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/taucharts@1/build/production/tauCharts.min.js" type="text/javascript"></script>
-  
-  <style>
 
-  .color-blue {
-    stroke:blue
-  }
-  .color-red {
-    stroke:red
-  }
-  .color-green {
-    stroke:green
-  }
-  .color-orange {
-    stroke: darkorange
-  }
-  .color-purple {
-    stroke: purple
-  }
-  #myAreaChart > svg {
-    display: block;
-  }
+    <style>
 
   .graphical-report__svg{
-      width: auto;
-  }
+        width: 195%;
+        height: 50em;
+      }
 
-  body{
-    height:100%;
-  }
+      html,
+      body,
+      #myAreaChart {
+        position:relative;
+        height: 50em;
+        width: 250%;
+        margin: 20;
+        padding: 20;
+      }
 
-   #myAreaChart, 
-   #myAreaChart2
-   {
-      position:relative;
-      height: 100%;
-      width: 150%;
-      margin: 0;
-      padding: 0;
-    }
-
-    #myAreaChart2 > svg {
-      overflow-x: auto;
-      display: block;
-    }
-
-    }
+      #myAreaChart > svg {
+        overflow-x: auto;
+        display: block;
+      }
 
   </style>
 
@@ -147,7 +124,7 @@
 
     -->
 
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/js/dependencies/billboard.pkgd.js"></script>
