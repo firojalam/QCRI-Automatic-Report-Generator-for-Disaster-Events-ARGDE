@@ -30,25 +30,25 @@ var intervals = {
 function data()
 {
   sockets.minute.get(queries['minute'], function(data, json_obj){
-    allData.minute_data = data;
+    allData.minute_data = data['minute_data'];
   });
   sockets.hour.get(queries['hour'], function(data, json_obj){
-    allData.hour_data = data;
+    allData.hour_data = data['hour_data'];
   });
   sockets.day.get(queries['day'], function(data, json_obj){
-    allData.day_data = data;
+    allData.day_data = data['day_data'];
   });
   sockets.label.get(queries['label'], function(data, json_obj){
-    allData.label_data = data;
+    allData.label_data = data['label_data'];
   });
   sockets.class.get(queries['class'], function(data, json_obj){
-    allData.class_data = data;
+    allData.class_data = data['class_data'];
   });
   sockets.sentiment.get(queries['sentiment'],function(data, json_obj){
-    allData.sentiment_data = data;
+    allData.sentiment_data = data['sentiment_data'];
   });
   sockets.damage.get(queries['damage'],function(data, json_obj){
-    allData.damage_data = data;
+    allData.damage_data = data['damage_data'];
   });
   intervals.minuteId = setInterval(function(){
     if(allData.minute_data!=null)
@@ -71,7 +71,6 @@ function data()
   intervals.dayId = setInterval(function(){
     if(allData.day_data!=null)
     {
-      console.log("Hello");
       /*
       * View Code goes here
       */
