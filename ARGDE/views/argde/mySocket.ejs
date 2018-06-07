@@ -221,7 +221,7 @@ console.log(data);
             tauCharts.api.plugins.get('legend')({'position': 'left'}),
             tauCharts.api.plugins.get('floating-axes'),
         ],
-        }).renderTo('#myAreaChart');
+        }).renderTo('#myAreaChart',{width: 5000, height:600});
 
       clearInterval(intervals.classId);
     }
