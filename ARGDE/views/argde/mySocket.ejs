@@ -1,7 +1,5 @@
-
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="#">Dashboard</a>
@@ -10,7 +8,7 @@
       </ol>
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i> Class Label Frequency </div>
+          <i class="fa fa-area-chart"></i> Class Frequency </div>
         <div class="card-body">
           <p id="myAreaChart"></p>
         </div>
@@ -38,15 +36,6 @@ var allData = {
   sentiment_data: null,
   damage_data: null,
 };
-var intervals = {
-  minuteId: null,
-  houtId: null,
-  dayId: null,
-  labelId: null,
-  classId: null,
-  sentimentId: null,
-  damageId: null,
-};
 function data()
 {
   sockets.minute.get(queries['minute'], function(data, json_obj){
@@ -71,177 +60,115 @@ function data()
   sockets.damage.get(queries['damage'],function(data, json_obj){
     allData.damage_data = data['damage_data'];
   });
-  intervals.minuteId = setInterval(function(){
-    if(allData.minute_data!=null)
+}
+function classGraph()
+{
+  var freqData = [];
+  var clData = [];
+  var minData = [];
+  var hourData = [];
+  var dateData = [];
+  var monthData = [];
+  var yearData = [];
+  var data = [];
+  var ldat;
+  allData.class_data.forEach(function(entry){
+    var fdat = (Number(entry.frequency));
+    freqData = freqData.concat(fdat);
+    ldat = String(entry.class_label);
+    var class_str  = ldat.toString();
+    clData = clData.concat(ldat);
+    var mdat = String(entry.minute);
+    minData = minData.concat(mdat);
+    var hdat = String(entry.hour).substr(0,2);
+    hourData = hourData.concat(hdat);
+    var ddat = new Date(entry.date);
+    var date = String(ddat.getDate());
+    var year = String(ddat.getFullYear());
+    var month = Number(ddat.getMonth());
+    var newMonth = month + 1;
+    var newMon = String(newMonth);
+    dateData = dateData.concat(date);
+    monthData = monthData.concat(newMon);
+    yearData = yearData.concat(year);
+   });
+
+
+  for(i in freqData)
+  {
+    var timeStamp;
+    if(minData[i]<10)
     {
-      /*
-      * View Code goes here
-      */
-      clearInterval(intervals.minuteId);
+      timeStamp = String(hourData[i]) + ":0" + String(minData[i]);
     }
-  },200);
-  intervals.hourId = setInterval(function(){
-    if(allData.hour_data!=null)
+    else
     {
-      /*
-      * View Code goes here
-      */
-      clearInterval(intervals.hourId);
+      timeStamp = String(hourData[i]) + ":" + String(minData[i]);
     }
-  },1);
-  intervals.dayId = setInterval(function(){
-    if(allData.day_data!=null)
-    {
-      /*
-      * View Code goes here
-      */
-      clearInterval(intervals.dayId);
+    var dateStamp = String(yearData[i])+"-"+String(Number(monthData[i]))+"-"+String(dateData[i]) +","+timeStamp;
+    var d = new Date(Number(yearData[i]), Number(monthData[i]), Number(dateData[i]));
+    var formatFreq = Number(freqData[i]);
+    if(clData[i] == "infrastructure_and_utilities_damage"){
+      clData[i] =  "Infrastructure and Utilities Damage";
+    } else if(clData[i] == "caution_and_advice"){
+      clData[i] = "Caution and Advice";
+    } else if(clData[i] == "displaced_and_evacuations"){
+      clData[i] = "Displaced and Evacuations";
+    } else if(clData[i] == "affected_individual"){
+      clData[i] = "Affected Individuals";
+    } else if(clData[i] == "donation_and_volunteering"){
+      clData[i] = "Donation and Volunteering";
+    } else if(clData[i] == "missing_and_found_people"){
+      clData[i] = "Missing and Found People";
+    } else if(clData[i] == "injured_or_dead_people"){
+      clData[i] = "Injured or Dead People";
+    } else if(clData[i] == "sympathy_and_support"){
+      clData[i] = "Sympathy and Support";
+    } else if(clData[i] == "relevant_information"){
+      clData[i] = "Relevant Information";
+    } else if(clData[i] == "not_related_or_irrelevant"){
+      clData[i] = "Not Related or Irrelevant";
+    } else if(clData[i] == "response_efforts"){
+      clData[i] = "Response Efforts";
+    } else if(clData[i] == "personal"){
+      clData[i] = "Personal";
     }
-  },1);
-  intervals.labelId = setInterval(function(){
-    if(allData.label_data!=null)
-    {
-      /*
-      * View Code goes here
-      */
-      clearInterval(intervals.labelId);
-    }
-  },1);
-  function classGraph(){
-    var freqData = [];
-    var clData = [];
-    var minData = [];
-    var hourData = [];
-    var dateData = [];
-    var monthData = [];
-    var yearData = [];
-    var data = [];
-    var ldat;
-    allData.class_data.forEach(function(entry){ 
-      var fdat = (Number(entry.frequency)); 
-      freqData = freqData.concat(fdat); 
-      ldat = String(entry.class_label); 
-      var class_str  = ldat.toString(); 
-      clData = clData.concat(ldat);
-      var mdat = String(entry.minute); 
-      minData = minData.concat(mdat);
-      var hdat = String(entry.hour).substr(0,2);
-      hourData = hourData.concat(hdat);
-      var ddat = new Date(entry.date); 
-      var date = String(ddat.getDate()); 
-      var year = String(ddat.getFullYear()); 
-      var month = Number(ddat.getMonth()); 
-      var newMonth = month + 1;
-      var newMon = String(newMonth);
-      dateData = dateData.concat(date);
-      monthData = monthData.concat(newMon);
-      yearData = yearData.concat(year);
-     }); 
-
-
-    for(i in freqData){
-
-      var timeStamp;
-
-      if(minData[i]<10)
-      {
-        timeStamp = String(hourData[i]) + ":0" + String(minData[i]);
-      }
-      else
-      {
-        timeStamp = String(hourData[i]) + ":" + String(minData[i]);
-      }
-
-      var dateStamp = String(yearData[i])+"-"+String(Number(monthData[i]))+"-"+String(dateData[i]) +","+timeStamp;
-
-      var d = new Date(Number(yearData[i]), Number(monthData[i]), Number(dateData[i]));
-
-      var formatFreq = Number(freqData[i]);
-
-      if(clData[i] == "infrastructure_and_utilities_damage"){
-        clData[i] =  "Infrastructure and Utilities Damage";
-      } else if(clData[i] == "caution_and_advice"){
-        clData[i] = "Caution and Advice";
-      } else if(clData[i] == "displaced_and_evacuations"){
-        clData[i] = "Displaced and Evacuations";
-      } else if(clData[i] == "affected_individual"){
-        clData[i] = "Affected Individuals";
-      } else if(clData[i] == "donation_and_volunteering"){
-        clData[i] = "Donation and Volunteering";
-      } else if(clData[i] == "missing_and_found_people"){
-        clData[i] = "Missing and Found People";
-      } else if(clData[i] == "injured_or_dead_people"){
-        clData[i] = "Injured or Dead People";
-      } else if(clData[i] == "sympathy_and_support"){
-        clData[i] = "Sympathy and Support";
-      } else if(clData[i] == "relevant_information"){
-        clData[i] = "Relevant Information";
-      } else if(clData[i] == "not_related_or_irrelevant"){
-        clData[i] = "Not Related or Irrelevant";
-      } else if(clData[i] == "response_efforts"){
-        clData[i] = "Response Efforts";
-      } else if(clData[i] == "personal"){
-        clData[i] = "Personal";
-      }
-
-      data[i] = {date: dateStamp, frequency: formatFreq ,label: clData[i]};
-
-    };
-
-      new tauCharts.Chart({
-          data: data,
-          type: 'stacked-bar',
-          x: 'date',
-          y: 'frequency',
-          color: 'label',
-          guide: {
-            y:{
-              label: 'Frequency',
-            },
-            color: {
-              brewer: {
-                'Injured or Dead People': '#824d3b',
-                'Donation and Volunteering': '#8e48a0',
-                'Not Related or Irrelevant' : '#000000' ,
-                'Response Efforts': '#8081d9',
-                'Sympathy and Support': '#38ad01',
-                'Personal': '#4289f4',
-                'Relevant Information': '#bdf0fc',
-                'Displaced and Evacuations': '#a5af33',
-                'Caution and Advice': '#ffb600',
-                'Affected Individuals': '#da96e8',
-                'Infrastructure and Utilities Damage': '#b20000',
-                'Missing and Found People': '#595959'
-              }
-            }
-          },
-          plugins: [
-              tauCharts.api.plugins.get('tooltip')(),
-              tauCharts.api.plugins.get('legend')({'position': 'left'}),
-              tauCharts.api.plugins.get('floating-axes'),
-          ],
-          }).renderTo('#myAreaChart',{width: 5000, height:600});
-
-      clearInterval(intervals.classId);
-    }
-
-  intervals.sentimentId = setInterval(function(){
-    if(allData.sentiment_data!=null)
-    {
-      /*
-      * View Code goes here
-      */
-      clearInterval(intervals.sentimentId);
-    }
-  },1);
-  intervals.damageId = setInterval(function(){
-    if(allData.damage_data!=null)
-    {
-      /*
-      * View Code goes here
-      */
-      clearInterval(intervals.damageId);
-    }
-  },1);
+    data[i] = {date: dateStamp, frequency: formatFreq ,label: clData[i]};
+  };
+  var class_graph_type = 'stacked-bar';
+  var class_chart = new tauCharts.Chart({
+      data: data,
+      type: class_graph_type,
+      x: 'date',
+      y: 'frequency',
+      color: 'label',
+      guide: {
+        y:{
+          label: 'Frequency',
+        },
+        color: {
+          brewer: {
+            'Injured or Dead People': '#824d3b',
+            'Donation and Volunteering': '#8e48a0',
+            'Not Related or Irrelevant' : '#000000' ,
+            'Response Efforts': '#8081d9',
+            'Sympathy and Support': '#38ad01',
+            'Personal': '#4289f4',
+            'Relevant Information': '#bdf0fc',
+            'Displaced and Evacuations': '#a5af33',
+            'Caution and Advice': '#ffb600',
+            'Affected Individuals': '#da96e8',
+            'Infrastructure and Utilities Damage': '#b20000',
+            'Missing and Found People': '#595959'
+          }
+        }
+      },
+      plugins: [
+          tauCharts.api.plugins.get('tooltip')(),
+          tauCharts.api.plugins.get('legend')({'position': 'left'}),
+          tauCharts.api.plugins.get('floating-axes')(),
+      ],
+  });
+  class_chart.renderTo('#myAreaChart',{width: 3000, height:600});
 }
 </script>
