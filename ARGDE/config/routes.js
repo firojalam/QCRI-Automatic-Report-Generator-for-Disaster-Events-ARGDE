@@ -38,7 +38,7 @@ module.exports.routes = {
   '/test': {
     view: 'argde/mySocket',
   },
-  
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

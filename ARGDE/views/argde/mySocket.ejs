@@ -2,7 +2,7 @@
     <div class="container-fluid">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Dashboard</a>
+          <a href="/">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">Charts</li>
       </ol>
@@ -11,12 +11,19 @@
           <i class="fa fa-area-chart"></i> Class Frequency
         </div>
         <div class="card-body">
-          <div id="myAreaChart"></div>
+          <div id="ClassChart"></div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i> Sentiment Frequency
+        </div>
+        <div class="card-body">
+          <div id="SentimentChart"></div>
         </div>
       </div>
     </div>
   </div>
-
 <script>
 var queries = <%- JSON.stringify(queries) %>;
 var sockets = {
@@ -57,6 +64,7 @@ function data()
   });
   sockets.sentiment.get(queries['sentiment'],function(data, json_obj){
     allData.sentiment_data = data['sentiment_data'];
+    sentimentGraph();
   });
   sockets.damage.get(queries['damage'],function(data, json_obj){
     allData.damage_data = data['damage_data'];
@@ -94,7 +102,6 @@ function classGraph()
     yearData = yearData.concat(year);
    });
 
-
   for(i in freqData)
   {
     var timeStamp;
@@ -106,7 +113,7 @@ function classGraph()
     {
       timeStamp = String(hourData[i]) + ":" + String(minData[i]);
     }
-    var dateStamp = String(yearData[i])+"-"+String(Number(monthData[i]))+"-"+String(dateData[i]) +","+timeStamp;
+    var dateStamp = String(yearData[i])+"-"+String(Number(monthData[i]))+"-"+String(dateData[i]) +", "+timeStamp;
     var d = new Date(Number(yearData[i]), Number(monthData[i]), Number(dateData[i]));
     var formatFreq = Number(freqData[i]);
     if(clData[i] == "infrastructure_and_utilities_damage"){
@@ -170,6 +177,68 @@ function classGraph()
           tauCharts.api.plugins.get('floating-axes')(),
       ],
   });
-  class_chart.renderTo('#myAreaChart',{width: 3000, height:600});
+  class_chart.renderTo('#ClassChart',{width: 4500, height:600});
+}
+
+function sentimentGraph()
+{
+  var final_data = [];
+  var obj;
+  var date;
+  var year;
+  var month;
+  var day;
+  var hour;
+  var minute;
+  var time;
+  allData.sentiment_data.forEach(function(sentiment)
+  {
+    obj = sentiment;
+    date = new Date(obj.date);
+    year = date.getFullYear();
+    month = date.getMonth()+1;
+    day = date.getDate();
+    hour = obj.hour.substr(0,2);
+    if(obj.minute < 10)
+    {
+      minute = "0"+String(obj.minute);
+    }
+    else
+    {
+      minute = obj.minute;
+    }
+    obj.sentiment = obj.class_label;
+    obj.frequency = Number(obj.frequency);
+    obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":"+String(minute);
+    final_data.push(obj);
+  });
+  var graph_type = 'stacked-bar';
+  var sentiment_chart = new tauCharts.Chart({
+              data: final_data,
+              type: graph_type,
+              x: 'compiled_time',
+              y: 'frequency',
+              color: 'sentiment',
+              guide:{
+                x:{label: 'Minute'},
+                y:{label: 'Frequency'},
+                color:{
+                  brewer:
+                  {
+                    'Very positive':'#0f0',
+                    'Positive':'#00f',
+                    'Neutral':'#666',
+                    'Negative':'#fc8d59',
+                    'Very negative':'#f00',
+                  }
+                },
+              },
+              plugins: [
+                tauCharts.api.plugins.get('legend')({position: 'left'}),
+                tauCharts.api.plugins.get('tooltip')({fields: ['compiled_time','frequency']}),
+                tauCharts.api.plugins.get('floating-axes')(),
+              ],
+          });
+  sentiment_chart.renderTo('#SentimentChart',{width: 4500, height:600});
 }
 </script>
