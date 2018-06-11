@@ -33,18 +33,6 @@ var chartDimensions = {
   sentiment: { width : 4500, height : 600 },
 };
 
-function labelize(str) {
-   str = str.split("_").join(" ");
-   var splitStr = str.toLowerCase().split(" ");
-   console.log(splitStr);
-   for (var i = 0; i < splitStr.length; i++) {
-        if(splitStr[i] != "and" && splitStr[i] != "or"){
-          splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
-        }
-   }
-   return splitStr.join(' '); 
-}
-
 function data()
 {
   sockets.minute.get(queries['minute'], function(data, json_obj){
@@ -61,18 +49,18 @@ function data()
   });
   sockets.class.get(queries['class'], function(data, json_obj){
     allData.class_data = data['class_data'];
-    classGraph();
+    classGraph(graphRes.class);
   });
   sockets.sentiment.get(queries['sentiment'],function(data, json_obj){
     allData.sentiment_data = data['sentiment_data'];
-    sentimentGraph();
+    sentimentGraph(graphRes.sentiment);
   });
   sockets.damage.get(queries['damage'],function(data, json_obj){
     allData.damage_data = data['damage_data'];
   });
 }
 
-function classGraph(res = 'minute')
+function classGraph(res)
 {
   var freqData = [];
   var clData = [];
@@ -227,17 +215,17 @@ function classGraph(res = 'minute')
   });
 }
 
-function sentimentGraph(res = 'minute')
+function sentimentGraph(res)
 {
-  var final_data = [];
-  var obj;
-  var date;
-  var year;
-  var month;
-  var day;
-  var hour;
-  var minute;
-  var time;
+  let final_data = [];
+  let obj;
+  let date;
+  let year;
+  let month;
+  let day;
+  let hour;
+  let minute;
+  let time;
   allData.sentiment_data.forEach(function(sentiment)
   {
     obj = sentiment;
@@ -267,9 +255,11 @@ function sentimentGraph(res = 'minute')
           let flag = false;
           obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":00";
           obj.frequency = Number(obj.frequency);
+          // console.log(final_data);
           final_data = final_data.map(function(datum){
             if((obj.compiled_time==datum.compiled_time) && (obj.sentiment==datum.sentiment))
             {
+              // console.log("added for "+obj.compiled_time);
               datum.frequency += obj.frequency;
               flag = true;
               return datum;
@@ -341,6 +331,18 @@ function sentimentGraph(res = 'minute')
     charts.sentiment_chart.destroy();
     charts.sentiment_chart.renderTo('#SentimentChart', {width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
   });
+  console.log(" ");
+}
+
+function labelize(str) {
+   str = str.split("_").join(" ");
+   var splitStr = str.toLowerCase().split(" ");
+   for (var i = 0; i < splitStr.length; i++) {
+        if(splitStr[i] != "and" && splitStr[i] != "or"){
+          splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+        }
+   }
+   return splitStr.join(' ');
 }
 
 function toggle_graph_type(type, graph)
@@ -350,13 +352,13 @@ function toggle_graph_type(type, graph)
     case 'class':
         graphType[graph] = type;
         charts.class_chart.destroy();
-        classGraph();
+        classGraph(graphRes.class);
         break;
 
     case 'sentiment':
         graphType[graph] = type;
         charts.sentiment_chart.destroy();
-        sentimentGraph();
+        sentimentGraph(graphRes.sentiment);
         break;
 
     default:
@@ -370,13 +372,15 @@ function toggle_graph_res(res, graph)
   switch(graph)
   {
     case 'class':
+        graphRes.class = res;
         charts.class_chart.destroy();
-        classGraph(res);
+        classGraph(graphRes.class);
         break;
 
     case 'sentiment':
+        graphRes.sentiment = res;
         charts.sentiment_chart.destroy();
-        sentimentGraph(res);
+        sentimentGraph(graphRes.sentiment);
         break;
 
     default:
