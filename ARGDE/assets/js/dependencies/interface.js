@@ -29,9 +29,21 @@ var charts = {
   sentiment_chart: null,
 };
 var chartDimensions = {
-  class: { width: 4500, height:600},
-  sentiment: { width:4500, height: 600},
+  class: { width : 4500, height : 600 },
+  sentiment: { width : 4500, height : 600 },
 };
+
+function labelize(str) {
+   str = str.split("_").join(" ");
+   var splitStr = str.toLowerCase().split(" ");
+   console.log(splitStr);
+   for (var i = 0; i < splitStr.length; i++) {
+        if(splitStr[i] != "and" && splitStr[i] != "or"){
+          splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+        }
+   }
+   return splitStr.join(' '); 
+}
 
 function data()
 {
@@ -59,7 +71,8 @@ function data()
     allData.damage_data = data['damage_data'];
   });
 }
-function classGraph(res='minute')
+
+function classGraph(res = 'minute')
 {
   var freqData = [];
   var clData = [];
@@ -69,8 +82,12 @@ function classGraph(res='minute')
   var monthData = [];
   var yearData = [];
   var data = [];
+  var day = [];
   var ldat;
+
   allData.class_data.forEach(function(entry){
+    var dayNum = (Number(entry.day));
+    day = day.concat(dayNum);
     var fdat = (Number(entry.frequency));
     freqData = freqData.concat(fdat);
     ldat = String(entry.class_label);
@@ -109,6 +126,11 @@ function classGraph(res='minute')
       case 'hour':
             timeStamp = String(hourData[i]) + ":00";
             break;
+
+      case 'day' :
+            timeStamp = "Day: "+day[i];
+            break;
+
       default:
             if(minData[i]<10)
             {
@@ -122,38 +144,14 @@ function classGraph(res='minute')
     }
     var dateStamp = String(yearData[i])+"-"+String(Number(monthData[i]))+"-"+String(dateData[i]) +", "+timeStamp;
     var formatFreq = Number(freqData[i]);
-    if(clData[i] == "infrastructure_and_utilities_damage"){
-      clData[i] =  "Infrastructure and Utilities Damage";
-    } else if(clData[i] == "caution_and_advice"){
-      clData[i] = "Caution and Advice";
-    } else if(clData[i] == "displaced_and_evacuations"){
-      clData[i] = "Displaced and Evacuations";
-    } else if(clData[i] == "affected_individual"){
-      clData[i] = "Affected Individuals";
-    } else if(clData[i] == "donation_and_volunteering"){
-      clData[i] = "Donation and Volunteering";
-    } else if(clData[i] == "missing_and_found_people"){
-      clData[i] = "Missing and Found People";
-    } else if(clData[i] == "injured_or_dead_people"){
-      clData[i] = "Injured or Dead People";
-    } else if(clData[i] == "sympathy_and_support"){
-      clData[i] = "Sympathy and Support";
-    } else if(clData[i] == "relevant_information"){
-      clData[i] = "Relevant Information";
-    } else if(clData[i] == "not_related_or_irrelevant"){
-      clData[i] = "Not Related or Irrelevant";
-    } else if(clData[i] == "response_efforts"){
-      clData[i] = "Response Efforts";
-    } else if(clData[i] == "personal"){
-      clData[i] = "Personal";
-    }
-    let temp = {date: dateStamp, frequency: formatFreq ,label: clData[i]};
-    let flag=false;
+    var niceLabel = labelize(clData[i]);
+    let temp = {date: dateStamp, frequency: formatFreq ,label: niceLabel};
+    let flag = false;
     data = data.map(function(datum){
-      if(temp.date==datum.date && temp.label==datum.label)
+      if((temp.date == datum.date) && (temp.label == datum.label))
       {
-        datum.frequency+=temp.frequency;
-        flag=true;
+        datum.frequency += temp.frequency;
+        flag = true;
         return datum;
       }
       else
@@ -161,7 +159,7 @@ function classGraph(res='minute')
         return datum;
       }
     });
-    if(flag==false)
+    if(flag == false)
     {
       data.push(temp);
     }
@@ -206,10 +204,16 @@ function classGraph(res='minute')
       chartDimensions.class.width = 4500;
       chartDimensions.class.height = 600;
       break;
+
     case 'hour':
-    chartDimensions.class.width = 1550;
-    chartDimensions.class.height = 600;
-    break;
+      chartDimensions.class.width = 1550;
+      chartDimensions.class.height = 600;
+      break;
+
+    case 'day' :
+      chartDimensions.class.width = 850;
+      chartDimensions.class.height = 600;
+      break;
   }
 
   charts.class_chart.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
@@ -219,7 +223,7 @@ function classGraph(res='minute')
   });
 }
 
-function sentimentGraph(res='minute')
+function sentimentGraph(res = 'minute')
 {
   var final_data = [];
   var obj;
@@ -254,15 +258,16 @@ function sentimentGraph(res='minute')
           obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":"+String(minute);
           final_data.push(obj);
           break;
+
       case 'hour':
-          let flag=false;
+          let flag = false;
           obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":00";
           obj.frequency = Number(obj.frequency);
           final_data = final_data.map(function(datum){
-            if(obj.compiled_time==datum.compiled_time && obj.sentiment==datum.sentiment)
+            if((obj.compiled_time==datum.compiled_time) && (obj.sentiment==datum.sentiment))
             {
-              datum.frequency+=obj.frequency;
-              flag=true;
+              datum.frequency += obj.frequency;
+              flag = true;
               return datum;
             }
             else
@@ -270,11 +275,12 @@ function sentimentGraph(res='minute')
               return datum;
             }
           });
-          if(flag==false)
+          if(flag == false)
           {
             final_data.push(obj);
           }
           break;
+
       default:
           break;
     }
@@ -312,10 +318,11 @@ function sentimentGraph(res='minute')
       chartDimensions.sentiment.width = 4500;
       chartDimensions.sentiment.height = 600;
       break;
+
     case 'hour':
-    chartDimensions.sentiment.width = 1550;
-    chartDimensions.sentiment.height = 600;
-    break;
+      chartDimensions.sentiment.width = 1550;
+      chartDimensions.sentiment.height = 600;
+      break;
   }
 
   charts.sentiment_chart.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
@@ -334,11 +341,13 @@ function toggle_graph_type(type, graph)
         charts.class_chart.destroy();
         classGraph();
         break;
+
     case 'sentiment':
         graphType[graph] = type;
         charts.sentiment_chart.destroy();
         sentimentGraph();
         break;
+
     default:
         window.alert("Graph does not exist!");
         break;
@@ -353,10 +362,12 @@ function toggle_graph_res(res, graph)
         charts.class_chart.destroy();
         classGraph(res);
         break;
+
     case 'sentiment':
         charts.sentiment_chart.destroy();
         sentimentGraph(res);
         break;
+
     default:
         window.alert("Graph does not exist!");
         break;
