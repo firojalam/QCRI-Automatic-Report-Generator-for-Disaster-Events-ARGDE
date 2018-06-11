@@ -28,6 +28,11 @@ var charts = {
   class_chart: null,
   sentiment_chart: null,
 };
+var chartDimensions = {
+  class: { width: 4500, height:600},
+  sentiment: { width:4500, height: 600},
+};
+
 function data()
 {
   sockets.minute.get(queries['minute'], function(data, json_obj){
@@ -194,10 +199,23 @@ function classGraph(res='minute')
           tauCharts.api.plugins.get('floating-axes')(),
       ],
   });
-  charts.class_chart.renderTo('#ClassChart',{width: 4500, height:600});
+
+  switch(res)
+  {
+    case 'minute':
+      chartDimensions.class.width = 4500;
+      chartDimensions.class.height = 600;
+      break;
+    case 'hour':
+    chartDimensions.class.width = 1550;
+    chartDimensions.class.height = 600;
+    break;
+  }
+
+  charts.class_chart.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
   window.addEventListener("resize",function(){
     charts.class_chart.destroy();
-    charts.class_chart.renderTo('#ClassChart', {width: 4500, height:600});
+    charts.class_chart.renderTo('#ClassChart', {width: chartDimensions.class.width, height: chartDimensions.class.height});
   });
 }
 
@@ -287,11 +305,23 @@ function sentimentGraph(res='minute')
                 tauCharts.api.plugins.get('floating-axes')(),
               ],
           });
-          
-  charts.sentiment_chart.renderTo('#SentimentChart',{width: 4500, height:600});
+
+  switch(res)
+  {
+    case 'minute':
+      chartDimensions.sentiment.width = 4500;
+      chartDimensions.sentiment.height = 600;
+      break;
+    case 'hour':
+    chartDimensions.sentiment.width = 1550;
+    chartDimensions.sentiment.height = 600;
+    break;
+  }
+
+  charts.sentiment_chart.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
   window.addEventListener("resize",function(){
     charts.sentiment_chart.destroy();
-    charts.sentiment_chart.renderTo('#SentimentChart', {width: 4500, height:600});
+    charts.sentiment_chart.renderTo('#SentimentChart', {width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
   });
 }
 
