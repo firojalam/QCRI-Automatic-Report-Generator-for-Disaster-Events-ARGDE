@@ -159,8 +159,9 @@ function classGraph()
   });
   charts.class_chart.renderTo('#ClassChart',{width: 4500, height:600});
   window.addEventListener("resize",function(){
-  charts.class_chart.destroy();
-  charts.class_chart.renderTo('#ClassChart', {width: 4500, height:600});});
+    charts.class_chart.destroy();
+    charts.class_chart.renderTo('#ClassChart', {width: 4500, height:600});
+  });
 }
 
 function sentimentGraph()
@@ -222,9 +223,12 @@ function sentimentGraph()
               ],
           });
   charts.sentiment_chart.renderTo('#SentimentChart',{width: 4500, height:600});
- window.addEventListener("resize",function(){
-  charts.sentiment_chart.destroy();
-  charts.sentiment_chart.renderTo('#SentimentChart', {width: 4500, height:600});});
+
+  window.addEventListener("resize",function(){
+    charts.sentiment_chart.destroy();
+    charts.sentiment_chart.renderTo('#SentimentChart', {width: 4500, height:600});
+  });
+
 }
 
 function toggle_graph_type(type, graph)
