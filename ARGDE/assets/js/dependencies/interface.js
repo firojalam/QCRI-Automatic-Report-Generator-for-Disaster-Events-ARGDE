@@ -164,12 +164,16 @@ function classGraph(res = 'minute')
       data.push(temp);
     }
   };
+
   charts.class_chart = new tauCharts.Chart({
       data: data,
       type: graphType['class'],
       x: 'date',
       y: 'frequency',
       color: 'label',
+      settings:{
+        asyncRendering: true,
+      },
       guide: {
         y:{
           label: 'Frequency',
@@ -281,16 +285,23 @@ function sentimentGraph(res = 'minute')
           }
           break;
 
+      case 'day':
+          break;
+
       default:
           break;
     }
   });
+
   charts.sentiment_chart = new tauCharts.Chart({
               data: final_data,
               type: graphType['sentiment'],
               x: 'compiled_time',
               y: 'frequency',
               color: 'sentiment',
+              settings:{
+                asyncRendering: true,
+              },
               guide:{
                 x:{label: 'Minute'},
                 y:{label: 'Frequency'},
