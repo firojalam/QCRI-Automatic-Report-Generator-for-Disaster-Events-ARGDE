@@ -20,6 +20,10 @@ var graphType = {
   class: 'stacked-bar',
   sentiment: 'stacked-bar',
 };
+var graphRes = {
+  class: 'minute',
+  sentiment: 'minute',
+}
 var charts = {
   class_chart: null,
   sentiment_chart: null,
@@ -50,7 +54,7 @@ function data()
     allData.damage_data = data['damage_data'];
   });
 }
-function classGraph()
+function classGraph(res='minute')
 {
   var freqData = [];
   var clData = [];
@@ -85,16 +89,33 @@ function classGraph()
   for(i in freqData)
   {
     var timeStamp;
-    if(minData[i]<10)
+    switch(res)
     {
-      timeStamp = String(hourData[i]) + ":0" + String(minData[i]);
-    }
-    else
-    {
-      timeStamp = String(hourData[i]) + ":" + String(minData[i]);
+      case 'minute':
+            if(minData[i]<10)
+            {
+              timeStamp = String(hourData[i]) + ":0" + String(minData[i]);
+            }
+            else
+            {
+              timeStamp = String(hourData[i]) + ":" + String(minData[i]);
+            }
+            break;
+      case 'hour':
+            timeStamp = String(hourData[i]) + ":00";
+            break;
+      default:
+            if(minData[i]<10)
+            {
+              timeStamp = String(hourData[i]) + ":0" + String(minData[i]);
+            }
+            else
+            {
+              timeStamp = String(hourData[i]) + ":" + String(minData[i]);
+            }
+            break;
     }
     var dateStamp = String(yearData[i])+"-"+String(Number(monthData[i]))+"-"+String(dateData[i]) +", "+timeStamp;
-    var d = new Date(Number(yearData[i]), Number(monthData[i]), Number(dateData[i]));
     var formatFreq = Number(freqData[i]);
     if(clData[i] == "infrastructure_and_utilities_damage"){
       clData[i] =  "Infrastructure and Utilities Damage";
@@ -121,9 +142,25 @@ function classGraph()
     } else if(clData[i] == "personal"){
       clData[i] = "Personal";
     }
-    data[i] = {date: dateStamp, frequency: formatFreq ,label: clData[i]};
+    let temp = {date: dateStamp, frequency: formatFreq ,label: clData[i]};
+    let flag=false;
+    data = data.map(function(datum){
+      if(temp.date==datum.date && temp.label==datum.label)
+      {
+        datum.frequency+=temp.frequency;
+        flag=true;
+        return datum;
+      }
+      else
+      {
+        return datum;
+      }
+    });
+    if(flag==false)
+    {
+      data.push(temp);
+    }
   };
-  var class_graph_type = 'stacked-bar';
   charts.class_chart = new tauCharts.Chart({
       data: data,
       type: graphType['class'],
@@ -164,7 +201,7 @@ function classGraph()
   });
 }
 
-function sentimentGraph()
+function sentimentGraph(res='minute')
 {
   var final_data = [];
   var obj;
@@ -183,18 +220,46 @@ function sentimentGraph()
     month = date.getMonth()+1;
     day = date.getDate();
     hour = obj.hour.substr(0,2);
-    if(obj.minute < 10)
-    {
-      minute = "0"+String(obj.minute);
-    }
-    else
-    {
-      minute = obj.minute;
-    }
     obj.sentiment = obj.class_label;
-    obj.frequency = Number(obj.frequency);
-    obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":"+String(minute);
-    final_data.push(obj);
+    switch(res)
+    {
+      case 'minute':
+          if(obj.minute < 10)
+          {
+            minute = "0"+String(obj.minute);
+          }
+          else
+          {
+            minute = obj.minute;
+          }
+          obj.frequency = Number(obj.frequency);
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":"+String(minute);
+          final_data.push(obj);
+          break;
+      case 'hour':
+          let flag=false;
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":00";
+          obj.frequency = Number(obj.frequency);
+          final_data = final_data.map(function(datum){
+            if(obj.compiled_time==datum.compiled_time && obj.sentiment==datum.sentiment)
+            {
+              datum.frequency+=obj.frequency;
+              flag=true;
+              return datum;
+            }
+            else
+            {
+              return datum;
+            }
+          });
+          if(flag==false)
+          {
+            final_data.push(obj);
+          }
+          break;
+      default:
+          break;
+    }
   });
   charts.sentiment_chart = new tauCharts.Chart({
               data: final_data,
@@ -222,13 +287,12 @@ function sentimentGraph()
                 tauCharts.api.plugins.get('floating-axes')(),
               ],
           });
+          
   charts.sentiment_chart.renderTo('#SentimentChart',{width: 4500, height:600});
-
   window.addEventListener("resize",function(){
     charts.sentiment_chart.destroy();
     charts.sentiment_chart.renderTo('#SentimentChart', {width: 4500, height:600});
   });
-
 }
 
 function toggle_graph_type(type, graph)
@@ -253,5 +317,18 @@ function toggle_graph_type(type, graph)
 
 function toggle_graph_res(res, graph)
 {
-  window.alert(res+"-wise");
+  switch(graph)
+  {
+    case 'class':
+        charts.class_chart.destroy();
+        classGraph(res);
+        break;
+    case 'sentiment':
+        charts.sentiment_chart.destroy();
+        sentimentGraph(res);
+        break;
+    default:
+        window.alert("Graph does not exist!");
+        break;
+  }
 }
