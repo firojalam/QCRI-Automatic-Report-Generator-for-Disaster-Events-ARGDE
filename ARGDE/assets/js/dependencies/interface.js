@@ -203,7 +203,7 @@ function classGraph(res)
       break;
 
     case 'day' :
-      chartDimensions.class.width = 850;
+      chartDimensions.class.width = 1550;
       chartDimensions.class.height = 600;
       break;
   }

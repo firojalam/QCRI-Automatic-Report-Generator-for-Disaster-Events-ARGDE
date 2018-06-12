@@ -38,6 +38,9 @@ module.exports.routes = {
   '/test': {
     view: 'argde/mySocket',
   },
+  '/login': {
+    view: 'login',
+  },
 
   /***************************************************************************
   *                                                                          *
