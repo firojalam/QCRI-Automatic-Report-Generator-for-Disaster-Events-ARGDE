@@ -19,20 +19,38 @@ var allData = {
 var graphType = {
   class: 'stacked-bar',
   sentiment: 'stacked-bar',
+  frequency: 'stacked-bar',
+  relevancy: 'stacked-bar',
+  damage: 'stacked-bar',
 };
 var graphRes = {
   class: 'minute',
   sentiment: 'minute',
+  frequency: 'minute',
+  relevancy: 'minute',
+  damage: 'minute',
 }
 var charts = {
-  class_chart: null,
-  sentiment_chart: null,
+  class: null,
+  sentiment: null,
+  frequency: null,
+  relevancy: null,
+  damage: null,
 };
 var chartDimensions = {
-  class: { width : 4500, height : 600 },
-  sentiment: { width : 4500, height : 600 },
+  class: { width: 4500, height: 600 },
+  sentiment: { width: 4500, height: 600 },
+  frequency: { width: 4500, height: 600 },
+  relevancy: { width: 4500, height: 600 },
+  damage: { width: 4500, height: 600 },
 };
-
+var generate = {
+  class: null,
+  sentiment: null,
+  frequency: null,
+  relevancy: null,
+  damage: null,
+};
 function data()
 {
   sockets.minute.get(queries['minute'], function(data, json_obj){
@@ -49,18 +67,18 @@ function data()
   });
   sockets.class.get(queries['class'], function(data, json_obj){
     allData.class_data = data['class_data'];
-    classGraph(graphRes.class);
+    generate.class(graphRes.class);
   });
   sockets.sentiment.get(queries['sentiment'],function(data, json_obj){
     allData.sentiment_data = data['sentiment_data'];
-    sentimentGraph(graphRes.sentiment);
+    generate.sentiment(graphRes.sentiment);
   });
   sockets.damage.get(queries['damage'],function(data, json_obj){
     allData.damage_data = data['damage_data'];
   });
 }
 
-function classGraph(res)
+generate.class = function(res)
 {
   var freqData = [];
   var clData = [];
@@ -153,7 +171,7 @@ function classGraph(res)
     }
   };
 
-  charts.class_chart = new tauCharts.Chart({
+  charts.class = new tauCharts.Chart({
       data: data,
       type: graphType['class'],
       x: 'date',
@@ -211,14 +229,14 @@ function classGraph(res)
       break;
   }
 
-  charts.class_chart.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
+  charts.class.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
   window.addEventListener("resize",function(){
-    charts.class_chart.destroy();
-    charts.class_chart.renderTo('#ClassChart', {width: chartDimensions.class.width, height: chartDimensions.class.height});
+    charts.class.destroy();
+    charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
   });
 }
 
-function sentimentGraph(res)
+generate.sentiment = function(res)
 {
   let final_data = [];
   let datacopy;
@@ -260,11 +278,9 @@ function sentimentGraph(res)
           let flag = false;
           obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":00";
           obj.frequency = Number(obj.frequency);
-          // console.log(final_data);
           final_data = final_data.map(function(datum){
             if((obj.compiled_time==datum.compiled_time) && (obj.sentiment==datum.sentiment))
             {
-              // console.log("added for "+obj.compiled_time);
               datum.frequency += obj.frequency;
               flag = true;
               return datum;
@@ -288,7 +304,7 @@ function sentimentGraph(res)
     }
   });
 
-  charts.sentiment_chart = new tauCharts.Chart({
+  charts.sentiment = new tauCharts.Chart({
               data: final_data,
               type: graphType['sentiment'],
               x: 'compiled_time',
@@ -334,12 +350,11 @@ function sentimentGraph(res)
       break;
   }
 
-  charts.sentiment_chart.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+  charts.sentiment.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
   window.addEventListener("resize",function(){
-    charts.sentiment_chart.destroy();
-    charts.sentiment_chart.renderTo('#SentimentChart', {width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+    charts.sentiment.destroy();
+    charts.sentiment.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
   });
-  console.log(" ");
 }
 
 function labelize(str) {
@@ -352,47 +367,41 @@ function labelize(str) {
    }
    return splitStr.join(' ');
 }
-
+/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
+/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
+/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
+/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
+/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
 function toggle_graph_type(type, graph)
 {
-  switch(graph)
-  {
-    case 'class':
-        graphType[graph] = type;
-        charts.class_chart.destroy();
-        classGraph(graphRes.class);
-        break;
-
-    case 'sentiment':
-        graphType[graph] = type;
-        charts.sentiment_chart.destroy();
-        sentimentGraph(graphRes.sentiment);
-        break;
-
-    default:
-        window.alert("Graph does not exist!");
-        break;
-  }
+  // $("#" + graphType[graph] + "." + graph + "Type").removeClass("active");
+  graphType[graph] = type;
+  // $("#" + graphType[graph] + "." + graph + "Type").addClass("active");
+  $("#" + graph + "TypeButton").html($("#" + graphType[graph] + "." + graph + "Type").html());
+  charts[graph].destroy();
+  generate[graph](graphRes[graph]);
 }
 
 function toggle_graph_res(res, graph)
 {
-  switch(graph)
-  {
-    case 'class':
-        graphRes.class = res;
-        charts.class_chart.destroy();
-        classGraph(graphRes.class);
-        break;
+  // $("#" + graphRes[graph] + "." + graph + "Res").removeClass("active");
+  graphRes[graph] = res;
+  // $("#" + graphRes[graph] + "." + graph + "Res").addClass("active");
+  $("#" + graph + "ResButton").html($("#" + graphRes[graph] + "." + graph + "Res").html());
+  charts[graph].destroy();
+  generate[graph](graphRes[graph]);
+}
 
-    case 'sentiment':
-        graphRes.sentiment = res;
-        charts.sentiment_chart.destroy();
-        sentimentGraph(graphRes.sentiment);
-        break;
-
-    default:
-        window.alert("Graph does not exist!");
-        break;
-  }
+function reset(graph)
+{
+  // $("#" + graphType[graph] + "." + graph + "Type").removeClass("active");
+  graphType[graph] = 'stacked-bar';
+  // $("#" + graphType[graph] + "." + graph + "Type").addClass("active");
+  $("#" + graph + "TypeButton").html($("#" + graphType[graph] + "." + graph + "Type").html());
+  // $("#" + graphRes[graph] + "." + graph + "Res").removeClass("active");
+  graphRes[graph] = 'minute';
+  // $("#" + graphRes[graph] + "." + graph + "Res").addClass("active");
+  $("#" + graph + "ResButton").html($("#" + graphRes[graph] + "." + graph + "Res").html());
+  charts[graph].destroy();
+  generate[graph](graphRes[graph]);
 }

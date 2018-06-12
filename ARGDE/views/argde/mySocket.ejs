@@ -8,26 +8,27 @@
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-area-chart"></i> Class Frequency
-          <div class="dropdown" style="float:right;">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Graph Type
+          <button type="button" class="btn btn-secondary" style="float:right;" onclick="reset('class');">Reset</button>
+          <div class="dropdown" style="float:right; padding-right:1em;">
+            <a id="classTypeButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Stacked Bar
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button id="bar" class="dropdown-item" onclick="toggle_graph_type(this.id,'class');">Bar</button>
-              <button id="line" class="dropdown-item" onclick="toggle_graph_type(this.id,'class');">Line</button>
-              <button id="stacked-bar" class="dropdown-item" onclick="toggle_graph_type(this.id,'class');">Stacked Bar</button>
-              <button id="area" class="dropdown-item" onclick="toggle_graph_type(this.id, 'class');">Area</button>
-              <button id="scatterplot" class="dropdown-item" onclick="toggle_graph_type(this.id, 'class');">Scatter Plot</button>
+              <button id="bar" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Bar</button>
+              <button id="line" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Line</button>
+              <button id="stacked-bar" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Stacked Bar</button>
+              <button id="area" class="dropdown-item classType" onclick="toggle_graph_type(this.id, 'class');">Area</button>
+              <button id="scatterplot" class="dropdown-item classType" onclick="toggle_graph_type(this.id, 'class');">Scatter Plot</button>
             </div>
           </div>
           <div class="dropdown" style="float:right; padding-right:1em;">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Resolution
+            <a id="classResButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Minute
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button id="minute" class="dropdown-item" onclick="toggle_graph_res(this.id, 'class');">Minute</button>
-              <button id="hour" class="dropdown-item" onclick="toggle_graph_res(this.id, 'class');">Hour</button>
-              <button id="day" class="dropdown-item" onclick="toggle_graph_res(this.id, 'class');">Day</button>
+              <button id="minute" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Minute</button>
+              <button id="hour" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Hour</button>
+              <button id="day" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Day</button>
             </div>
           </div>
         </div>
@@ -38,26 +39,27 @@
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-area-chart"></i> Sentiment Frequency
-          <div class="dropdown" style="float:right;">
-            <a id="class_type"class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Graph Type
+          <button type="button" class="btn btn-secondary" style="float:right;" onclick="reset('sentiment');">Reset</button>
+          <div class="dropdown" style="float:right; padding-right:1em;">
+            <a id="sentimentTypeButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Stacked Bar
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button id="bar" class="dropdown-item" onclick="toggle_graph_type(this.id, 'sentiment');">Bar</button>
-              <button id="line" class="dropdown-item" onclick="toggle_graph_type(this.id, 'sentiment');">Line</button>
-              <button id="stacked-bar" class="dropdown-item" onclick="toggle_graph_type(this.id, 'sentiment');">Stacked Bar</button>
-              <button id="area" class="dropdown-item" onclick="toggle_graph_type(this.id, 'sentiment');">Area</button>
-              <button id="scatterplot" class="dropdown-item" onclick="toggle_graph_type(this.id, 'sentiment');">Scatter Plot</button>
+              <button id="bar" class="dropdown-item sentimentType" onclick="toggle_graph_type(this.id, 'sentiment');">Bar</button>
+              <button id="line" class="dropdown-item sentimentType" onclick="toggle_graph_type(this.id, 'sentiment');">Line</button>
+              <button id="stacked-bar" class="dropdown-item sentimentType" onclick="toggle_graph_type(this.id, 'sentiment');">Stacked Bar</button>
+              <button id="area" class="dropdown-item sentimentType" onclick="toggle_graph_type(this.id, 'sentiment');">Area</button>
+              <button id="scatterplot" class="dropdown-item sentimentType" onclick="toggle_graph_type(this.id, 'sentiment');">Scatter Plot</button>
             </div>
           </div>
           <div class="dropdown" style="float:right; padding-right:1em;">
-            <a id="class_res"class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Resolution
+            <a id="sentimentResButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Minute
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button id="minute" class="dropdown-item" onclick="toggle_graph_res(this.id, 'sentiment');">Minute</button>
-              <button id="hour" class="dropdown-item" onclick="toggle_graph_res(this.id, 'sentiment');">Hour</button>
-              <button id="day" class="dropdown-item" onclick="toggle_graph_res(this.id, 'sentiment');">Day</button>
+              <button id="minute" class="dropdown-item sentimentRes" onclick="toggle_graph_res(this.id, 'sentiment');">Minute</button>
+              <button id="hour" class="dropdown-item sentimentRes" onclick="toggle_graph_res(this.id, 'sentiment');">Hour</button>
+              <button id="day" class="dropdown-item sentimentRes" onclick="toggle_graph_res(this.id, 'sentiment');">Day</button>
             </div>
           </div>
         </div>
