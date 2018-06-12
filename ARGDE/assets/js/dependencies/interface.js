@@ -218,6 +218,7 @@ function classGraph(res)
 function sentimentGraph(res)
 {
   let final_data = [];
+  let datacopy;
   let obj;
   let date;
   let year;
@@ -226,9 +227,10 @@ function sentimentGraph(res)
   let hour;
   let minute;
   let time;
-  allData.sentiment_data.forEach(function(sentiment)
+  datacopy = allData.sentiment_data.slice();
+  datacopy.forEach(function(sentiment)
   {
-    obj = sentiment;
+    obj = Object.assign({},sentiment);
     date = new Date(obj.date);
     year = date.getFullYear();
     month = date.getMonth()+1;
