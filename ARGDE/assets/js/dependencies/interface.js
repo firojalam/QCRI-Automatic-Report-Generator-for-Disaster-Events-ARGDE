@@ -185,6 +185,9 @@ function classGraph(res)
       },
       plugins: [
           tauCharts.api.plugins.get('tooltip')(),
+          tauCharts.api.plugins.get('exportTo')({
+             cssPaths:['https://cdn.jsdelivr.net/taucharts/latest/tauCharts.min.css']
+          }),
           tauCharts.api.plugins.get('legend')({'position': 'left'}),
           tauCharts.api.plugins.get('floating-axes')(),
       ],
@@ -310,6 +313,9 @@ function sentimentGraph(res)
               },
               plugins: [
                 tauCharts.api.plugins.get('legend')({position: 'left'}),
+                tauCharts.api.plugins.get('exportTo')({
+                   cssPaths:['https://cdn.jsdelivr.net/taucharts/latest/tauCharts.min.css']
+                }),
                 tauCharts.api.plugins.get('tooltip')({fields: ['compiled_time','frequency']}),
                 tauCharts.api.plugins.get('floating-axes')(),
               ],
