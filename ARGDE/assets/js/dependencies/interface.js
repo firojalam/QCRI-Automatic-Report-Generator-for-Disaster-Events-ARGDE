@@ -177,9 +177,6 @@ generate.class = function(res)
       x: 'date',
       y: 'frequency',
       color: 'label',
-      settings:{
-        asyncRendering: true,
-      },
       guide: {
         y:{
           label: 'Frequency',
@@ -202,7 +199,7 @@ generate.class = function(res)
         }
       },
       plugins: [
-          tauCharts.api.plugins.get('tooltip')(),
+          tauCharts.api.plugins.get('tooltip')({fields: ['date','frequency']}),
           tauCharts.api.plugins.get('exportTo')({
              cssPaths:['https://cdn.jsdelivr.net/taucharts/latest/tauCharts.min.css']
           }),
@@ -230,10 +227,14 @@ generate.class = function(res)
   }
 
   charts.class.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
-  window.addEventListener("resize",function(){
-    charts.class.destroy();
-    charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
+
+  $(window).resize(function() {
+    clearTimeout(window.resizedFinished);
+    window.resizedFinished = setTimeout(function(){
+        charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
+    }, 250);
   });
+
 }
 
 generate.sentiment = function(res)
@@ -248,6 +249,7 @@ generate.sentiment = function(res)
   let hour;
   let minute;
   let time;
+  let disDay;
   datacopy = allData.sentiment_data.slice();
   datacopy.forEach(function(sentiment)
   {
@@ -256,7 +258,9 @@ generate.sentiment = function(res)
     year = date.getFullYear();
     month = date.getMonth()+1;
     day = date.getDate();
+    disDay = Number(obj.day);
     hour = obj.hour.substr(0,2);
+
     obj.sentiment = obj.class_label;
     switch(res)
     {
@@ -275,7 +279,7 @@ generate.sentiment = function(res)
           break;
 
       case 'hour':
-          let flag = false;
+          var flag = false;
           obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":00";
           obj.frequency = Number(obj.frequency);
           final_data = final_data.map(function(datum){
@@ -297,6 +301,25 @@ generate.sentiment = function(res)
           break;
 
       case 'day':
+          var flag = false;
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", Day: "+disDay;
+          obj.frequency = Number(obj.frequency);
+          final_data = final_data.map(function(datum){
+            if((obj.compiled_time==datum.compiled_time) && (obj.sentiment==datum.sentiment))
+            {
+              datum.frequency += obj.frequency;
+              flag = true;
+              return datum;
+            }
+            else
+            {
+              return datum;
+            }
+          });
+          if(flag == false)
+          {
+            final_data.push(obj);
+          }
           break;
 
       default:
@@ -310,9 +333,6 @@ generate.sentiment = function(res)
               x: 'compiled_time',
               y: 'frequency',
               color: 'sentiment',
-              settings:{
-                asyncRendering: true,
-              },
               guide:{
                 x:{label: 'Minute'},
                 y:{label: 'Frequency'},
@@ -348,13 +368,24 @@ generate.sentiment = function(res)
       chartDimensions.sentiment.width = 1550;
       chartDimensions.sentiment.height = 600;
       break;
+
+
+    case 'day' :
+      chartDimensions.class.width = 1550;
+      chartDimensions.class.height = 600;
+      break;
   }
 
-  charts.sentiment.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
-  window.addEventListener("resize",function(){
-    charts.sentiment.destroy();
-    charts.sentiment.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+  charts.sentiment.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height: chartDimensions.sentiment.height});
+
+
+  $(window).resize(function() {
+    clearTimeout(window.resizedFinished);
+    window.resizedFinished = setTimeout(function(){
+        charts.sentiment.resize({width: chartDimensions.sentiment.width, height: chartDimensions.sentiment.height});
+    }, 250);
   });
+
 }
 
 function labelize(str) {
@@ -403,5 +434,7 @@ function reset(graph)
   // $("#" + graphRes[graph] + "." + graph + "Res").addClass("active");
   $("#" + graph + "ResButton").html($("#" + graphRes[graph] + "." + graph + "Res").html());
   charts[graph].destroy();
+  console.log(graph);
+  console.log(graphRes[graph]);
   generate[graph](graphRes[graph]);
 }
