@@ -39,8 +39,11 @@ module.exports.routes = {
     view: 'argde/mySocket',
   },
   '/login': {
-    view: 'login',
+    view: 'user/login',
   },
+  '/signup':{
+    view: 'user/signup',
+  }
 
   /***************************************************************************
   *                                                                          *
