@@ -19,7 +19,6 @@
  * For more information on configuring custom routes, check out:
  * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
-
 module.exports.routes = {
 
   /***************************************************************************
@@ -35,15 +34,14 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  '/test': {
-    view: 'argde/mySocket',
-  },
-  '/login': {
+  'get /login': {
     view: 'user/login',
   },
-  '/signup':{
+  'get /signup':{
     view: 'user/signup',
-  }
+  },
+  'post /login': 'UserController.login',
+  '/logout' : 'UserController.logout',
 
   /***************************************************************************
   *                                                                          *
