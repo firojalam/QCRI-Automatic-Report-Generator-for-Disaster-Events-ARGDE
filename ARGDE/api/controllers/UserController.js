@@ -93,7 +93,11 @@ module.exports =  {
       }
       else
       {
-        res.view('Dashboard/results',{collections: response.rows});
+        let response_obj = [];
+        response.rows.forEach(function(row){
+          response_obj.push(User.collectionNames[row['code']]);
+        });
+        res.view('Dashboard/results',{collections: response_obj});
       }
     });
   },

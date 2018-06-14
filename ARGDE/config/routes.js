@@ -39,7 +39,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'logout',
   },
-
+  '/visualize': {
+    controller: 'DataController',
+    action: 'retrieveAll',
+  },
   // GET requests
   'GET /search': {
     controller: 'UserController',
@@ -48,7 +51,6 @@ module.exports.routes = {
   'GET /login': {
     view: 'user/login',
   },
-
   // POST requests
   'POST /login': {
     controller: 'UserController',

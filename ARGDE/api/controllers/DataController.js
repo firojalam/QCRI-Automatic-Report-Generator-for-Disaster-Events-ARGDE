@@ -230,35 +230,44 @@ module.exports = {
 			}
 		);
 	},
-	retrieveAll: function(req,res){
+	retrieveAll: function(req, res){
+		let collection;
+		if(req.param('name') == undefined)
+		{
+			collection = req.param('collection');
+		}
+		else
+		{
+			collection = (_.invert(User.collectionNames))[req.param('name')];
+		}
 		var queries = {
 		  minute: "/"+DataControllerInfo.model+"/"
 		  +DataControllerInfo.methods['minute_wise']
-	    +"?collection="+req.param('collection'),
+	    +"?collection="+collection,
 
 	    hour: "/"+DataControllerInfo.model+"/"
 	    +DataControllerInfo.methods['hour_wise']
-	    +"?collection="+req.param('collection'),
+	    +"?collection="+collection,
 
 	    day: "/"+DataControllerInfo.model+"/"
 	    +DataControllerInfo.methods['day_wise']
-	    +"?collection="+req.param('collection'),
+	    +"?collection="+collection,
 
 	    label: "/"+DataControllerInfo.model+"/"
 	    +DataControllerInfo.methods['label_wise']
-	    +"?collection="+req.param('collection'),
+	    +"?collection="+collection,
 
 	    class: "/"+DataControllerInfo.model+"/"
 	    +DataControllerInfo.methods['class_wise']
-	    +"?collection="+req.param('collection'),
+	    +"?collection="+collection,
 
 	    sentiment: "/"+DataControllerInfo.model+"/"
 	    +DataControllerInfo.methods['sentiment_wise']
-	    +"?collection="+req.param('collection'),
+	    +"?collection="+collection,
 
 	    damage: "/"+DataControllerInfo.model+"/"
 	    +DataControllerInfo.methods['damage_wise']
-	    +"?collection="+req.param('collection'),
+	    +"?collection="+collection,
 		};
 
 		res.view('argde/mySocket', { queries: queries });
