@@ -139,11 +139,11 @@
           </div>
         </li>
         <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
+          <form action="/search" method="get" class="form-inline my-2 my-lg-0 mr-lg-2">
             <div class="input-group">
-              <input class="form-control" type="text" placeholder="Search for...">
+              <input class="form-control" type="text" name="name" placeholder="Search Collection">
               <span class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary" type="submit">
                   <i class="fa fa-search"></i>
                 </button>
               </span>
@@ -151,7 +151,7 @@
           </form>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/logout"><!--data-toggle="modal" data-target="#login-modal"-->
+          <a class="nav-link" href="/logout">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
         </li>
       </ul>
@@ -168,11 +168,11 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
+          <form action="/search" method="get" class="form-inline my-2 my-lg-0 mr-lg-2">
             <div class="input-group">
-              <input class="form-control" type="text" placeholder="Search for...">
+              <input class="form-control" name="name" type="text" placeholder="Search Collection">
               <span class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary" type="submit">
                   <i class="fa fa-search"></i>
                 </button>
               </span>
@@ -245,8 +245,6 @@
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/js/dependencies/billboard.pkgd.js"></script>
-    <script src="/js/dependencies/interface.js"></script>
-    <script src="/js/interface.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>

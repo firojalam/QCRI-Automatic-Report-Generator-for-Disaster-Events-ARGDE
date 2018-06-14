@@ -1,41 +1,44 @@
-<script src="/js/interface.js"></script>
+<% title = 'Visualizations' %>
+<script src="/interface.js"></script>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="/">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">Charts</li>
       </ol>
+
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i> Class Frequency
-          <button type="button" class="btn btn-secondary" style="float:right;" onclick="reset('class');">Reset</button>
+          <i class="fa fa-area-chart"></i> Tweet Frequency
+          <button type="button" class="btn btn-secondary" style="float:right;" onclick="reset('frequency');">Reset</button>
           <div class="dropdown" style="float:right; padding-right:1em;">
-            <a id="classTypeButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Stacked Bar
+            <a id="frequencyTypeButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Bar
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button id="bar" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Bar</button>
-              <button id="line" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Line</button>
-              <button id="stacked-bar" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Stacked Bar</button>
-              <button id="area" class="dropdown-item classType" onclick="toggle_graph_type(this.id, 'class');">Area</button>
-              <button id="scatterplot" class="dropdown-item classType" onclick="toggle_graph_type(this.id, 'class');">Scatter Plot</button>
+              <button id="bar" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Bar</button>
+              <button id="line" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Line</button>
+              <button id="stacked-bar" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Stacked Bar</button>
+              <button id="area" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Area</button>
+              <button id="scatterplot" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Scatter Plot</button>
             </div>
           </div>
           <div class="dropdown" style="float:right; padding-right:1em;">
-            <a id="classResButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a id="frequencyResButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Minute
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button id="minute" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Minute</button>
-              <button id="hour" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Hour</button>
-              <button id="day" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Day</button>
+              <button id="minute" class="dropdown-item frequencyRes" onclick="toggle_graph_res(this.id, 'frequency');">Minute</button>
+              <button id="hour" class="dropdown-item frequencyRes" onclick="toggle_graph_res(this.id, 'frequency');">Hour</button>
+              <button id="day" class="dropdown-item frequencyRes" onclick="toggle_graph_res(this.id, 'frequency');">Day</button>
             </div>
           </div>
         </div>
         <div class="card-body">
-          <div id="ClassChart"></div>
+          <div id="FrequencyChart"></div>
         </div>
       </div>
+
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-area-chart"></i> Sentiment Frequency
@@ -68,41 +71,38 @@
         </div>
       </div>
 
-
-
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i> General Frequency
-          <button type="button" class="btn btn-secondary" style="float:right;" onclick="reset('frequency');">Reset</button>
+          <i class="fa fa-area-chart"></i> Class Frequency
+          <button type="button" class="btn btn-secondary" style="float:right;" onclick="reset('class');">Reset</button>
           <div class="dropdown" style="float:right; padding-right:1em;">
-            <a id="frequencyTypeButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Bar
+            <a id="classTypeButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Stacked Bar
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button id="bar" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Bar</button>
-              <button id="line" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Line</button>
-              <button id="stacked-bar" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Stacked Bar</button>
-              <button id="area" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Area</button>
-              <button id="scatterplot" class="dropdown-item frequencyType" onclick="toggle_graph_type(this.id, 'frequency');">Scatter Plot</button>
+              <button id="bar" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Bar</button>
+              <button id="line" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Line</button>
+              <button id="stacked-bar" class="dropdown-item classType" onclick="toggle_graph_type(this.id,'class');">Stacked Bar</button>
+              <button id="area" class="dropdown-item classType" onclick="toggle_graph_type(this.id, 'class');">Area</button>
+              <button id="scatterplot" class="dropdown-item classType" onclick="toggle_graph_type(this.id, 'class');">Scatter Plot</button>
             </div>
           </div>
           <div class="dropdown" style="float:right; padding-right:1em;">
-            <a id="frequencyResButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a id="classResButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Minute
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button id="minute" class="dropdown-item frequencyRes" onclick="toggle_graph_res(this.id, 'frequency');">Minute</button>
-              <button id="hour" class="dropdown-item frequencyRes" onclick="toggle_graph_res(this.id, 'frequency');">Hour</button>
-              <button id="day" class="dropdown-item frequencyRes" onclick="toggle_graph_res(this.id, 'frequency');">Day</button>
+              <button id="minute" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Minute</button>
+              <button id="hour" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Hour</button>
+              <button id="day" class="dropdown-item classRes" onclick="toggle_graph_res(this.id, 'class');">Day</button>
             </div>
           </div>
         </div>
         <div class="card-body">
-          <div id="FrequencyChart"></div>
+          <div id="ClassChart"></div>
         </div>
       </div>
 
-      
     </div>
 <script>
 var queries = <%- JSON.stringify(queries) %>;

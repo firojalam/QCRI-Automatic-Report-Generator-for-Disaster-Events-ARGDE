@@ -16,6 +16,13 @@ var allData = {
   sentiment_data: null,
   damage_data: null,
 };
+var defaultGraphType = {
+  class: 'stacked-bar',
+  sentiment: 'stacked-bar',
+  frequency: 'bar',
+  relevancy: 'stacked-bar',
+  damage: 'stacked-bar',
+};
 var graphType = {
   class: 'stacked-bar',
   sentiment: 'stacked-bar',
@@ -23,6 +30,13 @@ var graphType = {
   relevancy: 'stacked-bar',
   damage: 'stacked-bar',
 };
+var defaultGraphRes = {
+  class: 'minute',
+  sentiment: 'minute',
+  frequency: 'minute',
+  relevancy: 'minute',
+  damage: 'minute',
+}
 var graphRes = {
   class: 'minute',
   sentiment: 'minute',
@@ -324,7 +338,6 @@ generate.frequency = function(res)
       type: graphType['frequency'],
       x: 'date',
       y: 'frequency',
-      color: 'frequency',
       settings:{
                 asyncRendering: true,
               },
@@ -503,17 +516,15 @@ function labelize(str) {
    }
    return splitStr.join(' ');
 }
+
 /*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
-/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
-/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
-/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
-/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
+
 function toggle_graph_type(type, graph)
 {
   // $("#" + graphType[graph] + "." + graph + "Type").removeClass("active");
   graphType[graph] = type;
   // $("#" + graphType[graph] + "." + graph + "Type").addClass("active");
-  $("#" + graph + "TypeButton").html($("#" + graphType[graph] + "." + graph + "Type").html());
+  $("#" + graph + "TypeButton").html($("#" + graphType[graph] + "." + graph + "Type").html()+" ");
   charts[graph].destroy();
   generate[graph](graphRes[graph]);
 }
@@ -531,19 +542,13 @@ function toggle_graph_res(res, graph)
 function reset(graph)
 {
   // $("#" + graphType[graph] + "." + graph + "Type").removeClass("active");
-  if(graph == 'frequency'){
-    graphType[graph] = 'bar';
-  } else{
-    graphType[graph] = 'stacked-bar';
-  }
+  graphType[graph] = defaultGraphType[graph];
   // $("#" + graphType[graph] + "." + graph + "Type").addClass("active");
   $("#" + graph + "TypeButton").html($("#" + graphType[graph] + "." + graph + "Type").html());
   // $("#" + graphRes[graph] + "." + graph + "Res").removeClass("active");
-  graphRes[graph] = 'minute';
+  graphRes[graph] = defaultGraphRes[graph];
   // $("#" + graphRes[graph] + "." + graph + "Res").addClass("active");
   $("#" + graph + "ResButton").html($("#" + graphRes[graph] + "." + graph + "Res").html());
   charts[graph].destroy();
-  console.log(graph);
-  console.log(graphRes[graph]);
   generate[graph](graphRes[graph]);
 }

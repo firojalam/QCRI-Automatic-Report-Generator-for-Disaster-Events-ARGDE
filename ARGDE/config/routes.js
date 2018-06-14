@@ -31,17 +31,30 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  // Requests
   '/': {
     view: 'homepage'
   },
-  'get /login': {
+  '/logout' : {
+    controller: 'UserController',
+    action: 'logout',
+  },
+
+  // GET requests
+  'GET /search': {
+    controller: 'UserController',
+    action: 'search',
+  },
+  'GET /login': {
     view: 'user/login',
   },
-  'get /signup':{
-    view: 'user/signup',
+
+  // POST requests
+  'POST /login': {
+    controller: 'UserController',
+    action: 'login',
   },
-  'post /login': 'UserController.login',
-  '/logout' : 'UserController.logout',
+
 
   /***************************************************************************
   *                                                                          *

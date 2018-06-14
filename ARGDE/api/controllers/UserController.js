@@ -79,6 +79,22 @@ module.exports =  {
   },
   logout: function(req, res){
     User.adminLoggedIn = false;
-    res.view('homepage');
-  }
+    res.redirect('/');
+  },
+  search: function(req, res){
+    let search = req.param('name').toLowerCase();
+    Argde.query("select distinct "+Argde.attributes.code.columnName+" from "
+    +Argde.tableName+" where "+Argde.attributes.code.columnName+" like '%"
+    +search+"%';", function(err, response){
+      if(err)
+      {
+        sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
+        return res.serverError(err);
+      }
+      else
+      {
+        res.view('Dashboard/results',{collections: response.rows});
+      }
+    });
+  },
 };
