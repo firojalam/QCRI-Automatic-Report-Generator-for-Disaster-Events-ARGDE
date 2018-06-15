@@ -338,6 +338,7 @@ generate.frequency = function(res)
       type: graphType['frequency'],
       x: 'date',
       y: 'frequency',
+      color: 'frequency',
       settings:{
                 asyncRendering: true,
               },
@@ -355,6 +356,7 @@ generate.frequency = function(res)
              cssPaths:['https://cdn.jsdelivr.net/taucharts/latest/tauCharts.min.css']
           }),
           tauCharts.api.plugins.get('floating-axes')(),
+          tauCharts.api.plugins.get('legend')({position: 'left'}),
       ],
   });
 
