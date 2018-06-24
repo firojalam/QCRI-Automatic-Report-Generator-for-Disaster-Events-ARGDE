@@ -1,0 +1,24 @@
+<% title = 'Search Results' %>
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fa fa-search"></i> Search Results
+  </div>
+  <div class="card-body">
+    <br>
+    <% if(collections.length > 0) { %>
+      <div id='results'></div>
+    <% }else{ %>
+      <div><h4>No results found.</h4></div><hr>
+    <% } %>
+  </div>
+</div>
+<script>
+var results = <%- JSON.stringify(collections) %>;
+function data()
+{
+  results.forEach(function(result){
+    let code = $('#results').html()+"<div style='display:flex;'><div style='flex:1; padding-top:0.5em;'><h4>"+result+"</h4></div><div style='flex:1;'><a href='/visualize?name="+result+"'><button type='button' class='btn btn-secondary' style='float:right; margin-bottom: 0.5em;'>Visualize</button></a></div></div><hr><br>";
+    $('#results').html(code);
+  });
+}
+</script>
