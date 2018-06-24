@@ -270,6 +270,6 @@ module.exports = {
 	    +"?collection="+collection,
 		};
 
-		res.view('argde/mySocket', { queries: queries });
+		res.view('argde/visualize', { queries: queries });
 	},
 };

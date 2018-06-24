@@ -338,7 +338,6 @@ generate.frequency = function(res)
       type: graphType['frequency'],
       x: 'date',
       y: 'frequency',
-      // color: 'frequency',
       settings:{
                 asyncRendering: true,
               },
@@ -348,6 +347,9 @@ generate.frequency = function(res)
         },
         y:{
           label: 'Frequency',
+        },
+        color:{
+          brewer: ['#33aa33',],
         }
       },
       plugins: [
