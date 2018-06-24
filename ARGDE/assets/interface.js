@@ -187,6 +187,7 @@ generate.class = function(res)
 
   charts.class = new tauCharts.Chart({
       data: data,
+      autoResize: false,
       type: graphType['class'],
       x: 'date',
       y: 'frequency',
@@ -335,6 +336,7 @@ generate.frequency = function(res)
 
   charts.frequency = new tauCharts.Chart({
       data: data,
+      autoResize: false,
       type: graphType['frequency'],
       x: 'date',
       y: 'frequency',
@@ -453,6 +455,7 @@ generate.sentiment = function(res)
 
   charts.sentiment = new tauCharts.Chart({
               data: final_data,
+              autoResize: false,
               type: graphType['sentiment'],
               x: 'compiled_time',
               y: 'frequency',
@@ -504,10 +507,10 @@ generate.sentiment = function(res)
   $(window).resize(function() {
     clearTimeout(window.resizedFinished);
     window.resizedFinished = setTimeout(function(){
-          charts.sentiment.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
-          charts.frequency.renderTo('#FrequencyChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
-          charts.class.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
-        }, 1000);
+          charts.sentiment.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+          charts.frequency.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+          charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
+        }, 500);
   });
 
 function labelize(str) {
