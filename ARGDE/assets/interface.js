@@ -338,7 +338,7 @@ generate.frequency = function(res)
       type: graphType['frequency'],
       x: 'date',
       y: 'frequency',
-      color: 'frequency',
+      // color: 'frequency',
       settings:{
                 asyncRendering: true,
               },
