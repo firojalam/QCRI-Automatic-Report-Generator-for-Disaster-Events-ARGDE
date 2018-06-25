@@ -172,6 +172,8 @@ generate.class = function(res)
     var dateStamp = String(yearData[i])+"-"+String(Number(monthData[i]))+"-"+String(dateData[i]) +", "+timeStamp;
     var formatFreq = Number(freqData[i]);
     var niceLabel = labelize(clData[i]);
+    var notNiceLabel = unlabelize(niceLabel);
+    console.log(notNiceLabel);
     let temp = {date: dateStamp, frequency: formatFreq ,label: niceLabel};
     let flag = false;
     data = data.map(function(datum){
@@ -767,6 +769,12 @@ function labelize(str) {
         }
    }
    return splitStr.join(' ');
+}
+
+function unlabelize(str) {
+  str = str.split(" ").join("_");
+  var splitStr = str.toLowerCase().split("_");
+  return splitStr.join('_');
 }
 
 function toggle_graph_type(type, graph)
