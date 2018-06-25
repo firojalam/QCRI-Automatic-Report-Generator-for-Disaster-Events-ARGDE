@@ -8,6 +8,7 @@ var DataControllerInfo = {
 		class_wise: 'retrieveClass',
 		sentiment_wise: 'retrieveSentiment',
 		damage_wise: 'retrieveDamage',
+		relevancy_wise: 'retrieveRelevancy',
 		all: 'retrieveAll',
 	},
 };
@@ -230,6 +231,38 @@ module.exports = {
 			}
 		);
 	},
+	retrieveRelevancy: function(req, res){
+		var relevancy_values = ['ir_true', 'ir_false'];
+		var query = "select * from "+Label_frequency.tableName+" where (";
+		for(i in relevancy_values)
+		{
+			if(i == (relevancy_values.length-1))
+			{
+				query = query + Label_frequency.attributes.class_label.columnName+"='"+relevancy_values[i]+"'";
+			}
+			else
+			{
+				query = query + Label_frequency.attributes.class_label.columnName+"='"+relevancy_values[i]+"' or ";
+			}
+		}
+		query = query + ") and "+Label_frequency.attributes.code.columnName+"='"
+		+req.param('collection')+"' order by "+Label_frequency.attributes.date.columnName+","
+		+Label_frequency.attributes.hour.columnName+","
+		+Label_frequency.attributes.minute.columnName+";";
+
+		Label_frequency.query(query,function(err, records){
+			if(err)
+			{
+				sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
+				return res.serverError(err);
+			}
+			else
+			{
+				sails.log.info("Image Relevancy data retrieved, passing to view");
+				res.send({relevancy_data: records.rows});
+			}
+		});
+	},
 	retrieveAll: function(req, res){
 		let collection;
 		if(req.param('name') == undefined)
@@ -267,6 +300,10 @@ module.exports = {
 
 	    damage: "/"+DataControllerInfo.model+"/"
 	    +DataControllerInfo.methods['damage_wise']
+	    +"?collection="+collection,
+
+			relevancy: "/"+DataControllerInfo.model+"/"
+	    +DataControllerInfo.methods['relevancy_wise']
 	    +"?collection="+collection,
 		};
 

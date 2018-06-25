@@ -84,6 +84,11 @@ module.exports = {
 										else
 										{
 											sails.log.info("Minute "+date_val+" "+_hour+":"+_minute+":00"+" OK");
+											if(i == iterations)
+											{
+												sails.log.info("Minute-wise precomputation complete");
+												Argde.precomputation['minute'] = true;
+											}
 										}
 									});
 								}

@@ -5,6 +5,7 @@ var sockets = {
   label: io.sails.connect(),
   class: io.sails.connect(),
   sentiment: io.sails.connect(),
+  relevancy: io.sails.connect(),
   damage: io.sails.connect(),
 };
 var allData = {
@@ -14,20 +15,21 @@ var allData = {
   label_data: null,
   class_data: null,
   sentiment_data: null,
+  relevancy_data: null,
   damage_data: null,
 };
 var defaultGraphType = {
   class: 'stacked-bar',
   sentiment: 'stacked-bar',
   frequency: 'bar',
-  relevancy: 'stacked-bar',
+  relevancy: 'line',
   damage: 'stacked-bar',
 };
 var graphType = {
   class: 'stacked-bar',
   sentiment: 'stacked-bar',
   frequency: 'bar',
-  relevancy: 'stacked-bar',
+  relevancy: 'line',
   damage: 'stacked-bar',
 };
 var defaultGraphRes = {
@@ -88,8 +90,13 @@ function data()
     allData.sentiment_data = data['sentiment_data'];
     generate.sentiment(graphRes.sentiment);
   });
+  sockets.relevancy.get(queries['relevancy'],function(data, json_obj){
+    allData.relevancy_data = data['relevancy_data'];
+    generate.relevancy(graphRes.relevancy);
+  });
   sockets.damage.get(queries['damage'],function(data, json_obj){
     allData.damage_data = data['damage_data'];
+    generate.damage(graphRes.damage);
   });
 }
 
@@ -259,7 +266,6 @@ generate.frequency = function(res)
   var monthData = [];
   var yearData = [];
   var data = [];
-  console.log(allData.minute_data);
 
   allData.minute_data.forEach(function(entry){
     freqData = freqData.concat(Number(entry.frequency));
@@ -331,8 +337,6 @@ generate.frequency = function(res)
       data.push(temp);
     }
   };
-
-  console.log(data);
 
   charts.frequency = new tauCharts.Chart({
       data: data,
@@ -503,15 +507,256 @@ generate.sentiment = function(res)
   charts.sentiment.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
 }
 
+generate.damage = function(res)
+{
+  let final_data = [];
+  let datacopy;
+  let obj;
+  let date;
+  let year;
+  let month;
+  let day;
+  let hour;
+  let minute;
+  let time;
+  datacopy = allData.damage_data.slice();
+  datacopy.forEach(function(damage)
+  {
+    obj = Object.assign({},damage);
+    date = new Date(obj.date);
+    year = date.getFullYear();
+    month = date.getMonth()+1;
+    day = date.getDate();
+    hour = obj.hour.substr(0,2);
+    obj.damage = obj.class_label;
+    switch(res)
+    {
+      case 'minute':
+          if(obj.minute < 10)
+          {
+            minute = "0"+String(obj.minute);
+          }
+          else
+          {
+            minute = obj.minute;
+          }
+          obj.frequency = Number(obj.frequency);
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":"+String(minute);
+          final_data.push(obj);
+          break;
 
-  $(window).resize(function() {
-    clearTimeout(window.resizedFinished);
-    window.resizedFinished = setTimeout(function(){
-          charts.sentiment.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
-          charts.frequency.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
-          charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
-        }, 500);
+      case 'hour':
+          var flag = false;
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":00";
+          obj.frequency = Number(obj.frequency);
+          final_data = final_data.map(function(datum){
+            if((obj.compiled_time==datum.compiled_time) && (obj.damage==datum.damage))
+            {
+              datum.frequency += obj.frequency;
+              flag = true;
+              return datum;
+            }
+            else
+            {
+              return datum;
+            }
+          });
+          if(flag == false)
+          {
+            final_data.push(obj);
+          }
+          break;
+
+      case 'day':
+          break;
+
+      default:
+          break;
+    }
   });
+
+  charts.damage = new tauCharts.Chart({
+              data: final_data,
+              autoResize: false,
+              type: graphType['damage'],
+              x: 'compiled_time',
+              y: 'frequency',
+              color: 'damage',
+              settings:{
+                asyncRendering: true,
+              },
+              guide:{
+                x:{label: 'Minute'},
+                y:{label: 'Frequency'},
+                color:{
+                  brewer:
+                  {
+                    'Severe':'#ff0000',
+                    'Mild':'#f48c42',
+                    'None':'#4180f4',
+                  }
+                },
+              },
+              plugins: [
+                tauCharts.api.plugins.get('legend')({position: 'left'}),
+                tauCharts.api.plugins.get('exportTo')({
+                   cssPaths:['https://cdn.jsdelivr.net/taucharts/latest/tauCharts.min.css']
+                }),
+                tauCharts.api.plugins.get('tooltip')({fields: ['compiled_time','frequency']}),
+                tauCharts.api.plugins.get('floating-axes')(),
+              ],
+          });
+
+  switch(res)
+  {
+    case 'minute':
+      chartDimensions.damage.width = 4500;
+      chartDimensions.damage.height = 600;
+      break;
+
+    case 'hour':
+      chartDimensions.damage.width = 1550;
+      chartDimensions.damage.height = 600;
+      break;
+  }
+
+  charts.damage.renderTo('#DamageChart',{width: chartDimensions.damage.width, height:chartDimensions.damage.height});
+}
+
+generate.relevancy = function(res)
+{
+  let final_data = [];
+  let datacopy;
+  let obj;
+  let date;
+  let year;
+  let month;
+  let day;
+  let hour;
+  let minute;
+  let time;
+  datacopy = allData.relevancy_data.slice();
+  datacopy.forEach(function(relevancy)
+  {
+    obj = Object.assign({},relevancy);
+    date = new Date(obj.date);
+    year = date.getFullYear();
+    month = date.getMonth()+1;
+    day = date.getDate();
+    hour = obj.hour.substr(0,2);
+    obj.relevancy = obj.class_label;
+    switch(obj.class_label)
+    {
+      case 'ir_true':
+          obj.relevancy = 'True';
+          break;
+      case 'ir_false':
+          obj.relevancy = 'False';
+    }
+    switch(res)
+    {
+      case 'minute':
+          if(obj.minute < 10)
+          {
+            minute = "0"+String(obj.minute);
+          }
+          else
+          {
+            minute = obj.minute;
+          }
+          obj.frequency = Number(obj.frequency);
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":"+String(minute);
+          final_data.push(obj);
+          break;
+
+      case 'hour':
+          var flag = false;
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day)+", "+hour+":00";
+          obj.frequency = Number(obj.frequency);
+          final_data = final_data.map(function(datum){
+            if((obj.compiled_time==datum.compiled_time) && (obj.relevancy==datum.relevancy))
+            {
+              datum.frequency += obj.frequency;
+              flag = true;
+              return datum;
+            }
+            else
+            {
+              return datum;
+            }
+          });
+          if(flag == false)
+          {
+            final_data.push(obj);
+          }
+          break;
+
+      case 'day':
+          break;
+
+      default:
+          break;
+    }
+  });
+
+  charts.relevancy = new tauCharts.Chart({
+              data: final_data,
+              autoResize: false,
+              type: graphType['relevancy'],
+              x: 'compiled_time',
+              y: 'frequency',
+              color: 'relevancy',
+              settings:{
+                asyncRendering: true,
+              },
+              guide:{
+                x:{label: 'Minute'},
+                y:{label: 'Frequency'},
+                color:{
+                  brewer:
+                  {
+                    'True':'#4180f4',
+                    'False':'#ff0000',
+                  }
+                },
+              },
+              plugins: [
+                tauCharts.api.plugins.get('legend')({position: 'left'}),
+                tauCharts.api.plugins.get('exportTo')({
+                   cssPaths:['https://cdn.jsdelivr.net/taucharts/latest/tauCharts.min.css']
+                }),
+                tauCharts.api.plugins.get('tooltip')({fields: ['compiled_time','frequency']}),
+                tauCharts.api.plugins.get('floating-axes')(),
+              ],
+          });
+
+  switch(res)
+  {
+    case 'minute':
+      chartDimensions.relevancy.width = 4500;
+      chartDimensions.relevancy.height = 600;
+      break;
+
+    case 'hour':
+      chartDimensions.relevancy.width = 1550;
+      chartDimensions.relevancy.height = 600;
+      break;
+  }
+
+  charts.relevancy.renderTo('#RelevancyChart',{width: chartDimensions.relevancy.width, height:chartDimensions.relevancy.height});
+}
+
+
+$(window).resize(function() {
+  clearTimeout(window.resizedFinished);
+  window.resizedFinished = setTimeout(function(){
+        charts.frequency.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+        charts.sentiment.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+        charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
+        charts.relevancy.resize({width: chartDimensions.relevancy.width, height: chartDimensions.relevancy.height});
+        charts.damage.resize({width: chartDimensions.damage.width, height: chartDimensions.damage.height});
+      }, 500);
+});
 
 function labelize(str) {
    str = str.split("_").join(" ");
@@ -524,13 +769,9 @@ function labelize(str) {
    return splitStr.join(' ');
 }
 
-/*DO NOT DELETE/UNCOMMENT THE COMMENTS IN THE FOLLOWING FUNCTIONS*/
-
 function toggle_graph_type(type, graph)
 {
-  // $("#" + graphType[graph] + "." + graph + "Type").removeClass("active");
   graphType[graph] = type;
-  // $("#" + graphType[graph] + "." + graph + "Type").addClass("active");
   $("#" + graph + "TypeButton").html($("#" + graphType[graph] + "." + graph + "Type").html()+" ");
   charts[graph].destroy();
   generate[graph](graphRes[graph]);
@@ -538,9 +779,7 @@ function toggle_graph_type(type, graph)
 
 function toggle_graph_res(res, graph)
 {
-  // $("#" + graphRes[graph] + "." + graph + "Res").removeClass("active");
   graphRes[graph] = res;
-  // $("#" + graphRes[graph] + "." + graph + "Res").addClass("active");
   $("#" + graph + "ResButton").html($("#" + graphRes[graph] + "." + graph + "Res").html());
   charts[graph].destroy();
   generate[graph](graphRes[graph]);
@@ -548,13 +787,9 @@ function toggle_graph_res(res, graph)
 
 function reset(graph)
 {
-  // $("#" + graphType[graph] + "." + graph + "Type").removeClass("active");
   graphType[graph] = defaultGraphType[graph];
-  // $("#" + graphType[graph] + "." + graph + "Type").addClass("active");
   $("#" + graph + "TypeButton").html($("#" + graphType[graph] + "." + graph + "Type").html());
-  // $("#" + graphRes[graph] + "." + graph + "Res").removeClass("active");
   graphRes[graph] = defaultGraphRes[graph];
-  // $("#" + graphRes[graph] + "." + graph + "Res").addClass("active");
   $("#" + graph + "ResButton").html($("#" + graphRes[graph] + "." + graph + "Res").html());
   charts[graph].destroy();
   generate[graph](graphRes[graph]);

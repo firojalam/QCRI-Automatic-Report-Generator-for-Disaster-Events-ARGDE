@@ -17,7 +17,7 @@ module.exports = {
 				}
 				else
 				{
-					sails.log.info("Writing to database, day-wise for "+_date_without_time);
+					sails.log.info("Writing to database, day-wise for "+_date_without_time+" + "+i+" days");
 
 					Day_frequency.query("update "+Day_frequency.tableName+" set "
 					+Day_frequency.attributes.frequency.columnName+"="+result.rows[0].count+" where "
@@ -33,7 +33,12 @@ module.exports = {
 						}
 						else
 						{
-							sails.log.info("Date "+_date_without_time+" OK");
+							sails.log.info("Date "+_date_without_time+" + "+i+" days OK");
+							if(i == (params['diff']+1))
+							{
+								sails.log.info("Day-wise precomputation complete");
+								Argde.precomputation['day'] = true;		
+							}
 						}
 					});
 				}

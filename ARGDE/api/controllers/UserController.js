@@ -71,7 +71,7 @@
 //
 module.exports =  {
   login: function(req, res){
-    if(req.param("username")=="admin" && req.param("password")=="aidr123")
+    if(req.param("username")==User.adminUsername && req.param("password")==User.adminPassword)
     {
       User.adminLoggedIn = true;
     }

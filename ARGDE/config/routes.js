@@ -43,6 +43,14 @@ module.exports.routes = {
     controller: 'DataController',
     action: 'retrieveAll',
   },
+  '/precompute': {
+    controller: 'ArgdeController',
+    action: 'precompute',
+  },
+  '/pre_complete': {
+    controller: 'ArgdeController',
+    action: 'precomputationComplete',
+  },
   // GET requests
   'GET /search': {
     controller: 'UserController',

@@ -141,6 +141,11 @@ module.exports = {
 																			else
 																			{
 																				sails.log.info("Label "+class_name+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
+																				if(class_name == class_names[class_names.length - 1] && i == iterations)
+																				{
+																					sails.log.info("Class Label-wise precomputation complete");
+																					Argde.precomputation['label'] = true;
+																				}
 																			}
 																		});
 																	}
@@ -186,17 +191,70 @@ module.exports = {
 																			else
 																			{
 																				sails.log.info("Sentiment "+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
+																				if(value == sentiment_values[sentiment_values.length - 1] && i == iterations)
+																				{
+																					sails.log.info("Sentiment-wise precomputation complete");
+																					Argde.precomputation['sentiment'] = true;
+																				}
 																			}
 																		});
 																	}
 																});
 															});
-															/**
-															 *
-															 */
-															 damage_values.forEach(function(value){
- 																Argde.query("select count("+Argde.attributes.image_damage_class.columnName+") from "
- 																+Argde.tableName+" where "+Argde.attributes.image_damage_class.columnName+"='"
+														 damage_values.forEach(function(value){
+																Argde.query("select count("+Argde.attributes.image_damage_class.columnName+") from "
+																+Argde.tableName+" where "+Argde.attributes.image_damage_class.columnName+"='"
+																+value+"' and "+Argde.attributes.updatedAt.columnName+">=(timestamp '"
+																+date_val+" "+_hour+":"+_minute+":00') and "+Argde.attributes.updatedAt.columnName
+																+"<(timestamp '"+date_val+" "+_hour+":"+_minute+":00'+interval '1 minutes') and "
+																+Argde.attributes.code.columnName+"='"+params['collection']+"';",
+																function(err,count){
+																	if(err)
+																	{
+																		sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
+																	}
+																	else
+																	{
+																		let damage_freq = count.rows[0].count;
+																		Label_frequency.query("update "+Label_frequency.tableName+" set "
+																		+Label_frequency.attributes.frequency.columnName+"="+damage_freq+" where "
+																		+Label_frequency.attributes.date.columnName+"='"+date_val+"' and "
+																		+Label_frequency.attributes.hour.columnName+"='"+hour_string+"' and "
+																		+Label_frequency.attributes.minute.columnName+"="+_minute+" and "
+																		+Label_frequency.attributes.class_label.columnName+"='"+value+"' and "
+																		+Label_frequency.attributes.code.columnName+"='"+params['collection']+"';insert into "
+																		+Label_frequency.tableName+" select '"+date_val+"','"+hour_string+"',"+_minute+",(date '"
+																		+date_val+"'- date '"+String(params['min'].getFullYear())+"-"
+																		+String((params['min'].getMonth()+1))+"-"+String(params['min'].getDate())+"')+1,'"
+																		+value+"',"+damage_freq+",'"+params['collection']+"' where not exists(select 1 from "
+																		+Label_frequency.tableName+" where "
+																		+Label_frequency.attributes.date.columnName+"='"+date_val+"' and "
+																		+Label_frequency.attributes.hour.columnName+"='"+hour_string+"' and "
+																		+Label_frequency.attributes.minute.columnName+"="+_minute+" and "
+																		+Label_frequency.attributes.class_label.columnName+"='"+value+"' and "
+																		+Label_frequency.attributes.code.columnName+"='"+params['collection']+"');",
+																		function(err, retVal){
+																			if(err)
+																			{
+																				sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
+																			}
+																			else
+																			{
+																				sails.log.info("Image Damage Class "+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
+																				if(value == damage_values[damage_values.length -1] && i == iterations)
+																				{
+																					sails.log.info("Damage-wise precomputation complete");
+																					Argde.precomputation['damage'] = true;
+																				}
+																			}
+																		});
+																	}
+																});
+															});
+															let image_relevancy_values = ['true', 'false'];
+															image_relevancy_values.forEach(function(value){
+ 																Argde.query("select count("+Argde.attributes.image_relevancy.columnName+") from "
+ 																+Argde.tableName+" where "+Argde.attributes.image_relevancy.columnName+"='"
  																+value+"' and "+Argde.attributes.updatedAt.columnName+">=(timestamp '"
  																+date_val+" "+_hour+":"+_minute+":00') and "+Argde.attributes.updatedAt.columnName
  																+"<(timestamp '"+date_val+" "+_hour+":"+_minute+":00'+interval '1 minutes') and "
@@ -208,23 +266,23 @@ module.exports = {
  																	}
  																	else
  																	{
- 																		let damage_freq = count.rows[0].count;
+ 																		let relevancy_freq = count.rows[0].count;
  																		Label_frequency.query("update "+Label_frequency.tableName+" set "
- 																		+Label_frequency.attributes.frequency.columnName+"="+damage_freq+" where "
+ 																		+Label_frequency.attributes.frequency.columnName+"="+relevancy_freq+" where "
  																		+Label_frequency.attributes.date.columnName+"='"+date_val+"' and "
  																		+Label_frequency.attributes.hour.columnName+"='"+hour_string+"' and "
  																		+Label_frequency.attributes.minute.columnName+"="+_minute+" and "
- 																		+Label_frequency.attributes.class_label.columnName+"='"+value+"' and "
+ 																		+Label_frequency.attributes.class_label.columnName+"='"+"ir_"+value+"' and "
  																		+Label_frequency.attributes.code.columnName+"='"+params['collection']+"';insert into "
  																		+Label_frequency.tableName+" select '"+date_val+"','"+hour_string+"',"+_minute+",(date '"
  																		+date_val+"'- date '"+String(params['min'].getFullYear())+"-"
  																		+String((params['min'].getMonth()+1))+"-"+String(params['min'].getDate())+"')+1,'"
- 																		+value+"',"+damage_freq+",'"+params['collection']+"' where not exists(select 1 from "
+ 																		+"ir_"+value+"',"+relevancy_freq+",'"+params['collection']+"' where not exists(select 1 from "
  																		+Label_frequency.tableName+" where "
  																		+Label_frequency.attributes.date.columnName+"='"+date_val+"' and "
  																		+Label_frequency.attributes.hour.columnName+"='"+hour_string+"' and "
  																		+Label_frequency.attributes.minute.columnName+"="+_minute+" and "
- 																		+Label_frequency.attributes.class_label.columnName+"='"+value+"' and "
+ 																		+Label_frequency.attributes.class_label.columnName+"='"+"ir_"+value+"' and "
  																		+Label_frequency.attributes.code.columnName+"='"+params['collection']+"');",
  																		function(err, retVal){
  																			if(err)
@@ -233,7 +291,12 @@ module.exports = {
  																			}
  																			else
  																			{
- 																				sails.log.info("Image Damage Class "+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
+ 																				sails.log.info("Image Relevancy "+"ir_"+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
+																				if(value == image_relevancy_values[image_relevancy_values.length - 1] && i == iterations)
+																				{
+																					sails.log.info("Image relevancy-wise precomputation complete");
+																					Argde.precomputation['image_relevancy'] = true;
+																				}
  																			}
  																		});
  																	}

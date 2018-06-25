@@ -1,5 +1,7 @@
 module.exports = {
   adminLoggedIn: false,
+  adminUsername: 'admin',
+  adminPassword: 'aidr123',
   collectionNames: {'170826213907_hurricane_harvey_2017': 'Hurricane Harvey 2017'},
 };
 // module.exports = {

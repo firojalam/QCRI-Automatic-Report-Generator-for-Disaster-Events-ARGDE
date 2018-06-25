@@ -105,6 +105,38 @@
 
       <div class="card mb-3">
         <div class="card-header">
+          <i class="fa fa-area-chart"></i> Image Relevancy Frequency
+          <button type="button" class="btn btn-secondary" style="float:right;" onclick="reset('relevancy');">Reset</button>
+          <div class="dropdown" style="float:right; padding-right:1em;">
+            <a id="relevancyTypeButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Line
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <button id="bar" class="dropdown-item relevancyType" onclick="toggle_graph_type(this.id,'relevancy');">Bar</button>
+              <button id="line" class="dropdown-item relevancyType" onclick="toggle_graph_type(this.id,'relevancy');">Line</button>
+              <button id="stacked-bar" class="dropdown-item relevancyType" onclick="toggle_graph_type(this.id,'relevancy');">Stacked Bar</button>
+              <button id="area" class="dropdown-item relevancyType" onclick="toggle_graph_type(this.id, 'relevancy');">Area</button>
+              <button id="scatterplot" class="dropdown-item relevancyType" onclick="toggle_graph_type(this.id, 'relevancy');">Scatter Plot</button>
+            </div>
+          </div>
+          <div class="dropdown" style="float:right; padding-right:1em;">
+            <a id="relevancyResButton" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Minute
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <button id="minute" class="dropdown-item relevancyRes" onclick="toggle_graph_res(this.id, 'relevancy');">Minute</button>
+              <button id="hour" class="dropdown-item relevancyRes" onclick="toggle_graph_res(this.id, 'relevancy');">Hour</button>
+              <button id="day" class="dropdown-item relevancyRes" onclick="toggle_graph_res(this.id, 'relevancy');">Day</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="RelevancyChart"></div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header">
           <i class="fa fa-area-chart"></i> Damage Frequency
           <button type="button" class="btn btn-secondary" style="float:right;" onclick="reset('damage');">Reset</button>
           <div class="dropdown" style="float:right; padding-right:1em;">
