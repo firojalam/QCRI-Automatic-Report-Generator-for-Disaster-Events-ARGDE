@@ -114,8 +114,6 @@ function data()
     allData.damage_data = data['damage_data'];
     generate.damage(graphRes.damage);
   });
-  console.log(tweet_texts);
-  console.log(tweet_images);
 }
 
 generate.class = function(res)
