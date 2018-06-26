@@ -19,6 +19,7 @@ module.exports = {
 		function(err, result){
 			if(err)
 			{
+				sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 				res.serverError(err);
 			}
 			min_date = new Date(result.rows[0].min);
@@ -53,7 +54,7 @@ module.exports = {
 		});
 	},
 	precomputationComplete: function(req, res){
-		sails.log.info("All precompuations complete");
+		sails.log.info("All precomputations complete");
 		Argde.precomputation['day'] = false;
 		Argde.precomputation['hour'] = false;
 		Argde.precomputation['minute'] = false;

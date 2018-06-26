@@ -7,6 +7,7 @@ var sockets = {
   sentiment: io.sails.connect(),
   relevancy: io.sails.connect(),
   damage: io.sails.connect(),
+  tweets: io.sails.connect(),
 };
 var allData = {
   minute_data: null,
@@ -17,6 +18,21 @@ var allData = {
   sentiment_data: null,
   relevancy_data: null,
   damage_data: null,
+};
+var tweet_texts = {
+  class: null,
+  sentiment: null,
+  frequency: null,
+  relevancy: null,
+  damage: null,
+
+};
+var tweet_images = {
+  class: null,
+  sentiment: null,
+  frequency: null,
+  relevancy: null,
+  damage: null,
 };
 var defaultGraphType = {
   class: 'stacked-bar',
@@ -98,6 +114,8 @@ function data()
     allData.damage_data = data['damage_data'];
     generate.damage(graphRes.damage);
   });
+  console.log(tweet_texts);
+  console.log(tweet_images);
 }
 
 generate.class = function(res)
@@ -174,7 +192,6 @@ generate.class = function(res)
     var formatFreq = Number(freqData[i]);
     var niceLabel = labelize(clData[i]);
     var notNiceLabel = unlabelize(niceLabel);
-    console.log(notNiceLabel);
     let temp = {date: dateStamp, frequency: formatFreq ,label: niceLabel};
     let flag = false;
     data = data.map(function(datum){
@@ -194,6 +211,11 @@ generate.class = function(res)
       data.push(temp);
     }
   };
+
+  for(i in data)
+  {
+    data[i].code = allData.class_data[0].code;
+  }
 
   charts.class = new tauCharts.Chart({
       data: data,
@@ -258,14 +280,12 @@ generate.class = function(res)
   }
 
   charts.class.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
-  charts.class.on('elementclick' , function (chartRef, e) {
-    let graph_type = graphType['class'];
-    let graph_resolution = res;
-    let time_stamp = e.data.date;
-    let collection_code = e.data.code;
-    let class_label = e.data.label;
-    let packet = {filter: 'class', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: class_label};
-    console.log(packet);
+  charts.class.on('elementclick' , function (chartRef, e){
+    let packet = {filter: 'class', resolution: res, code: e.data.code, res_value: e.data.date, value: e.data.label};
+    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+      tweet_texts.class = data['texts'];
+      tweet_images.class = data['images'];
+    });
   });
 }
 
@@ -350,6 +370,11 @@ generate.frequency = function(res)
     }
   };
 
+  for(i in data)
+  {
+    data[i].code = allData.minute_data[0].code;
+  }
+
   charts.frequency = new tauCharts.Chart({
       data: data,
       autoResize: false,
@@ -399,14 +424,12 @@ generate.frequency = function(res)
   }
 
   charts.frequency.renderTo('#FrequencyChart',{width: chartDimensions.frequency.width, height: chartDimensions.frequency.height});
-  charts.frequency.on('elementclick' , function (chartRef, e) {
-    let graph_type = graphType['frequency'];
-    let graph_resolution = res;
-    let time_stamp = e.data.date;
-    let collection_code = e.data.code;
-    let class_label = "none";
-    let packet = {filter: 'frequency', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: class_label};
-    console.log(packet);
+  charts.frequency.on('elementclick' , function (chartRef, e){
+    let packet = {filter: 'frequency', resolution: res, code: e.data.code, res_value: e.data.date, value: "None"};
+    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+      tweet_texts.frequency = data['texts'];
+      tweet_images.frequency = data['images'];
+    });
   });
 }
 
@@ -550,15 +573,12 @@ generate.sentiment = function(res)
   }
 
   charts.sentiment.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
-  charts.sentiment.on('elementclick' , function (chartRef, e) {
-    let graph_type = graphType['sentiment'];
-    let graph_resolution = res;
-    let time_stamp = e.data.compiled_time;
-    let collection_code = e.data.code;
-    let class_label = e.data.class_label;
-    let relevancy = e.data.relevancy;
-    let packet = {filter: 'sentiment', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: relevancy};
-    console.log(packet);
+  charts.sentiment.on('elementclick' , function (chartRef, e){
+    let packet = {filter: 'sentiment', resolution: res, code: e.data.code, res_value: e.data.compiled_time, value: e.data.relevancy};
+    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+      tweet_texts.sentiment = data['texts'];
+      tweet_images.sentiment = data['images'];
+    });
   });
 }
 
@@ -701,13 +721,11 @@ generate.damage = function(res)
 
   charts.damage.renderTo('#DamageChart',{width: chartDimensions.damage.width, height:chartDimensions.damage.height});
   charts.damage.on('elementclick' , function (chartRef, e) {
-    let graph_type = graphType['damage'];
-    let graph_resolution = res;
-    let time_stamp = e.data.compiled_time;
-    let collection_code = e.data.code;
-    let class_label = e.data.class_label;
-    let packet = {filter: 'damage', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: class_label};
-    console.log(packet);
+    let packet = {filter: 'damage', resolution: res, code: e.data.code, res_value: e.data.compiled_time, value: e.data.class_label};
+    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+      tweet_texts.damage = data['texts'];
+      tweet_images.damage = data['images'];
+    });
   });
 
 }
@@ -858,15 +876,12 @@ generate.relevancy = function(res)
 
   charts.relevancy.renderTo('#RelevancyChart',{width: chartDimensions.relevancy.width, height:chartDimensions.relevancy.height});
   charts.relevancy.on('elementclick' , function (chartRef, e) {
-    let graph_type = graphType['relevancy'];
-    let graph_resolution = res;
-    let time_stamp = e.data.compiled_time;
-    let collection_code = e.data.code;
-    let class_label = e.data.class_label;
-    let relevancy = e.data.relevancy;
-    let packet = {filter: 'relevancy', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: relevancy};
-    console.log(packet);
-  }); 
+    let packet = {filter: 'relevancy', resolution: res, code: e.data.code, res_value: e.data.compiled_time, value: e.data.relevancy};
+    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+      tweet_texts.relevancy = data['texts'];
+      tweet_images.relevancy = data['images'];
+    });
+  });
 }
 
 
