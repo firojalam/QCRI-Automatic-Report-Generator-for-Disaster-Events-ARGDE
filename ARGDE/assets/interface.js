@@ -112,6 +112,7 @@ generate.class = function(res)
   var data = [];
   var day = [];
   var ldat;
+  var code = [];
 
   allData.class_data.forEach(function(entry){
     var dayNum = (Number(entry.day));
@@ -257,6 +258,15 @@ generate.class = function(res)
   }
 
   charts.class.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
+  charts.class.on('elementclick' , function (chartRef, e) {
+    let graph_type = graphType['class'];
+    let graph_resolution = res;
+    let time_stamp = e.data.date;
+    let collection_code = e.data.code;
+    let class_label = e.data.label;
+    let packet = {filter: 'class', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: class_label};
+    console.log(packet);
+  });
 }
 
 generate.frequency = function(res)
@@ -347,8 +357,8 @@ generate.frequency = function(res)
       x: 'date',
       y: 'frequency',
       settings:{
-                asyncRendering: true,
-              },
+          asyncRendering: true,
+      },
       guide: {
         x:{
           label: 'Time'
@@ -389,6 +399,15 @@ generate.frequency = function(res)
   }
 
   charts.frequency.renderTo('#FrequencyChart',{width: chartDimensions.frequency.width, height: chartDimensions.frequency.height});
+  charts.frequency.on('elementclick' , function (chartRef, e) {
+    let graph_type = graphType['frequency'];
+    let graph_resolution = res;
+    let time_stamp = e.data.date;
+    let collection_code = e.data.code;
+    let class_label = "none";
+    let packet = {filter: 'frequency', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: class_label};
+    console.log(packet);
+  });
 }
 
 generate.sentiment = function(res)
@@ -452,6 +471,25 @@ generate.sentiment = function(res)
           break;
 
       case 'day':
+          var flag = false;
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day);
+          obj.frequency = Number(obj.frequency);
+          final_data = final_data.map(function(datum){
+            if((obj.compiled_time==datum.compiled_time) && (obj.sentiment==datum.sentiment))
+            {
+              datum.frequency += obj.frequency;
+              flag = true;
+              return datum;
+            }
+            else
+            {
+              return datum;
+            }
+          });
+          if(flag == false)
+          {
+            final_data.push(obj);
+          }
           break;
 
       default:
@@ -504,9 +542,24 @@ generate.sentiment = function(res)
       chartDimensions.sentiment.width = 1550;
       chartDimensions.sentiment.height = 600;
       break;
+
+    case 'day':
+      chartDimensions.sentiment.width = 1550;
+      chartDimensions.sentiment.height = 600;
+      break;
   }
 
   charts.sentiment.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+  charts.sentiment.on('elementclick' , function (chartRef, e) {
+    let graph_type = graphType['sentiment'];
+    let graph_resolution = res;
+    let time_stamp = e.data.compiled_time;
+    let collection_code = e.data.code;
+    let class_label = e.data.class_label;
+    let relevancy = e.data.relevancy;
+    let packet = {filter: 'sentiment', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: relevancy};
+    console.log(packet);
+  });
 }
 
 generate.damage = function(res)
@@ -570,6 +623,25 @@ generate.damage = function(res)
           break;
 
       case 'day':
+          var flag = false;
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day);
+          obj.frequency = Number(obj.frequency);
+          final_data = final_data.map(function(datum){
+            if((obj.compiled_time==datum.compiled_time) && (obj.damage==datum.damage))
+            {
+              datum.frequency += obj.frequency;
+              flag = true;
+              return datum;
+            }
+            else
+            {
+              return datum;
+            }
+          });
+          if(flag == false)
+          {
+            final_data.push(obj);
+          }
           break;
 
       default:
@@ -620,9 +692,24 @@ generate.damage = function(res)
       chartDimensions.damage.width = 1550;
       chartDimensions.damage.height = 600;
       break;
+
+    case 'day':
+      chartDimensions.damage.width = 1550;
+      chartDimensions.damage.height = 600;
+      break;
   }
 
   charts.damage.renderTo('#DamageChart',{width: chartDimensions.damage.width, height:chartDimensions.damage.height});
+  charts.damage.on('elementclick' , function (chartRef, e) {
+    let graph_type = graphType['damage'];
+    let graph_resolution = res;
+    let time_stamp = e.data.compiled_time;
+    let collection_code = e.data.code;
+    let class_label = e.data.class_label;
+    let packet = {filter: 'damage', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: class_label};
+    console.log(packet);
+  });
+
 }
 
 generate.relevancy = function(res)
@@ -694,6 +781,25 @@ generate.relevancy = function(res)
           break;
 
       case 'day':
+          var flag = false;
+          obj.compiled_time = String(year)+"-"+String(month)+"-"+String(day);
+          obj.frequency = Number(obj.frequency);
+          final_data = final_data.map(function(datum){
+            if((obj.compiled_time==datum.compiled_time) && (obj.relevancy==datum.relevancy))
+            {
+              datum.frequency += obj.frequency;
+              flag = true;
+              return datum;
+            }
+            else
+            {
+              return datum;
+            }
+          });
+          if(flag == false)
+          {
+            final_data.push(obj);
+          }
           break;
 
       default:
@@ -743,10 +849,27 @@ generate.relevancy = function(res)
       chartDimensions.relevancy.width = 1550;
       chartDimensions.relevancy.height = 600;
       break;
+
+    case 'day':
+      chartDimensions.relevancy.width = 1550;
+      chartDimensions.relevancy.height = 600;
+      break;
   }
 
   charts.relevancy.renderTo('#RelevancyChart',{width: chartDimensions.relevancy.width, height:chartDimensions.relevancy.height});
+  charts.relevancy.on('elementclick' , function (chartRef, e) {
+    let graph_type = graphType['relevancy'];
+    let graph_resolution = res;
+    let time_stamp = e.data.compiled_time;
+    let collection_code = e.data.code;
+    let class_label = e.data.class_label;
+    let relevancy = e.data.relevancy;
+    let packet = {filter: 'relevancy', resolution: graph_resolution, code: collection_code, res_value: time_stamp, value: relevancy};
+    console.log(packet);
+  }); 
 }
+
+
 
 
 $(window).resize(function() {
@@ -773,8 +896,7 @@ function labelize(str) {
 
 function unlabelize(str) {
   str = str.split(" ").join("_");
-  var splitStr = str.toLowerCase().split("_");
-  return splitStr.join('_');
+  return str.toLowerCase();
 }
 
 function toggle_graph_type(type, graph)
