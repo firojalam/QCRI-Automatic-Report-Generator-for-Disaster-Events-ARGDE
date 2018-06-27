@@ -429,12 +429,10 @@ module.exports = {
 	    +DataControllerInfo.methods['relevancy_wise']
 	    +"?collection="+collection,
 
-			tweets: `/`+DataControllerInfo.model+`/`
-	    +DataControllerInfo.methods['tweets']
-	    +`?code=${packet['code']}&resolution=${packet['resolution']}&`
-			+`res_value=${packet['res_value']}&filter=${packet['filter']}&value=${packet['value']}`,
+			tweets: "/"+DataControllerInfo.model+"/"
+	    +DataControllerInfo.methods['tweets'],
 		};
 
-		res.view('argde/visualize', { queries: queries });
+		res.view('argde/visualize', {queries: queries});
 	},
 };

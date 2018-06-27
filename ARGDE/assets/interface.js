@@ -280,7 +280,7 @@ generate.class = function(res)
   charts.class.renderTo('#ClassChart',{width: chartDimensions.class.width, height: chartDimensions.class.height});
   charts.class.on('elementclick' , function (chartRef, e){
     let packet = {filter: 'class', resolution: res, code: e.data.code, res_value: e.data.date, value: e.data.label};
-    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+    sockets.tweets.post(queries['tweets'], packet, function(data, json_obj){
       tweet_texts.class = data['texts'];
       tweet_images.class = data['images'];
     });
@@ -424,7 +424,7 @@ generate.frequency = function(res)
   charts.frequency.renderTo('#FrequencyChart',{width: chartDimensions.frequency.width, height: chartDimensions.frequency.height});
   charts.frequency.on('elementclick' , function (chartRef, e){
     let packet = {filter: 'frequency', resolution: res, code: e.data.code, res_value: e.data.date, value: "None"};
-    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+    sockets.tweets.post(queries['tweets'], packet, function(data, json_obj){
       tweet_texts.frequency = data['texts'];
       tweet_images.frequency = data['images'];
     });
@@ -573,7 +573,7 @@ generate.sentiment = function(res)
   charts.sentiment.renderTo('#SentimentChart',{width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
   charts.sentiment.on('elementclick' , function (chartRef, e){
     let packet = {filter: 'sentiment', resolution: res, code: e.data.code, res_value: e.data.compiled_time, value: e.data.relevancy};
-    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+    sockets.tweets.post(queries['tweets'], packet, function(data, json_obj){
       tweet_texts.sentiment = data['texts'];
       tweet_images.sentiment = data['images'];
     });
@@ -720,7 +720,7 @@ generate.damage = function(res)
   charts.damage.renderTo('#DamageChart',{width: chartDimensions.damage.width, height:chartDimensions.damage.height});
   charts.damage.on('elementclick' , function (chartRef, e) {
     let packet = {filter: 'damage', resolution: res, code: e.data.code, res_value: e.data.compiled_time, value: e.data.class_label};
-    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+    sockets.tweets.post(queries['tweets'], packet, function(data, json_obj){
       tweet_texts.damage = data['texts'];
       tweet_images.damage = data['images'];
     });
@@ -875,7 +875,7 @@ generate.relevancy = function(res)
   charts.relevancy.renderTo('#RelevancyChart',{width: chartDimensions.relevancy.width, height:chartDimensions.relevancy.height});
   charts.relevancy.on('elementclick' , function (chartRef, e) {
     let packet = {filter: 'relevancy', resolution: res, code: e.data.code, res_value: e.data.compiled_time, value: e.data.relevancy};
-    sockets.tweets.get(queries['tweets'], function(data, json_obj){
+    sockets.tweets.post(queries['tweets'], packet, function(data, json_obj){
       tweet_texts.relevancy = data['texts'];
       tweet_images.relevancy = data['images'];
     });
