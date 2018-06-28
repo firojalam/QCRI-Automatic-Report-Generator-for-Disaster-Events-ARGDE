@@ -1,17 +1,12 @@
 <% title = 'Visualizations' %>
+
 <style>
  .graphical-report__tooltip {
       display: none;
   }
-
 </style>
+
 <script src="/interface.js"></script>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="/">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Charts</li>
-      </ol>
 
       <div class="card mb-3">
         <div class="card-header">
@@ -42,8 +37,33 @@
         </div>
         <div class="card-body">
           <div id="FrequencyChart"></div>
+          <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#frequency_tweets" aria-expanded="false" aria-controls="frequency_tweets"><span class="badge badge-light">1</span>
+              Tweets Data
+            </button>
+          </p>
+          <div class="collapse" id="frequency_tweets">
+            <div class="card">
+              <div class="card-header"> 
+                <ul class="nav nav-tabs card-header-tabs"  id="myTab" role="tablist">
+                  <li class="nav-item">
+                   <a class="nav-link active" id="tweets-tab" data-toggle="tab" href="#frequency_tweets_card" role="tab" aria-controls="frequency_tweets_card" aria-selected="true">Tweets</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="images-tab" data-toggle="tab" href="#frequency_images_card" role="tab" aria-controls="frequency_images_card" aria-selected="false">Images</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="frequency_tweets_card" role="tabpanel" aria-labelledby="tweets-tab">TWEETS</div>
+                  <div class="tab-pane fade" id="frequency_images_card" role="tabpanel" aria-labelledby="images-tab">IMAGES</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
 
       <div class="card mb-3">
         <div class="card-header">
@@ -74,8 +94,32 @@
         </div>
         <div class="card-body">
           <div id="SentimentChart"></div>
+            <p>
+              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sentiment_tweets" aria-expanded="false" aria-controls="sentiment_tweets"><span class="badge badge-light">1</span>
+                Tweets Data
+              </button>
+            </p>
+            <div class="collapse" id="sentiment_tweets">
+              <div class="card">
+                <div class="card-header"> 
+                  <ul class="nav nav-tabs card-header-tabs"  id="myTab" role="tablist">
+                    <li class="nav-item">
+                     <a class="nav-link active" id="tweets-tab" data-toggle="tab" href="#sentiment_tweets_card" role="tab" aria-controls="sentiment_tweets_card" aria-selected="true">Tweets</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="images-tab" data-toggle="tab" href="#sentiment_images_card" role="tab" aria-controls="sentiment_images_card" aria-selected="false">Images</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="sentiment_tweets_card" role="tabpanel" aria-labelledby="tweets-tab">TWEETS</div>
+                    <div class="tab-pane fade" id="sentiment_images_card" role="tabpanel" aria-labelledby="images-tab">IMAGES</div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
-      </div>
 
       <div class="card mb-3">
         <div class="card-header">
@@ -106,8 +150,32 @@
         </div>
         <div class="card-body">
           <div id="ClassChart"></div>
+          <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#class_tweets" aria-expanded="false" aria-controls="class_tweets"><span class="badge badge-light">1</span>
+              Tweets Data
+            </button>
+          </p>
+          <div class="collapse" id="class_tweets">
+            <div class="card">
+              <div class="card-header"> 
+                <ul class="nav nav-tabs card-header-tabs"  id="myTab" role="tablist">
+                  <li class="nav-item">
+                   <a class="nav-link active" id="tweets-tab" data-toggle="tab" href="#class_tweets_card" role="tab" aria-controls="class_tweets_card" aria-selected="true">Tweets</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="images-tab" data-toggle="tab" href="#class_images_card" role="tab" aria-controls="class_images_card" aria-selected="false">Images</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="class_tweets_card" role="tabpanel" aria-labelledby="tweets-tab">TWEETS</div>
+                  <div class="tab-pane fade" id="class_images_card" role="tabpanel" aria-labelledby="images-tab">IMAGES</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
       <div class="card mb-3">
         <div class="card-header">
@@ -138,6 +206,31 @@
         </div>
         <div class="card-body">
           <div id="RelevancyChart"></div>
+          <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#relevancy_tweets" aria-expanded="false" aria-controls="relevancy_tweets"><span class="badge badge-light">1</span>
+              Tweets Data
+            </button>
+          </p>
+          <div class="collapse" id="relevancy_tweets">
+            <div class="card">
+              <div class="card-header"> 
+                <ul class="nav nav-tabs card-header-tabs"  id="myTab" role="tablist">
+                  <li class="nav-item">
+                   <a class="nav-link active" id="tweets-tab" data-toggle="tab" href="#relevancy_tweets_card" role="tab" aria-controls="relevancy_tweets_card" aria-selected="true">Tweets</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="images-tab" data-toggle="tab" href="#relevancy_images_card" role="tab" aria-controls="relevancy_images_card" aria-selected="false">Images</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="relevancy_tweets_card" role="tabpanel" aria-labelledby="tweets-tab">TWEETS</div>
+                  <div class="tab-pane fade" id="relevancy_images_card" role="tabpanel" aria-labelledby="images-tab">IMAGES</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -170,9 +263,33 @@
         </div>
         <div class="card-body">
           <div id="DamageChart"></div>
+          <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#damage_tweets" aria-expanded="false" aria-controls="damage_tweets"><span class="badge badge-light">1</span>
+              Tweets Data
+            </button>
+          </p>
+          <div class="collapse" id="damage_tweets">
+            <div class="card">
+              <div class="card-header"> 
+                <ul class="nav nav-tabs card-header-tabs"  id="myTab" role="tablist">
+                  <li class="nav-item">
+                   <a class="nav-link active" id="tweets-tab" data-toggle="tab" href="#damage_tweets_card" role="tab" aria-controls="damage_tweets_card" aria-selected="true">Tweets</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="images-tab" data-toggle="tab" href="#damage_images_card" role="tab" aria-controls="damage_images_card" aria-selected="false">Images</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="damage_tweets_card" role="tabpanel" aria-labelledby="tweets-tab">TWEETS</div>
+                  <div class="tab-pane fade" id="damage_images_card" role="tabpanel" aria-labelledby="images-tab">IMAGES</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
 <script>
 var queries = <%- JSON.stringify(queries) %>;
