@@ -284,6 +284,7 @@ generate.class = function(res)
       tweet_texts.class = data['texts'];
       tweet_images.class = data['images'];
     });
+    $(".class-data-button").show();
   });
 }
 
@@ -428,6 +429,7 @@ generate.frequency = function(res)
       tweet_texts.frequency = data['texts'];
       tweet_images.frequency = data['images'];
     });
+    $(".frequency-data-button").show();
   });
 }
 
@@ -577,6 +579,7 @@ generate.sentiment = function(res)
       tweet_texts.sentiment = data['texts'];
       tweet_images.sentiment = data['images'];
     });
+    $(".sentiment-data-button").show();
   });
 }
 
@@ -723,10 +726,89 @@ generate.damage = function(res)
     sockets.tweets.post(queries['tweets'], packet, function(data, json_obj){
       tweet_texts.damage = data['texts'];
       tweet_images.damage = data['images'];
+
+      $(".damage-data-button").show();
+      var tweet_count = 1;
+      var current_page = 0;
+      var tweets_per_page = 3;
+      var total_pages = 0;
+      var limit = 81;
+      $('#damage_tweets_load').empty();
+      $('#dt_paginator').empty();
+      $(".damage-tweet-num").empty();
+      $(".damage-tweet-num").html($('.damage-tweet-num').html()
+          +""+(tweet_texts.damage.length)+"");
+
+      for(i=0; i<tweet_texts.damage.length; i++)
+      {
+        if(i>=limit){ 
+          break;
+        }
+
+        if((tweet_count-1) % 3 == 0){
+          current_page+=1;
+          total_pages+=1;
+          let tweet = tweet_texts.damage[i];
+          let tLink = findTwitterLink(tweet);
+          $('#damage_tweets_load').html($('#damage_tweets_load').html()
+           +"<div class='card-deck'"+"id='dt_page"+current_page+"'>"
+            + "<div class='card'>"
+              + "<div class='card-body'>"
+               +" <h5 class='card-title'>"+"Tweet "+(tweet_count++)+"</h5>"
+                + "<p class='card-text'>"+tweet+"</p>"
+             +" </div>"
+              + "<div class='card-footer'>"
+               +"<small class='text-muted'>"+"<a href="+tLink+"> View Tweet </a>"+"</small>"
+              +"</div>"
+            +"</div>"
+          + "</div>");
+
+          let dom_id = "#dt_page"+current_page;
+          $(dom_id).hide();
+          
+        } else {
+            let tweet = tweet_texts.damage[i];
+            let tLink = findTwitterLink(tweet);
+            let card_id = "#dt_page"+current_page;
+            $(card_id).html($(card_id).html()
+              + "<div class='card'>"
+                + "<div class='card-body'>"
+                 +" <h5 class='card-title'>"+"Tweet "+(tweet_count++)+"</h5>"
+                  + "<p class='card-text'>"+tweet+"</p>"
+               +" </div>"
+                + "<div class='card-footer'>"
+                 +"<small class='text-muted'>"+"<a href="+tLink+"> View Tweet </a>"+"</small>"
+                +"</div>"
+              +"</div>");
+        }
+      }
+
+
+      let dom_id = "#dt_page1";
+      $(dom_id).show();
+
+      let card_code = "dt";
+
+      $('#dt_paginator').html($('#dt_paginator').html()
+        + "<li class='page-item'>"
+         +   "<a class='page-link' href='javascript:void(0)' tabindex='-1' id = 'dt_prev' onclick='switchPages("+total_pages+","+1+", \""+card_code+"\")'>Previous</a>"
+        + "</li>" );  
+
+      for(i = 1; i <= total_pages; i++){
+        $('#dt_paginator').html($('#dt_paginator').html()
+        + "<li class='page-item'><a class='page-link' onclick='switchPages("+total_pages+","+(current_page = i)+", \""+card_code+"\")' href='javascript:void(0)'>"+i+"</a></li> ");  
+      }
+
+      $('#dt_paginator').html($('#dt_paginator').html()
+        + "<li class='page-item'>"
+         +   "<a class='page-link' href='javascript:void(0)' id = 'dt_next' onclick='switchPages("+total_pages+","+2+", \""+card_code+"\")'>Next</a>"
+        + "</li>");  
+      $('#damage_tweets_card').html($('#damage_tweets_card').html()
+        +"<div> Displaying only 81 out of "+ tweet_texts.damage.length +" tweets. </div>");
     });
   });
-
 }
+
 
 generate.relevancy = function(res)
 {
@@ -879,22 +961,26 @@ generate.relevancy = function(res)
       tweet_texts.relevancy = data['texts'];
       tweet_images.relevancy = data['images'];
     });
+     $(".relevancy-data-button").show();
   });
 }
-
-
-
 
 $(window).resize(function() {
   clearTimeout(window.resizedFinished);
   window.resizedFinished = setTimeout(function(){
-        charts.frequency.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+        charts.frequency.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height}); 
         charts.sentiment.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
         charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
         charts.relevancy.resize({width: chartDimensions.relevancy.width, height: chartDimensions.relevancy.height});
         charts.damage.resize({width: chartDimensions.damage.width, height: chartDimensions.damage.height});
+        $(".frequency-data-button").hide();
+        $(".sentiment-data-button").hide();
+        $(".damage-data-button").hide();
+        $(".class-data-button").hide();
+        $(".relevancy-data-button").hide();
       }, 500);
 });
+
 
 function labelize(str) {
    str = str.split("_").join(" ");
@@ -937,3 +1023,56 @@ function reset(graph)
   charts[graph].destroy();
   generate[graph](graphRes[graph]);
 }
+
+function findTwitterLink(tweet){
+  var link_index = tweet.lastIndexOf('https://');
+  var tweet_words = tweet.substring(link_index);
+  tweet_words = tweet_words.split(" ");
+  var link = tweet_words[0];
+  return link;
+}
+
+function switchPages(pages, id, card_code){
+
+    if(id == 0){
+      id = 1;
+    } else if (id == (pages + 1)){
+      id = pages;
+    }
+
+    for(var i=1; i<=pages; i++){
+
+        if (document.getElementById(card_code+'_page'+i)) {
+            let dom_id = "#"+card_code+"_page"+i;
+            $(dom_id).hide();
+        }
+
+    }
+        if (document.getElementById(card_code+'_page'+id)) {
+            let dom_id = "#"+card_code+"_page"+id;
+            $(dom_id).show();
+        }
+
+        let next_id = "#"+card_code+"_next";
+        let prev_id = "#"+card_code+"_prev";
+        $(next_id).attr("onclick","switchPages("+pages+","+(id+1)+", \""+card_code+"\")");
+        $(prev_id).attr("onclick","switchPages("+pages+","+(id-1)+", \""+card_code+"\")");
+};
+
+
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
