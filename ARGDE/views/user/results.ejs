@@ -17,7 +17,7 @@ var results = <%- JSON.stringify(collections) %>;
 function data()
 {
   results.forEach(function(result){
-    let code = $('#results').html()+"<div style='display:flex;'><div style='flex:1; padding-top:0.5em;'><h4>"+result+"</h4></div><div style='flex:1;'><a href='/visualize?name="+result+"'><button type='button' class='btn btn-secondary' style='float:right; margin-bottom: 0.5em;'>Visualize</button></a></div></div><hr><br>";
+    let code = $('#results').html()+"<div style='display:flex;'><div style='flex:1; padding-top:0.5em;'><h4>"+result.pretty+"</h4></div><div style='flex:1;'><a href='/visualize/"+result.code+"'><button type='button' class='btn btn-secondary' style='float:right; margin-bottom: 0.5em;'>Visualize</button></a></div></div><hr><br>";
     $('#results').html(code);
   });
 }

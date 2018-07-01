@@ -87,7 +87,6 @@ module.exports = {
 											if(i == iterations)
 											{
 												sails.log.info("Minute-wise precomputation complete");
-												Argde.precomputation['minute'] = true;
 											}
 										}
 									});

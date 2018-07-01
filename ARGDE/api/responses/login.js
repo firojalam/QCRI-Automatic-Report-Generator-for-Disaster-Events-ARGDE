@@ -79,7 +79,3 @@ module.exports = function login(inputs) {
 // • unexpected server error => call `res.negotiate()`
 //                              (see `sailsjs.org/#/documentation` for more info on what
 //                               `res.negotiate()` does)
-
-
-
-

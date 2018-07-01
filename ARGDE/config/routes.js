@@ -33,13 +33,13 @@ module.exports.routes = {
 
   // Requests
   '/': {
-    view: 'homepage'
+    view: 'user/homepage'
   },
   '/logout' : {
-    controller: 'UserController',
+    controller: 'SessionController',
     action: 'logout',
   },
-  '/visualize': {
+  '/visualize/:name': {
     controller: 'DataController',
     action: 'retrieveAll',
   },
@@ -47,9 +47,46 @@ module.exports.routes = {
     controller: 'ArgdeController',
     action: 'precompute',
   },
-  '/pre_complete': {
-    controller: 'ArgdeController',
-    action: 'precomputationComplete',
+  '/allAdmins': {
+    controller: 'UserController',
+    action: 'allAdmins',
+  },
+  // Data retrieval (Socket) Requests
+  '/get_minute': {
+    controller: 'DataController',
+    action: 'retrieveMinute',
+  },
+  '/get_hour': {
+    controller: 'DataController',
+    action: 'retrieveHour',
+  },
+  '/get_day': {
+    controller: 'DataController',
+    action: 'retrieveDay',
+  },
+  '/get_label': {
+    controller: 'DataController',
+    action: 'retrieveLabel',
+  },
+  '/get_class': {
+    controller: 'DataController',
+    action: 'retrieveClass',
+  },
+  '/get_sentiment': {
+    controller: 'DataController',
+    action: 'retrieveSentiment',
+  },
+  '/get_damage': {
+    controller: 'DataController',
+    action: 'retrieveDamage',
+  },
+  '/get_relevancy': {
+    controller: 'DataController',
+    action: 'retrieveRelevancy',
+  },
+  '/get_tweets': {
+    controller: 'DataController',
+    action: 'retrieveTweets',
   },
   // GET requests
   'GET /search': {
@@ -57,12 +94,21 @@ module.exports.routes = {
     action: 'search',
   },
   'GET /login': {
-    view: 'user/login',
+    controller: 'SessionController',
+    action: 'get_login',
+  },
+  'GET /add_admin': {
+    controller: 'UserController',
+    action: 'get_addAdmin',
   },
   // POST requests
   'POST /login': {
-    controller: 'UserController',
+    controller: 'SessionController',
     action: 'login',
+  },
+  'POST /add_admin': {
+    controller: 'UserController',
+    action: 'addAdmin',
   },
 
 

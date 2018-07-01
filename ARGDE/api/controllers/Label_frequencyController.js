@@ -144,7 +144,6 @@ module.exports = {
 																				if(class_name == class_names[class_names.length - 1] && i == iterations)
 																				{
 																					sails.log.info("Class Label-wise precomputation complete");
-																					Argde.precomputation['label'] = true;
 																				}
 																			}
 																		});
@@ -194,7 +193,6 @@ module.exports = {
 																				if(value == sentiment_values[sentiment_values.length - 1] && i == iterations)
 																				{
 																					sails.log.info("Sentiment-wise precomputation complete");
-																					Argde.precomputation['sentiment'] = true;
 																				}
 																			}
 																		});
@@ -244,7 +242,6 @@ module.exports = {
 																				if(value == damage_values[damage_values.length -1] && i == iterations)
 																				{
 																					sails.log.info("Damage-wise precomputation complete");
-																					Argde.precomputation['damage'] = true;
 																				}
 																			}
 																		});
@@ -295,7 +292,6 @@ module.exports = {
 																				if(value == image_relevancy_values[image_relevancy_values.length - 1] && i == iterations)
 																				{
 																					sails.log.info("Image relevancy-wise precomputation complete");
-																					Argde.precomputation['image_relevancy'] = true;
 																				}
  																			}
  																		});

@@ -26,8 +26,34 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
-
+  '*': 'flash',
+  argde: {
+    '*': 'authenticated',
+  },
+  data: {
+    '*': 'flash',
+  },
+  day_frequency: {
+    '*': 'authenticated',
+  },
+  hour_frequency:{
+    '*': 'authenticated',
+  },
+  minute_frequency: {
+    '*': 'authenticated',
+  },
+  label_frequency: {
+    '*': 'authenticated',
+  },
+  user: {
+    'search': 'flash',
+    'get_addAdmin': 'flash',
+    '*': 'authenticated',
+  },
+  session: {
+    'logout': 'authenticated',
+    '*': 'flash',
+  },
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *

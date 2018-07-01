@@ -70,16 +70,63 @@
 // };
 //
 module.exports =  {
-  login: function(req, res){
-    if(req.param("username")==User.adminUsername && req.param("password")==User.adminPassword)
+  allAdmins: function(req, res){
+    if(req.session.authenticated == true || true)
     {
-      User.adminLoggedIn = true;
+      User.find({select: ['name', 'username', 'email'],}).exec(function(err, users){
+        if(err)
+        {
+          sails.log.info("Error name: "+err.name+"	 "+"Error code: "+err.code);
+          req.session.flash = {err: "Error: "+err.name,};
+          return res.redirect('/allAdmins');
+        }
+        else
+        {
+          return res.view('admin/alladmins', {admins: users});
+        }
+      });
     }
-    res.view('homepage');
   },
-  logout: function(req, res){
-    User.adminLoggedIn = false;
-    res.redirect('/');
+  get_addAdmin: function(req, res){
+    if(req.session.authenticated)
+    {
+      return res.view('admin/addadmin');
+    }
+    else
+    {
+      var requireLoginError = [{name: 'requireLogin', message: 'You must be logged in to perform this action.'}];
+      req.session.flash = {err: requireLoginError};
+      req.session.next_url = req.path;
+      return res.redirect('/login');
+    }
+  },
+  addAdmin: function(req, res){
+    require('bcrypt').hash(req.param('password'), 10, function passwordEncrypted(err, result){
+      if(err)
+      {
+        return res.serverError();
+      }
+      else
+      {
+        User.create({
+          name: req.param('name'),
+          username: req.param('username'),
+          email: req.param('email'),
+          encryptedPassword: result,
+        }).exec(function(err, user){
+          if(err)
+          {
+            sails.log.info("Error name: "+err.name+"	 "+"Error code: "+err.code);
+            req.session.flash = {err: "There was an error in the input data, make sure the username and email are ones that haven't been used before.",};
+            return res.redirect('/add_admin');
+          }
+          else
+          {
+            return res.redirect('/allAdmins');
+          }
+        });
+      }
+    });
   },
   search: function(req, res){
     let search = req.param('name').toLowerCase();
@@ -95,9 +142,13 @@ module.exports =  {
       {
         let response_obj = [];
         response.rows.forEach(function(row){
-          response_obj.push(User.collectionNames[row['code']]);
+          let temp = {
+            code: User.collectionNames[row['code']],
+            pretty: User.collectionPretty[User.collectionNames[row['code']]],
+          };
+          response_obj.push(temp);
         });
-        res.view('Dashboard/results',{collections: response_obj});
+        res.view('user/results',{collections: response_obj});
       }
     });
   },

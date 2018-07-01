@@ -888,7 +888,7 @@ generate.relevancy = function(res)
 $(window).resize(function() {
   clearTimeout(window.resizedFinished);
   window.resizedFinished = setTimeout(function(){
-        charts.frequency.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
+        charts.frequency.resize({width: chartDimensions.frequency.width, height:chartDimensions.frequency.height});
         charts.sentiment.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
         charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
         charts.relevancy.resize({width: chartDimensions.relevancy.width, height: chartDimensions.relevancy.height});

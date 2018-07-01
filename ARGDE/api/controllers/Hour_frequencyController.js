@@ -76,7 +76,6 @@ module.exports = {
 									if(i == iterations)
 									{
 										sails.log.info("Hour-wise precomputation complete");
-										Argde.precomputation['hour'] = true;
 									}
 								}
 							});

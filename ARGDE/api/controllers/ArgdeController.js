@@ -36,32 +36,8 @@ module.exports = {
 					labelController.createPreLabels(paramList);
 					hourController.createPreHours(paramList);
 					dayController.createPreDays(paramList);
-					let interval = setInterval(function(){
-						if(Argde.precomputation['day'] == true
-						&& Argde.precomputation['hour'] == true
-						&& Argde.precomputation['minute'] == true
-						&& Argde.precomputation['label'] == true
-						&& Argde.precomputation['sentiment'] == true
-						&& Argde.precomputation['damage'] == true
-						&& Argde.precomputation['image_relevancy'] == true)
-						{
-							res.redirect('/pre_complete');
-							clearInterval(interval);
-						}
-					}, 500);
 				});
 			});
 		});
-	},
-	precomputationComplete: function(req, res){
-		sails.log.info("All precomputations complete");
-		Argde.precomputation['day'] = false;
-		Argde.precomputation['hour'] = false;
-		Argde.precomputation['minute'] = false;
-		Argde.precomputation['label'] = false;
-		Argde.precomputation['sentiment'] = false;
-		Argde.precomputation['damage'] = false;
-		Argde.precomputation['image_relevancy'] = false;
-		res.view('argde/complete_pre');
 	},
 };

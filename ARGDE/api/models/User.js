@@ -1,8 +1,42 @@
 module.exports = {
-  adminLoggedIn: false,
-  adminUsername: 'admin',
-  adminPassword: 'aidr123',
-  collectionNames: {'170826213907_hurricane_harvey_2017': 'Hurricane Harvey 2017'},
+  connection: 'postgresServer',
+  schema: true,
+  autoPK: false,
+  autoCreatedAt: false,
+  autoUpdatedAt: false,
+  tableName: 'user',
+  attributes: {
+    name: {
+      type: 'string',
+      required: true,
+      allowNull: false,
+      columnName: 'name',
+    },
+    username: {
+      type: 'string',
+      required: true,
+      unique: true,
+      allowNull: false,
+      primaryKey: true,
+      columnName: 'username',
+    },
+    email: {
+      type: 'email',
+      email: true,
+      required: true,
+      unique: true,
+      allowNull: false,
+      columnName: 'email',
+    },
+    encryptedPassword: {
+      type: 'string',
+      required: true,
+      allowNull: false,
+      columnName: 'password',
+    },
+  },
+  collectionNames: {'170826213907_hurricane_harvey_2017': '159HTG235HK'},
+  collectionPretty: {'159HTG235HK': 'Hurrican Harvey 2017'},
 };
 // module.exports = {
 //   connection : 'postgresServer',
