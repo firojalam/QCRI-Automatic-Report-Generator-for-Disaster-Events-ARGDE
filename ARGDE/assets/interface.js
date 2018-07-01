@@ -730,11 +730,11 @@ generate.damage = function(res)
       $(".damage-data-button").show();
       var tweet_count = 1;
       var current_page = 0;
-      var tweets_per_page = 3;
       var total_pages = 0;
-      var limit = 81;
+      var limit = 120;
       $('#damage_tweets_load').empty();
       $('#dt_paginator').empty();
+      $('#dt_numinator').empty();
       $(".damage-tweet-num").empty();
       $(".damage-tweet-num").html($('.damage-tweet-num').html()
           +""+(tweet_texts.damage.length)+"");
@@ -745,7 +745,7 @@ generate.damage = function(res)
           break;
         }
 
-        if((tweet_count-1) % 3 == 0){
+        if((tweet_count-1) % 5 == 0){
           current_page+=1;
           total_pages+=1;
           let tweet = tweet_texts.damage[i];
@@ -803,8 +803,15 @@ generate.damage = function(res)
         + "<li class='page-item'>"
          +   "<a class='page-link' href='javascript:void(0)' id = 'dt_next' onclick='switchPages("+total_pages+","+2+", \""+card_code+"\")'>Next</a>"
         + "</li>");
-      $('#damage_tweets_card').html($('#damage_tweets_card').html()
-        +"<div> Displaying only 81 out of "+ tweet_texts.damage.length +" tweets. </div>");
+
+      if(tweet_texts.damage.length >= limit){
+        $('#dt_numinator').html($('#dt_numinator').html()
+          +"Displaying <b>only</b> 150 out of "+ tweet_texts.damage.length +" tweets.");
+      } else {
+         $('#dt_numinator').html($('#dt_numinator').html()
+          +"Displaying "+ tweet_texts.damage.length +" tweets. ");
+      }
+
     });
   });
 }
