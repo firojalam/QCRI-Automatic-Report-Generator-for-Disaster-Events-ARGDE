@@ -37,7 +37,6 @@ module.exports = {
 							if(i == (params['diff']+1))
 							{
 								sails.log.info("Day-wise precomputation complete");
-								Argde.precomputation['day'] = true;		
 							}
 						}
 					});

@@ -1,32 +1,41 @@
-<% title = 'Login' %>
+<% title = 'Add Admin' %>
 <div class ="content">
 <div class="container">
     <div class="row vertical-offset-100">
         <div class="col-lg-4 offset-md-4">
             <div class="card">
                 <div class="card-header">
-                      <h3 class="card-title">Please sign in</h3>
+                      <h3 class="card-title">Add new Admin</h3>
                 </div>
                 <div class="card-body">
-                    <form accept-charset="UTF-8" role="form" action="/login" method="post" id="loginform">
+                    <form accept-charset="UTF-8" role="form" action="/add_admin" method="post" id="adduserform">
                         <fieldset>
                           <% if(flash && flash.err){ %>
                             <div class="alert alert-success">
-                              <% flash.err.forEach(function(error){ %>
+                              <% Object.keys(flash.err).forEach(function(error){ %>
                                 <span>
-                                  <%= error.message %>
+                                  <%= flash.err[error] %>
                                 </span>
                               <% }) %>
                             </div>
                           <% } %>
                             <div class="form-group">
+                                <input class="form-control" placeholder="Name" name="name" type="text"/>
+                            </div>
+                            <div class="form-group">
                                 <input class="form-control" placeholder="Username" name="username" type="text"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Email" name="email" type="text"/>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Password" name="password" type="password"
                                 value=""/>
                             </div>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Login"/>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Confirm Password" name="confirmation" type="password"/>
+                            </div>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Add Admin"/>
                             <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
                         </fieldset>
                     </form>

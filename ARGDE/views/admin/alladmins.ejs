@@ -1,0 +1,18 @@
+<div class="bg-light container">
+  <br>
+  <h3>Admins</h3>
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Email</th>
+    </tr>
+  <% admins.forEach(function(admin){ %>
+    <tr>
+      <td><%= admin.name %></td>
+      <td><%= admin.username %></td>
+      <td><%= admin.email %></td>
+    </tr>
+  <% }) %>
+</table>
+</div>

@@ -1,18 +1,3 @@
-var DataControllerInfo = {
-	'model': 'data',
-	'methods': {
-		minute_wise: 'retrieveMinute',
-		hour_wise: 'retrieveHour',
-		day_wise: 'retrieveDay',
-		label_wise: 'retrieveLabel',
-		class_wise: 'retrieveClass',
-		sentiment_wise: 'retrieveSentiment',
-		damage_wise: 'retrieveDamage',
-		relevancy_wise: 'retrieveRelevancy',
-		tweets: 'retrieveTweets',
-		all: 'retrieveAll',
-	},
-};
 module.exports = {
 	retrieveMinute: async function(req, res){
 			await Minute_frequency.find({
@@ -397,42 +382,24 @@ module.exports = {
 	retrieveAll: function(req, res){
 		let collection = req.param('name');
 		var queries = {
-		  minute: "/"+DataControllerInfo.model+"/"
-		  +DataControllerInfo.methods['minute_wise']
-	    +"?collection="+collection,
+		  minute: "/get_minute?collection="+collection,
 
-	    hour: "/"+DataControllerInfo.model+"/"
-	    +DataControllerInfo.methods['hour_wise']
-	    +"?collection="+collection,
+	    hour: "/get_hour?collection="+collection,
 
-	    day: "/"+DataControllerInfo.model+"/"
-	    +DataControllerInfo.methods['day_wise']
-	    +"?collection="+collection,
+	    day: "/get_day?collection="+collection,
 
-	    label: "/"+DataControllerInfo.model+"/"
-	    +DataControllerInfo.methods['label_wise']
-	    +"?collection="+collection,
+	    label: "/get_label?collection="+collection,
 
-	    class: "/"+DataControllerInfo.model+"/"
-	    +DataControllerInfo.methods['class_wise']
-	    +"?collection="+collection,
+	    class: "/get_class?collection="+collection,
 
-	    sentiment: "/"+DataControllerInfo.model+"/"
-	    +DataControllerInfo.methods['sentiment_wise']
-	    +"?collection="+collection,
+	    sentiment: "/get_sentiment?collection="+collection,
 
-	    damage: "/"+DataControllerInfo.model+"/"
-	    +DataControllerInfo.methods['damage_wise']
-	    +"?collection="+collection,
+	    damage: "/get_damage?collection="+collection,
 
-			relevancy: "/"+DataControllerInfo.model+"/"
-	    +DataControllerInfo.methods['relevancy_wise']
-	    +"?collection="+collection,
+			relevancy: "/get_relevancy?collection="+collection,
 
-			tweets: "/"+DataControllerInfo.model+"/"
-	    +DataControllerInfo.methods['tweets'],
+			tweets: "/get_tweets",
 		};
-
-		res.view('argde/visualize', {queries: queries});
+		res.view('visual/visualize', {queries: queries});
 	},
 };
