@@ -723,7 +723,7 @@ generate.damage = function(res)
   charts.damage.renderTo('#DamageChart',{width: chartDimensions.damage.width, height:chartDimensions.damage.height});
   charts.damage.on('elementclick' , function (chartRef, e) {
     let packet = {filter: 'damage', resolution: res, code: e.data.code, res_value: e.data.compiled_time, value: e.data.class_label};
-    sockets.tweets.post(queries['tweets'], packet, function(data, json_obj){
+    sockets.tweets.get(/*queries['tweets'], packet*/queries['tweets']+'?filter=damage&resolution='+res+'&code='+packet['code']+'&res_value='+packet['res_value']+'&value='+packet['value'], function(data, json_obj){
       tweet_texts.damage = data['texts'];
       tweet_images.damage = data['images'];
 
@@ -741,7 +741,7 @@ generate.damage = function(res)
 
       for(i=0; i<tweet_texts.damage.length; i++)
       {
-        if(i>=limit){ 
+        if(i>=limit){
           break;
         }
 
@@ -765,7 +765,7 @@ generate.damage = function(res)
 
           let dom_id = "#dt_page"+current_page;
           $(dom_id).hide();
-          
+
         } else {
             let tweet = tweet_texts.damage[i];
             let tLink = findTwitterLink(tweet);
@@ -792,23 +792,22 @@ generate.damage = function(res)
       $('#dt_paginator').html($('#dt_paginator').html()
         + "<li class='page-item'>"
          +   "<a class='page-link' href='javascript:void(0)' tabindex='-1' id = 'dt_prev' onclick='switchPages("+total_pages+","+1+", \""+card_code+"\")'>Previous</a>"
-        + "</li>" );  
+        + "</li>" );
 
       for(i = 1; i <= total_pages; i++){
         $('#dt_paginator').html($('#dt_paginator').html()
-        + "<li class='page-item'><a class='page-link' onclick='switchPages("+total_pages+","+(current_page = i)+", \""+card_code+"\")' href='javascript:void(0)'>"+i+"</a></li> ");  
+        + "<li class='page-item'><a class='page-link' onclick='switchPages("+total_pages+","+(current_page = i)+", \""+card_code+"\")' href='javascript:void(0)'>"+i+"</a></li> ");
       }
 
       $('#dt_paginator').html($('#dt_paginator').html()
         + "<li class='page-item'>"
          +   "<a class='page-link' href='javascript:void(0)' id = 'dt_next' onclick='switchPages("+total_pages+","+2+", \""+card_code+"\")'>Next</a>"
-        + "</li>");  
+        + "</li>");
       $('#damage_tweets_card').html($('#damage_tweets_card').html()
         +"<div> Displaying only 81 out of "+ tweet_texts.damage.length +" tweets. </div>");
     });
   });
 }
-
 
 generate.relevancy = function(res)
 {
@@ -968,7 +967,7 @@ generate.relevancy = function(res)
 $(window).resize(function() {
   clearTimeout(window.resizedFinished);
   window.resizedFinished = setTimeout(function(){
-        charts.frequency.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height}); 
+        charts.frequency.resize({width: chartDimensions.frequency.width, height:chartDimensions.frequency.height});
         charts.sentiment.resize({width: chartDimensions.sentiment.width, height:chartDimensions.sentiment.height});
         charts.class.resize({width: chartDimensions.class.width, height: chartDimensions.class.height});
         charts.relevancy.resize({width: chartDimensions.relevancy.width, height: chartDimensions.relevancy.height});
@@ -1058,7 +1057,6 @@ function switchPages(pages, id, card_code){
         $(next_id).attr("onclick","switchPages("+pages+","+(id+1)+", \""+card_code+"\")");
         $(prev_id).attr("onclick","switchPages("+pages+","+(id-1)+", \""+card_code+"\")");
 };
-
 
 window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],

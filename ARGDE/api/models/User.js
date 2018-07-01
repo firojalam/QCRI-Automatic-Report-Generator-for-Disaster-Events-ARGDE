@@ -36,7 +36,7 @@ module.exports = {
     },
   },
   collectionNames: {'170826213907_hurricane_harvey_2017': '159HTG235HK'},
-  collectionPretty: {'159HTG235HK': 'Hurrican Harvey 2017'},
+  collectionPretty: {'159HTG235HK': 'Hurricane Harvey 2017'},
 };
 // module.exports = {
 //   connection : 'postgresServer',
