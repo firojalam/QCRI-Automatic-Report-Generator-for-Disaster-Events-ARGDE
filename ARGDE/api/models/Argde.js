@@ -140,4 +140,13 @@ module.exports = {
       allowNull: true,
     },
   },
+  precomputation: {
+    'day': false,
+    'hour': false,
+    'minute': false,
+    'label': false,
+    'sentiment': false,
+    'damage': false,
+    'image_relevancy': false,
+  },
 };

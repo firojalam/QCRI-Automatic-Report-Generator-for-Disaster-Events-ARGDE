@@ -70,6 +70,9 @@
 // };
 //
 module.exports =  {
+  home: function(req, res){
+    return res.view('user/homepage');
+  },
   allAdmins: function(req, res){
     if(req.session.authenticated == true || true)
     {
@@ -88,17 +91,7 @@ module.exports =  {
     }
   },
   get_addAdmin: function(req, res){
-    if(req.session.authenticated)
-    {
-      return res.view('admin/addadmin');
-    }
-    else
-    {
-      var requireLoginError = [{name: 'requireLogin', message: 'You must be logged in to perform this action.'}];
-      req.session.flash = {err: requireLoginError};
-      req.session.next_url = req.path;
-      return res.redirect('/login');
-    }
+    return res.view('admin/addadmin');
   },
   addAdmin: function(req, res){
     require('bcrypt').hash(req.param('password'), 10, function passwordEncrypted(err, result){
@@ -143,13 +136,16 @@ module.exports =  {
         let response_obj = [];
         response.rows.forEach(function(row){
           let temp = {
-            code: User.collectionNames[row['code']],
-            pretty: User.collectionPretty[User.collectionNames[row['code']]],
+            code: row['code'],
+            pretty: User.collectionPretty[row['code']],
           };
           response_obj.push(temp);
         });
         res.view('user/results',{collections: response_obj});
       }
     });
+  },
+  precompute: function(req, res){
+    return res.view('admin/precomputation');
   },
 };

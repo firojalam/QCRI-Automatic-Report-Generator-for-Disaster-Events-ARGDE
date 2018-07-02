@@ -1,5 +1,6 @@
 module.exports = {
 	createPreDays: function(params){
+		var count = 0;
 		var year = params['min'].getFullYear();
 		var month = params['min'].getMonth()+1;
 		var day = params['min'].getDate();
@@ -34,9 +35,11 @@ module.exports = {
 						else
 						{
 							sails.log.info("Date "+_date_without_time+" + "+i+" days OK");
-							if(i == (params['diff']+1))
+							count += 1;
+							if(count == (params['diff']+1))
 							{
 								sails.log.info("Day-wise precomputation complete");
+								Argde.precomputation['day'] = true;
 							}
 						}
 					});

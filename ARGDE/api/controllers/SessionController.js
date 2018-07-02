@@ -37,7 +37,7 @@ module.exports = {
 					else
 					{
 						let now_date = new Date();
-					  let expiry_date = new Date(now_date.getTime() + 60000);
+					  let expiry_date = new Date(now_date.getTime() + 600000);
 					  req.session.cookie.expires = expiry_date;
 						req.session.authenticated = true;
 						req.session.User = user;

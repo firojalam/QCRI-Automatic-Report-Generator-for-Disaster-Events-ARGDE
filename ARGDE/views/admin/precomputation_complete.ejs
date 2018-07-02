@@ -1,0 +1,31 @@
+<% title = 'Precomputation Complete' %>
+<link href="/css/precompute.css" rel="stylesheet">
+<div id="precompute_page" class="container">
+<div class="card mb-3">
+  <div class="card-header">
+    <strong>Visualization URL</strong>
+  </div>
+  <div class="card-body">
+    <div id="precompute_heading">
+    </div>
+    <br>
+    <h3>URL</h3>
+    <form class="form">
+      <div class="input-group">
+        <input id="graphURL" type="text" class="form-control" value=<%= graphs_url %>>
+        <span class="input-group-append">
+          <button type="button" class="btn btn-dark" onclick="copyURL();">Copy URL</button>
+        </span>
+      </div>
+    </form>
+    <br>
+  </div>
+</div>
+</div>
+<script>
+function copyURL(){
+  var copyText = document.getElementById("graphURL");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>

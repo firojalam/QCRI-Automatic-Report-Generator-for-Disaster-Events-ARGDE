@@ -1,5 +1,6 @@
 module.exports = {
 	createPreMinutes: function(params){
+		var count = 0;
 
 		var start_year = params['min'].getFullYear();
 		var start_month = params['min'].getMonth()+1;
@@ -84,8 +85,10 @@ module.exports = {
 										else
 										{
 											sails.log.info("Minute "+date_val+" "+_hour+":"+_minute+":00"+" OK");
-											if(i == iterations)
+											count += 1;
+											if(count == iterations)
 											{
+												Argde.precomputation['minute'] = true;
 												sails.log.info("Minute-wise precomputation complete");
 											}
 										}

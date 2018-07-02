@@ -28,31 +28,33 @@ module.exports.policies = {
 
   '*': 'flash',
   argde: {
-    '*': 'authenticated',
+    '*': ['authenticated',],
   },
   data: {
-    '*': 'flash',
+    '*': ['flash',],
   },
   day_frequency: {
-    '*': 'authenticated',
+    '*': ['authenticated',],
   },
   hour_frequency:{
-    '*': 'authenticated',
+    '*': ['authenticated',],
   },
   minute_frequency: {
-    '*': 'authenticated',
+    '*': ['authenticated',],
   },
   label_frequency: {
-    '*': 'authenticated',
+    '*': ['authenticated',],
   },
   user: {
-    'search': 'flash',
-    'get_addAdmin': 'flash',
-    '*': 'authenticated',
+    'home': ['flash',],
+    'search': ['flash',],
+    'get_addAdmin': ['flash', 'authenticated',],
+    'precompute': ['flash', 'authenticated'],
+    '*': ['authenticated',],
   },
   session: {
-    'logout': 'authenticated',
-    '*': 'flash',
+    'logout': ['authenticated'],
+    '*': ['flash'],
   },
   /***************************************************************************
   *                                                                          *

@@ -33,7 +33,8 @@ module.exports.routes = {
 
   // Requests
   '/': {
-    view: 'user/homepage'
+    controller: 'UserController',
+    action: 'home',
   },
   '/logout' : {
     controller: 'SessionController',
@@ -42,10 +43,6 @@ module.exports.routes = {
   '/visualize/:name': {
     controller: 'DataController',
     action: 'retrieveAll',
-  },
-  '/precompute': {
-    controller: 'ArgdeController',
-    action: 'precompute',
   },
   '/allAdmins': {
     controller: 'UserController',
@@ -88,6 +85,10 @@ module.exports.routes = {
     controller: 'DataController',
     action: 'retrieveTweets',
   },
+  '/complete/:collection': {
+    controller: 'ArgdeController',
+    action: 'precompute_done',
+  },
   // GET requests
   'GET /search': {
     controller: 'UserController',
@@ -101,6 +102,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'get_addAdmin',
   },
+  'GET /precompute': {
+    controller: 'UserController',
+    action: 'precompute',
+  },
   // POST requests
   'POST /login': {
     controller: 'SessionController',
@@ -109,6 +114,10 @@ module.exports.routes = {
   'POST /add_admin': {
     controller: 'UserController',
     action: 'addAdmin',
+  },
+  'POST /precompute': {
+    controller: 'ArgdeController',
+    action: 'precompute',
   },
 
 

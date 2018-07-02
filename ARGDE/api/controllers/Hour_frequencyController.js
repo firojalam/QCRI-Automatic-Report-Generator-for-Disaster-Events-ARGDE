@@ -1,5 +1,7 @@
 module.exports = {
 	createPreHours: function(params){
+		var count = 0;
+
 		var start_year = params['min'].getFullYear();
 		var start_month = params['min'].getMonth()+1;
 		var start_day = params['min'].getDate();
@@ -73,9 +75,11 @@ module.exports = {
 								else
 								{
 									sails.log.info("Hour "+date_val+" "+_hour+" OK");
-									if(i == iterations)
+									count += 1;
+									if(count == iterations)
 									{
 										sails.log.info("Hour-wise precomputation complete");
+										Argde.precomputation['hour'] = true;
 									}
 								}
 							});

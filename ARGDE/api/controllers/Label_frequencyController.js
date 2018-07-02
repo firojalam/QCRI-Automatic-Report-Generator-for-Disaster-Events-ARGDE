@@ -1,5 +1,9 @@
 module.exports = {
 	createPreLabels: function(params){
+		var label_count = 0;
+		var sentiment_count = 0;
+		var damage_count = 0;
+		var ir_count = 0;
 		Argde.query("select distinct "+Argde.attributes.aidr_class_label.columnName+" from "+Argde.tableName+" where "
 		+Argde.attributes.aidr_class_label.columnName+" is not NULL;",function(err, classes){
 			if(err)
@@ -141,9 +145,11 @@ module.exports = {
 																			else
 																			{
 																				sails.log.info("Label "+class_name+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
-																				if(class_name == class_names[class_names.length - 1] && i == iterations)
+																				label_count += 1;
+																				if(class_name == class_names[class_names.length - 1] && label_count == iterations)
 																				{
 																					sails.log.info("Class Label-wise precomputation complete");
+																					Argde.precomputation['label'] = true;
 																				}
 																			}
 																		});
@@ -190,9 +196,11 @@ module.exports = {
 																			else
 																			{
 																				sails.log.info("Sentiment "+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
-																				if(value == sentiment_values[sentiment_values.length - 1] && i == iterations)
+																				sentiment_count += 1;
+																				if(value == sentiment_values[sentiment_values.length - 1] && sentiment_count == iterations)
 																				{
 																					sails.log.info("Sentiment-wise precomputation complete");
+																					Argde.precomputation['sentiment'] = true;
 																				}
 																			}
 																		});
@@ -239,9 +247,11 @@ module.exports = {
 																			else
 																			{
 																				sails.log.info("Image Damage Class "+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
-																				if(value == damage_values[damage_values.length -1] && i == iterations)
+																				damage_count += 1;
+																				if(value == damage_values[damage_values.length -1] && damage_count == iterations)
 																				{
 																					sails.log.info("Damage-wise precomputation complete");
+																					Argde.precomputation['damage'] = true;
 																				}
 																			}
 																		});
@@ -289,9 +299,11 @@ module.exports = {
  																			else
  																			{
  																				sails.log.info("Image Relevancy "+"ir_"+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
-																				if(value == image_relevancy_values[image_relevancy_values.length - 1] && i == iterations)
+																				ir_count += 1;
+																				if(value == image_relevancy_values[image_relevancy_values.length - 1] && ir_count == iterations)
 																				{
 																					sails.log.info("Image relevancy-wise precomputation complete");
+																					Argde.precomputation['image_relevancy'] = true;
 																				}
  																			}
  																		});

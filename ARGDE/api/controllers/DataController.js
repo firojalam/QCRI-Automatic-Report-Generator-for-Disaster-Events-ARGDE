@@ -1,7 +1,7 @@
 module.exports = {
 	retrieveMinute: async function(req, res){
 			await Minute_frequency.find({
-				where: { code: (_.invert(User.collectionNames))[req.param('collection')], },
+				where: { code: req.param('collection'), },
 				sort: { date: 1, hour: 1, minute: 1,},
 				}).exec(function(err, records){
 				if(err)
@@ -22,7 +22,7 @@ module.exports = {
 	},
 	retrieveHour: async function(req, res){
 			await Hour_frequency.find({
-				where: { code: (_.invert(User.collectionNames))[req.param('collection')], },
+				where: { code: req.param('collection'), },
 				sort: { date: 1, hour: 1,},
 			}).exec(function(err, records){
 				if(err)
@@ -43,7 +43,7 @@ module.exports = {
 	},
 	retrieveDay: async function(req, res){
 			await Day_frequency.find({
-				where: { code: (_.invert(User.collectionNames))[req.param('collection')], },
+				where: { code: req.param('collection'), },
 				sort: { date: 1, },
 			}).exec(function(err, records){
 				if(err)
@@ -64,7 +64,7 @@ module.exports = {
 	},
 	retrieveLabel: async function(req, res){
 			await Label_frequency.find({
-				where: { code: (_.invert(User.collectionNames))[req.param('collection')], },
+				where: { code: req.param('collection'), },
 				sort: { date: 1, hour: 1, minute: 1,},
 			}).exec(function(err, records){
 				if(err)
@@ -113,7 +113,7 @@ module.exports = {
 						}
 					}
 					query = query + ") and "+Label_frequency.attributes.code.columnName+"='"
-					+(_.invert(User.collectionNames))[req.param('collection')]+"' order by "+Label_frequency.attributes.date.columnName+","
+					+req.param('collection')+"' order by "+Label_frequency.attributes.date.columnName+","
 					+Label_frequency.attributes.hour.columnName+","
 					+Label_frequency.attributes.minute.columnName+";";
 
@@ -167,7 +167,7 @@ module.exports = {
 						}
 					}
 					query = query + ") and "+Label_frequency.attributes.code.columnName+"='"
-					+(_.invert(User.collectionNames))[req.param('collection')]+"' order by "+Label_frequency.attributes.date.columnName+","
+					+req.param('collection')+"' order by "+Label_frequency.attributes.date.columnName+","
 					+Label_frequency.attributes.hour.columnName+","
 					+Label_frequency.attributes.minute.columnName+";";
 
@@ -221,7 +221,7 @@ module.exports = {
 						}
 					}
 					query = query + ") and "+Label_frequency.attributes.code.columnName+"='"
-					+(_.invert(User.collectionNames))[req.param('collection')]+"' order by "+Label_frequency.attributes.date.columnName+","
+					+req.param('collection')+"' order by "+Label_frequency.attributes.date.columnName+","
 					+Label_frequency.attributes.hour.columnName+","
 					+Label_frequency.attributes.minute.columnName+";";
 
@@ -260,7 +260,7 @@ module.exports = {
 			}
 		}
 		query = query + ") and "+Label_frequency.attributes.code.columnName+"='"
-		+(_.invert(User.collectionNames))[req.param('collection')]+"' order by "+Label_frequency.attributes.date.columnName+","
+		+req.param('collection')+"' order by "+Label_frequency.attributes.date.columnName+","
 		+Label_frequency.attributes.hour.columnName+","
 		+Label_frequency.attributes.minute.columnName+";";
 
@@ -286,9 +286,11 @@ module.exports = {
 		var res_value = req.param('res_value');
 		var filter = req.param('filter');
 		var filter_value = req.param('value');
-		var collection = (_.invert(User.collectionNames))[req.param('code')];
-		var query_text = "select "+Argde.attributes.tweet_text.columnName+" from "+Argde.tableName+" where ";
-		var query_img = "select "+Argde.attributes.image_url.columnName+" from "+Argde.tableName+" where ";
+		var collection = req.param('code');
+		var query_text = "select "+Argde.attributes.tweet_text.columnName+", "
+		+Argde.attributes.createdAt.columnName+" from "+Argde.tableName+" where ";
+		var query_img = "select "+Argde.attributes.image_url.columnName+", "
+		+Argde.attributes.createdAt.columnName+" from "+Argde.tableName+" where ";
 		var res_texts = [];
 		var res_imgs = [];
 
@@ -355,7 +357,8 @@ module.exports = {
 				{
 					for(i in tweet_texts.rows)
 					{
-						res_texts.push(tweet_texts.rows[i].tweet_text);
+						let temp = {text:	tweet_texts.rows[i].tweet_text, time: tweet_texts.rows[i].created_at};
+						res_texts.push(temp);
 					}
 				}
 			}
@@ -371,7 +374,8 @@ module.exports = {
 					{
 						for(i in tweet_images.rows)
 						{
-							res_imgs.push(tweet_images.rows[i].image_url);
+							let temp = {image: tweet_images.rows[i].image_url, time: tweet_images.rows[i].created_at};
+							res_imgs.push(temp);
 						}
 					}
 				}

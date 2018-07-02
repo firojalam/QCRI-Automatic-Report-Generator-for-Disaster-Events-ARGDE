@@ -1,0 +1,25 @@
+<% title = 'Precomputation' %>
+<link href="/css/precompute.css" rel="stylesheet">
+<div id="precompute_page" class="container">
+<div class="card mb-3">
+  <div class="card-header">
+    <strong>Initiate Precomputation</strong>
+  </div>
+  <div class="card-body">
+    <br>
+    <div id="precompute_heading">
+      <h1><strong>Configure Precomputation</strong></h1>
+    </div>
+    <br>
+    <form accept-charset="UTF-8" role="form" action="/precompute" method="post">
+      <div class="form-group">
+        <h4><label for="collection_code">Collection Code</label></h4>
+        <input type="text" class="form-control" id="collection_code" placeholder="Enter collection code" name="collection">
+      </div>
+      <button type="submit" class="btn btn-primary">Precompute</button>
+      <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+  </form>
+  <br>
+  </div>
+</div>
+</div>

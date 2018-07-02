@@ -299,7 +299,21 @@
                     </nav>
                     <br>
                   </div>
-                  <div class="tab-pane fade" id="damage_images_card" role="tabpanel" aria-labelledby="images-tab">IMAGES</div>
+                  <div class="tab-pane fade" id="damage_images_card" role="tabpanel" aria-labelledby="images-tab">
+                    <div id="damage_images_indicators" class="carousel slide" data-ride="carousel">
+                      <ol id="damage_images_indicator" class="carousel-indicators"></ol>
+                      <div id="damage_images_carousel" class="carousel-inner">
+                      </div>
+                      <a class="carousel-control-prev" href="#damage_images_indicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href="#damage_images_indicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
