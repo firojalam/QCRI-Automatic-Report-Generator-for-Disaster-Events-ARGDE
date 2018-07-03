@@ -16,52 +16,97 @@ module.exports = {
 		var max_date;
 		var date_diff;
 		var paramList;
+
+		if(!collection_name)
+		{
+			let noCollectionNameError = [{name: 'noCollectionName', message: 'Please enter a collection code.'}];
+			req.session.flash = {err: noCollectionNameError};
+			return res.redirect('/precompute');
+		}
+
 		Argde.query("select min("+Argde.attributes.updatedAt.columnName+") from "+Argde.tableName+" where "
-		+Argde.attributes.code+"='"+collection_name+"';",
+		+Argde.attributes.code.columnName+"='"+collection_name+"';",
 		function(err, result){
 			if(err)
 			{
 				sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
-				res.serverError(err);
+				return res.serverError(err);
 			}
-			min_date = new Date(result.rows[0].min);
-			Argde.query("select max("+Argde.attributes.updatedAt.columnName+") from "+Argde.tableName+" where "
-			+Argde.attributes.code+"='"+collection_name+"';",
-			function(err, result){
-				max_date = new Date(result.rows[0].max);
-				Argde.query("select date(max("+Argde.attributes.updatedAt.columnName+"))-date(min("
-				+Argde.attributes.updatedAt.columnName
-				+")) from "+Argde.tableName+" where "+Argde.attributes.code.columnName+"='"+req.param('collection')
-				+"';",function(err, result){
-					date_diff = result.rows[0]['?column?'];
-					paramList={'min':min_date, 'max':max_date, 'diff':date_diff, 'collection': req.param('collection')};
-					minuteController.createPreMinutes(paramList);
-					labelController.createPreLabels(paramList);
-					hourController.createPreHours(paramList);
-					dayController.createPreDays(paramList);
+			else if(result.rows[0].min == null)
+			{
+				let invalidCollectionNameError = [{name: 'invalidCollectionName', message: 'Invalid code entered. Please enter a valid collection code.'}];
+				req.session.flash = {err: invalidCollectionNameError};
+				return res.redirect('/precompute');
+			}
+			else
+			{
+				min_date = new Date(result.rows[0].min);
+				Argde.query("select max("+Argde.attributes.updatedAt.columnName+") from "+Argde.tableName+" where "
+				+Argde.attributes.code.columnName+"='"+collection_name+"';",
+				function(err, result){
+					if(err)
+					{
+						sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
+						return res.serverError(err);
+					}
+					else
+					{
+						max_date = new Date(result.rows[0].max);
+						Argde.query("select date(max("+Argde.attributes.updatedAt.columnName+"))-date(min("
+						+Argde.attributes.updatedAt.columnName
+						+")) from "+Argde.tableName+" where "+Argde.attributes.code.columnName+"='"+req.param('collection')
+						+"';",function(err, result){
+							if(err)
+							{
+								sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
+								return res.serverError(err);
+							}
+							else
+							{
+								date_diff = result.rows[0]['?column?'];
+								paramList={'min':min_date, 'max':max_date, 'diff':date_diff, 'collection': req.param('collection')};
+								minuteController.createPreMinutes(paramList);
+								labelController.createPreLabels(paramList);
+								hourController.createPreHours(paramList);
+								dayController.createPreDays(paramList);
 
-					var interval = setInterval(function(){
-						if(Argde.precomputation['day'] == true
-						&&	Argde.precomputation['hour'] == true
-						&& Argde.precomputation['minute'] == true
-						&& Argde.precomputation['label'] == true
-						&& Argde.precomputation['sentiment'] == true
-						&& Argde.precomputation['damage'] == true
-						&& Argde.precomputation['image_relevancy'] == true)
-						{
-							clearInterval(interval);
-							return res.redirect('/complete/'+collection_name);
-						}
-					}, 100);
+								var interval = setInterval(function(){
+									if(Argde.precomputation['day'] == true
+									&&	Argde.precomputation['hour'] == true
+									&& Argde.precomputation['minute'] == true
+									&& Argde.precomputation['label'] == true
+									&& Argde.precomputation['sentiment'] == true
+									&& Argde.precomputation['damage'] == true
+									&& Argde.precomputation['image_relevancy'] == true)
+									{
+										clearInterval(interval);
+										req.session.collection = collection_name;
+										return res.redirect('/complete');
+									}
+								}, 100);
+							}
+						});
+					}
 				});
-			});
+			}
 		});
 	},
 	precompute_done: function(req, res){
-		var pre_url = sails.getBaseurl();
-		var the_url_raw = sails.getUrlFor('DataController.retrieveAll');
-		var the_url = the_url_raw.substr(0, the_url_raw.length - 5);
-		var url = pre_url + the_url + req.param('collection');
-		return res.view('admin/precomputation_complete', { graphs_url: url})
+		if(req.session.collection)
+		{
+			var collection = req.session.collection;
+			delete req.session.collection;
+			var pre_url = sails.getBaseurl();
+			var the_url_raw = sails.getUrlFor('DataController.retrieveAll');
+			var the_url = the_url_raw.substr(0, the_url_raw.length - 5);
+			var url = pre_url + the_url + collection;
+			return res.view('admin/precomputation_complete', { graphs_url: url});
+		}
+		else
+		{
+			var noComputationInitiatedError = [{name: 'noComputationInitiated', message: 'Please initiate precomputation to obtain URL for visualization for the corresponding collection.'}];
+			req.session.flash = {err: noComputationInitiatedError};
+			return res.redirect('/precompute');
+		}
 	},
 };

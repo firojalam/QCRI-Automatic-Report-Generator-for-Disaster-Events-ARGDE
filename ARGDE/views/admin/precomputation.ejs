@@ -11,12 +11,21 @@
       <h1><strong>Configure Precomputation</strong></h1>
     </div>
     <br>
+    <% if(flash && flash.err){ %>
+      <div class="alert alert-success">
+        <% flash.err.forEach(function(error){ %>
+          <span>
+            <%= error.message %>
+          </span>
+        <% }) %>
+      </div>
+    <% } %>
     <form accept-charset="UTF-8" role="form" action="/precompute" method="post">
       <div class="form-group">
         <h4><label for="collection_code">Collection Code</label></h4>
         <input type="text" class="form-control" id="collection_code" placeholder="Enter collection code" name="collection">
       </div>
-      <button type="submit" class="btn btn-primary">Precompute</button>
+      <button type="submit" class="btn btn-dark">Precompute</button>
       <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
   </form>
   <br>

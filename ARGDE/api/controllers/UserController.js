@@ -80,7 +80,12 @@ module.exports =  {
         if(err)
         {
           sails.log.info("Error name: "+err.name+"	 "+"Error code: "+err.code);
-          req.session.flash = {err: "Error: "+err.name,};
+          return res.serverError();
+        }
+        else if(users == undefined)
+        {
+          let noUsersFoundError = [{name: 'noUsersFound', message: 'No Admins Found'}];
+          req.session.flash = {err: noUsersFoundError};
           return res.redirect('/allAdmins');
         }
         else
@@ -124,7 +129,7 @@ module.exports =  {
   search: function(req, res){
     let search = req.param('name').toLowerCase();
     Argde.query("select distinct "+Argde.attributes.code.columnName+" from "
-    +Argde.tableName+" where "+Argde.attributes.code.columnName+" like '%"
+    +Label_frequency.tableName+" where "+Argde.attributes.code.columnName+" like '%"
     +search+"%';", function(err, response){
       if(err)
       {

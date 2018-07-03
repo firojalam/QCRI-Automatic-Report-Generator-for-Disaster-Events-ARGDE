@@ -12,6 +12,7 @@
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/taucharts@1/build/production/tauCharts.min.css">
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Bangers|Gentium+Basic|IBM+Plex+Sans|IBM+Plex+Serif|Khand|Montserrat+Alternates|News+Cycle|Noticia+Text|Oswald|Play|Poppins|Rajdhani" rel="stylesheet">
@@ -150,10 +151,33 @@
             </div>
           </form>
         </li>
-        <li class="nav-item">
+
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span><i class="fa fa-cog"></i> Settings<span>
+          </a>
+          <div id="settings_menu" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <h6 class="dropdown-header"><%= req.session.User.name %></h6>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/precompute"><i class="fa fa-cogs"></i> Precompute</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/allAdmins"><i class="fa fa-user"></i> Admins</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/add_admin"><i class="fa fa-user-plus"></i> Add New Admin</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/logout"><i class="fa fa-fw fa-sign-out"></i>Logout</a>
+          </div>
+        </li>
+
+
+
+
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/logout">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>

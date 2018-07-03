@@ -726,93 +726,125 @@ generate.damage = function(res)
     sockets.tweets.get(queries['tweets']+'?filter='+packet['filter']+'&resolution='+packet['resolution']+'&code='+packet['code']+'&res_value='+packet['res_value']+'&value='+packet['value'], function(data, json_obj){
       tweet_texts.damage = data['texts'];
       tweet_images.damage = data['images'];
+      // function show_tweets()
+      // {
+      //   $(".damage-data-button").show();
+      //   var tweet_count = 1;
+      //   var current_page = 0;
+      //   var total_pages = 0;
+      //   var limit = 120;
+      //   $('#damage_tweets_load').empty();
+      //   $('#dt_paginator').empty();
+      //   $('#dt_numinator').empty();
+      //   $(".damage-tweet-num").empty();
+      //   $(".damage-tweet-num").html($('.damage-tweet-num').html()
+      //       +""+(tweet_texts.damage.length)+"");
+      //
+      //   for(i=0; i<tweet_texts.damage.length; i++)
+      //   {
+      //     if(i>=limit){
+      //       break;
+      //     }
+      //
+      //     if((tweet_count-1) % 5 == 0){
+      //       current_page+=1;
+      //       total_pages+=1;
+      //       let tweet = tweet_texts.damage[i].text;
+      //       let tLink = findTwitterLink(tweet);
+      //       $('#damage_tweets_load').html($('#damage_tweets_load').html()
+      //        +"<div class='card-deck'"+"id='dt_page"+current_page+"'>"
+      //         + "<div class='card'>"
+      //           + "<div class='card-body'>"
+      //            +" <h5 class='card-title'>"+"Tweet "+(tweet_count++)+"</h5>"
+      //             + "<p class='card-text'>"+tweet+"</p>"
+      //          +" </div>"
+      //           + "<div class='card-footer' style='display: flex;'>"
+      //            +"<small class='text-muted'><div style='flex:1; vertical-align:text-bottom;'><em>"+new Date(tweet_texts.damage[i].time)+"</em></small></div><div style='flex:0;'><small><a href="+tLink+" target='_blank'><button type='button' class='btn btn-primary'>View Tweet</button></a></small></div>"
+      //           +"</div>"
+      //         +"</div>"
+      //       + "</div>");
+      //
+      //       let dom_id = "#dt_page"+current_page;
+      //       $(dom_id).hide();
+      //
+      //     } else {
+      //         let tweet = tweet_texts.damage[i].text;
+      //         let tLink = findTwitterLink(tweet);
+      //         let card_id = "#dt_page"+current_page;
+      //         $(card_id).html($(card_id).html()
+      //           + "<div class='card'>"
+      //             + "<div class='card-body'>"
+      //              +" <h5 class='card-title'>"+"Tweet "+(tweet_count++)+"</h5>"
+      //               + "<p class='card-text'>"+tweet+"</p>"
+      //            +" </div>"
+      //             + "<div class='card-footer' style='display: flex;'>"
+      //              +"<small class='text-muted'><div style='flex:1; vertical-align:text-bottom;'><em>"+new Date(tweet_texts.damage[i].time)+"</em></small></div><div style='flex:0;'><small><a href="+tLink+" target='_blank'><button type='button' class='btn btn-primary'>View Tweet</button></a></small></div>"
+      //             +"</div>"
+      //           +"</div>");
+      //     }
+      //   }
+      //
+      //
+      //   let dom_id = "#dt_page1";
+      //   $(dom_id).show();
+      //
+      //   let card_code = "dt";
+      //
+      //   $('#dt_paginator').html($('#dt_paginator').html()
+      //     + "<li class='page-item'>"
+      //      +   "<a class='page-link' href='javascript:void(0)' tabindex='-1' id = 'dt_prev' onclick='switchPages("+total_pages+","+1+", \""+card_code+"\")'>Previous</a>"
+      //     + "</li>" );
+      //
+      //   for(i = 1; i <= total_pages; i++){
+      //     $('#dt_paginator').html($('#dt_paginator').html()
+      //     + "<li class='page-item'><a class='page-link' onclick='switchPages("+total_pages+","+(current_page = i)+", \""+card_code+"\")' href='javascript:void(0)'>"+i+"</a></li> ");
+      //   }
+      //
+      //   $('#dt_paginator').html($('#dt_paginator').html()
+      //     + "<li class='page-item'>"
+      //      +   "<a class='page-link' href='javascript:void(0)' id = 'dt_next' onclick='switchPages("+total_pages+","+2+", \""+card_code+"\")'>Next</a>"
+      //     + "</li>");
+      //
+      //   if(tweet_texts.damage.length >= limit){
+      //     $('#dt_numinator').html($('#dt_numinator').html()
+      //       +"Displaying <b>only</b> 150 out of "+ tweet_texts.damage.length +" tweets.");
+      //   } else {
+      //      $('#dt_numinator').html($('#dt_numinator').html()
+      //       +"Displaying "+ tweet_texts.damage.length +" tweets. ");
+      //   }
+      // }
+
+
+
       function show_tweets()
       {
         $(".damage-data-button").show();
-        var tweet_count = 1;
-        var current_page = 0;
-        var total_pages = 0;
-        var limit = 120;
-        $('#damage_tweets_load').empty();
-        $('#dt_paginator').empty();
-        $('#dt_numinator').empty();
-        $(".damage-tweet-num").empty();
-        $(".damage-tweet-num").html($('.damage-tweet-num').html()
-            +""+(tweet_texts.damage.length)+"");
-
-        for(i=0; i<tweet_texts.damage.length; i++)
+        var count = 0;
+        $('#damage_table').empty();
+        $('#damage_table').html('<tr>'
+        +'<th>#</th>'
+        +'<th>Tweet Text</th>'
+        +'<th>Time</th>'
+        +'<th></th>'
+        +'</tr>');
+        for(i in tweet_texts.damage)
         {
-          if(i>=limit){
-            break;
-          }
-
-          if((tweet_count-1) % 5 == 0){
-            current_page+=1;
-            total_pages+=1;
-            let tweet = tweet_texts.damage[i].text;
-            let tLink = findTwitterLink(tweet);
-            $('#damage_tweets_load').html($('#damage_tweets_load').html()
-             +"<div class='card-deck'"+"id='dt_page"+current_page+"'>"
-              + "<div class='card'>"
-                + "<div class='card-body'>"
-                 +" <h5 class='card-title'>"+"Tweet "+(tweet_count++)+"</h5>"
-                  + "<p class='card-text'>"+tweet+"</p>"
-               +" </div>"
-                + "<div class='card-footer' style='display: flex;'>"
-                 +"<small class='text-muted'><div style='flex:1; vertical-align:text-bottom;'><em>"+new Date(tweet_texts.damage[i].time)+"</em></small></div><div style='flex:0;'><small><a href="+tLink+" target='_blank'><button type='button' class='btn btn-primary'>View Tweet</button></a></small></div>"
-                +"</div>"
-              +"</div>"
-            + "</div>");
-
-            let dom_id = "#dt_page"+current_page;
-            $(dom_id).hide();
-
-          } else {
-              let tweet = tweet_texts.damage[i].text;
-              let tLink = findTwitterLink(tweet);
-              let card_id = "#dt_page"+current_page;
-              $(card_id).html($(card_id).html()
-                + "<div class='card'>"
-                  + "<div class='card-body'>"
-                   +" <h5 class='card-title'>"+"Tweet "+(tweet_count++)+"</h5>"
-                    + "<p class='card-text'>"+tweet+"</p>"
-                 +" </div>"
-                  + "<div class='card-footer' style='display: flex;'>"
-                   +"<small class='text-muted'><div style='flex:1; vertical-align:text-bottom;'><em>"+new Date(tweet_texts.damage[i].time)+"</em></small></div><div style='flex:0;'><small><a href="+tLink+" target='_blank'><button type='button' class='btn btn-primary'>View Tweet</button></a></small></div>"
-                  +"</div>"
-                +"</div>");
-          }
-        }
-
-
-        let dom_id = "#dt_page1";
-        $(dom_id).show();
-
-        let card_code = "dt";
-
-        $('#dt_paginator').html($('#dt_paginator').html()
-          + "<li class='page-item'>"
-           +   "<a class='page-link' href='javascript:void(0)' tabindex='-1' id = 'dt_prev' onclick='switchPages("+total_pages+","+1+", \""+card_code+"\")'>Previous</a>"
-          + "</li>" );
-
-        for(i = 1; i <= total_pages; i++){
-          $('#dt_paginator').html($('#dt_paginator').html()
-          + "<li class='page-item'><a class='page-link' onclick='switchPages("+total_pages+","+(current_page = i)+", \""+card_code+"\")' href='javascript:void(0)'>"+i+"</a></li> ");
-        }
-
-        $('#dt_paginator').html($('#dt_paginator').html()
-          + "<li class='page-item'>"
-           +   "<a class='page-link' href='javascript:void(0)' id = 'dt_next' onclick='switchPages("+total_pages+","+2+", \""+card_code+"\")'>Next</a>"
-          + "</li>");
-
-        if(tweet_texts.damage.length >= limit){
-          $('#dt_numinator').html($('#dt_numinator').html()
-            +"Displaying <b>only</b> 150 out of "+ tweet_texts.damage.length +" tweets.");
-        } else {
-           $('#dt_numinator').html($('#dt_numinator').html()
-            +"Displaying "+ tweet_texts.damage.length +" tweets. ");
+          let tweet = tweet_texts.damage[i].text;
+          let time = tweet_texts.damage[i].time;
+          let link = findTwitterLink(tweet);
+            $('#damage_table').html($('#damage_table').html()+
+            +'<tr>'
+            +'<td>'+(count+1)+'</td>'
+            +'<td>'+tweet+'</td>'
+            +'<td>'+new Date(time)+'</td>'
+            +'<td><a href="'+link+'" target="_blank"><button type="button" class="btn btn-primary">View Tweet</button></a></td>'
+            +'</tr>'
+          );
+          count += 1;
         }
       }
+
+
       function show_images()
       {
         var count = 0;

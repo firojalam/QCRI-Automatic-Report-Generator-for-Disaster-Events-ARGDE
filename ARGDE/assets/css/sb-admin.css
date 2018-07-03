@@ -528,3 +528,56 @@ footer.sticky-footer {
 	.carousel-inner img{
 	min-width: 100%;
 }
+
+#settings_menu a{
+  background-color: transparent;
+  color: black;
+}
+
+#settings_menu a:hover {
+  /* background-color: #f8f9fa; */
+  background-color: black;
+  color: white;
+}
+
+#web_app_home {
+  /* color: white; */
+  color: #e6b932;
+  height: 100%;
+  text-align: center;
+  -webkit-animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -ms-animation: fadein 2s;
+  -o-animation: fadein 2s;
+  animation: fadein 2s;
+}
+
+#web_app_home_heading {
+  font-size: 13em;
+}
+
+#tagline {
+  color: #e6b932;
+  /* color: white; */
+  font-size: 2em;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

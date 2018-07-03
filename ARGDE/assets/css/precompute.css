@@ -6,3 +6,25 @@
 #precompute_heading {
   text-align: center;
 }
+
+#gotoURL a {
+  text-decoration: none;
+}
+
+#gotoURL a:hover{
+  text-decoration: none;
+}
+
+#gotoURL a:link{
+  text-decoration: none;
+}
+
+
+#gotoURL a:active{
+  text-decoration: none;
+}
+
+
+#gotoURL a:visited{
+  text-decoration: none;
+}

@@ -9,16 +9,20 @@
     <div id="precompute_heading">
     </div>
     <br>
-    <h3>URL</h3>
+    <strong><h3>URL</h3></strong>
     <form class="form">
       <div class="input-group">
         <input id="graphURL" type="text" class="form-control" value=<%= graphs_url %>>
         <span class="input-group-append">
-          <button type="button" class="btn btn-dark" onclick="copyURL();">Copy URL</button>
+          <button type="button" class="btn btn-dark" onclick="copyURL();"><strong>Copy URL</strong></button>
         </span>
       </div>
+      <br>
     </form>
     <br>
+    <div id="gotoURL">
+      <a href=<%= graphs_url %> target="_blank"><button type="button" class="btn btn-success btn-lg btn-block">Visualize <i class="fa fa-arrow-right"></i></button>
+    </div>
   </div>
 </div>
 </div>

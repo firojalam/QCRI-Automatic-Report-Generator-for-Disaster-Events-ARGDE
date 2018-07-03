@@ -146,7 +146,7 @@ module.exports = {
 																			{
 																				sails.log.info("Label "+class_name+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
 																				label_count += 1;
-																				if(class_name == class_names[class_names.length - 1] && label_count == iterations)
+																				if(label_count == (class_names.length*iterations))
 																				{
 																					sails.log.info("Class Label-wise precomputation complete");
 																					Argde.precomputation['label'] = true;
@@ -197,7 +197,7 @@ module.exports = {
 																			{
 																				sails.log.info("Sentiment "+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
 																				sentiment_count += 1;
-																				if(value == sentiment_values[sentiment_values.length - 1] && sentiment_count == iterations)
+																				if(sentiment_count == (sentiment_values.length*iterations))
 																				{
 																					sails.log.info("Sentiment-wise precomputation complete");
 																					Argde.precomputation['sentiment'] = true;
@@ -248,7 +248,7 @@ module.exports = {
 																			{
 																				sails.log.info("Image Damage Class "+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
 																				damage_count += 1;
-																				if(value == damage_values[damage_values.length -1] && damage_count == iterations)
+																				if(damage_count == (damage_values.length*iterations))
 																				{
 																					sails.log.info("Damage-wise precomputation complete");
 																					Argde.precomputation['damage'] = true;
@@ -300,7 +300,7 @@ module.exports = {
  																			{
  																				sails.log.info("Image Relevancy "+"ir_"+value+" at "+date_val+" "+_hour+":"+_minute+":00 OK");
 																				ir_count += 1;
-																				if(value == image_relevancy_values[image_relevancy_values.length - 1] && ir_count == iterations)
+																				if(ir_count == (image_relevancy_values.length*iterations))
 																				{
 																					sails.log.info("Image relevancy-wise precomputation complete");
 																					Argde.precomputation['image_relevancy'] = true;

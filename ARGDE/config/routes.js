@@ -85,7 +85,7 @@ module.exports.routes = {
     controller: 'DataController',
     action: 'retrieveTweets',
   },
-  '/complete/:collection': {
+  '/complete': {
     controller: 'ArgdeController',
     action: 'precompute_done',
   },
