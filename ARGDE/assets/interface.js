@@ -850,12 +850,6 @@ generate.damage = function(res)
         var count = 0;
         $('#damage_images_indicator').empty();
         $('#damage_images_carousel').empty();
-        tweet_images.damage = [
-          {image: 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350', time: data['images'][0].time},
-          {image: 'https://wallpaperbrowse.com/media/images/soap-bubble-1958650_960_720.jpg', time: data['images'][1].time},
-          {image: 'https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg', time: data['images'][2].time},
-          {image: 'https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350',  time: data['images'][3].time},
-        ];
         var indicators ='';
         var images ='';
         for(i in tweet_images.damage)
