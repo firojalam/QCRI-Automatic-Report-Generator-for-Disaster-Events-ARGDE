@@ -34,10 +34,15 @@ module.exports = {
       allowNull: false,
       columnName: 'password',
     },
+    super_admin: {
+      type: 'boolean',
+      columnName: 'super_admin',
+    },
   },
-  collectionPretty: {
-    '170826213907_hurricane_harvey_2017': 'Hurricane Harvey 2017',
-  },
+  default_password: 'qatar123',
+  // collectionPretty: {
+  //   '170826213907_hurricane_harvey_2017': 'Hurricane Harvey 2017',
+  // },
 };
 // module.exports = {
 //   connection : 'postgresServer',

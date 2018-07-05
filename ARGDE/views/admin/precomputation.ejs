@@ -12,11 +12,14 @@
     </div>
     <br>
     <% if(flash && flash.err){ %>
-      <div class="alert alert-success">
+      <div class="alert alert-success alert-dismissible">
         <% flash.err.forEach(function(error){ %>
           <span>
             <%= error.message %>
           </span>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         <% }) %>
       </div>
     <% } %>

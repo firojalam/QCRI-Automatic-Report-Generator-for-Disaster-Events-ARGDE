@@ -2,31 +2,71 @@
 <link href="/css/precompute.css" rel="stylesheet">
 <div id="precompute_page" class="container">
 <div class="card mb-3">
-  <div class="card-header">
-    <strong>Visualization URL</strong>
+  <div class="card-header" id="status">
+    <strong>
+      Status:
+        <span id="status" style="color: darkorange;"> Precomputing </span>
+    </strong>
   </div>
-  <div class="card-body">
-    <div id="precompute_heading">
-    </div>
-    <br>
-    <strong><h3>URL</h3></strong>
-    <form class="form">
-      <div class="input-group">
-        <input id="graphURL" type="text" class="form-control" value=<%= graphs_url %>>
-        <span class="input-group-append">
-          <button type="button" class="btn btn-dark" onclick="copyURL();"><strong>Copy URL</strong></button>
-        </span>
-      </div>
-      <br>
-    </form>
-    <br>
-    <div id="gotoURL">
-      <a href=<%= graphs_url %> target="_blank"><button type="button" class="btn btn-success btn-lg btn-block">Visualize <i class="fa fa-arrow-right"></i></button>
-    </div>
+  <div id="complete_body" class="card-body">
+    <div class="progress" style="height: 3em;"><div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>
   </div>
 </div>
 </div>
 <script>
+var vals = {
+  data: 0,
+  socket: io.sails.connect(),
+};
+function data(){
+  function fetch()
+  {
+      vals.socket.get('/progress', function(data, jsonObj){
+      if(data['progress'] != vals.data)
+      {
+        vals.data = data['progress'];
+        $('#complete_body').empty();
+        $('#complete_body').html('<div class="progress" style="height: 3em;"><div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="'+data['progress']+'" aria-valuemin="0" aria-valuemax="100" style="width: '+data['progress']+'%;"></div></div>');
+      }
+      if(data['progress']<100)
+      {
+        setTimeout(function(){fetch();},800);
+      }
+      else
+      {
+        setTimeout(function(){complete();},800);
+      }
+    });
+  }
+  fetch();
+}
+function complete()
+{
+  $('#status').empty();
+  $('#status').html('<strong>'
+    +'Status:'
+    +'<span id="status" style="color: green;"> Complete </span>'
+    +'</strong>');
+  $('#complete_body').empty();
+  $('#complete_body').html('<div id="precompute_heading">'
+    +'</div>'
+    +'<br>'
+    +'<strong><h3>URL</h3></strong>'
+    +'<form class="form">'
+    +'<div class="input-group">'
+    +'<input id="graphURL" type="text" class="form-control" value=<%= graphs_url %>>'
+    +'<span class="input-group-append">'
+    +'<button type="button" class="btn btn-dark" onclick="copyURL();"><strong>Copy URL</strong></button>'
+    +'</span>'
+    +'</div>'
+    +'<br>'
+    +'</form>'
+    +'<br>'
+    +'<div id="gotoURL">'
+    +'<a href=<%= graphs_url %> target="_blank"><button type="button" class="btn btn-success btn-lg btn-block">Visualize <i class="fa fa-arrow-right"></i></button>'
+    +'</div>');
+
+}
 function copyURL(){
   var copyText = document.getElementById("graphURL");
   copyText.select();

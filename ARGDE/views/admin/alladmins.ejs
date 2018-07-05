@@ -1,4 +1,4 @@
-<div class="bg-light container">
+<div class="bg-light container" id="alladmins">
   <br>
   <h3>Admins</h3>
   <table class="table">
@@ -6,12 +6,40 @@
       <th>Name</th>
       <th>Username</th>
       <th>Email</th>
+      <th>Super Admin</th>
+      <% if(req.session.User.super_admin){ %>
+        <th></th>
+        <th></th>
+        <th></th>
+      <% } %>
     </tr>
   <% admins.forEach(function(admin){ %>
     <tr>
       <td><%= admin.name %></td>
       <td><%= admin.username %></td>
       <td><%= admin.email %></td>
+      <% if(admin.super_admin){ %>
+        <td style="color: green;"><strong>Yes</strong></td>
+      <% }else{ %>
+        <td style="color: orange;"><strong>No</strong></td>
+      <% } %>
+      <% if(req.session.User.super_admin){ %>
+        <% if(!admin.super_admin){ %>
+          <td><a href="/reset_password/<%= admin.username %>"><button type="button" class="btn btn-primary">Reset Password</button></a></td>
+          <td><a href="/make_super/<%= admin.username %>"><button type="button" class="btn btn-success">Grant Super Access</button></a></td>
+          <td>
+            <form accept-charset="UTF-8" role="form" action="/delete_admin" method="post">
+              <input type="hidden" name="username" value="<%= admin.username %>"/>
+              <input type="submit" class="btn btn-danger" value="Delete"/>
+              <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+            </form>
+          </td>
+        <% }else{ %>
+          <td></td>
+          <td></td>
+          <td></td>
+        <% } %>
+      <% } %>
     </tr>
   <% }) %>
 </table>

@@ -47,9 +47,13 @@ module.exports.policies = {
   },
   user: {
     'home': ['flash',],
-    'search': ['flash',],
+    'search': ['flash', 'authenticated'],
     'get_addAdmin': ['flash', 'authenticated',],
-    'precompute': ['flash', 'authenticated'],
+    'precompute': ['flash', 'authenticated',],
+    'get_edit': ['flash', 'authenticated',],
+    'edit': ['authenticated',],
+    'get_reset_manual': ['flash', 'authenticated',],
+    'reset_manual': ['authenticated',],
     '*': ['authenticated',],
   },
   session: {

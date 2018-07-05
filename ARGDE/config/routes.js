@@ -85,9 +85,21 @@ module.exports.routes = {
     controller: 'DataController',
     action: 'retrieveTweets',
   },
-  '/complete': {
+  '/precomputation_progress': {
     controller: 'ArgdeController',
     action: 'precompute_done',
+  },
+  '/progress': {
+    controller: 'ArgdeController',
+    action: 'getProgress',
+  },
+  '/reset_password/:username': {
+    controller: 'UserController',
+    action: 'reset',
+  },
+  '/make_super/:username': {
+    controller: 'UserController',
+    action: 'make_super',
   },
   // GET requests
   'GET /search': {
@@ -106,6 +118,14 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'precompute',
   },
+  'GET /edit/:username': {
+    controller: 'UserController',
+    action: 'get_edit',
+  },
+  'GET /resetpassword/:username': {
+    controller: 'UserController',
+    action: 'get_reset_manual',
+  },
   // POST requests
   'POST /login': {
     controller: 'SessionController',
@@ -119,7 +139,18 @@ module.exports.routes = {
     controller: 'ArgdeController',
     action: 'precompute',
   },
-
+  'POST /edit': {
+    controller: 'UserController',
+    action: 'edit',
+  },
+  'POST /resetpassword/:username': {
+    controller: 'UserController',
+    action: 'reset_manual',
+  },
+  'POST /delete_admin': {
+    controller: 'UserController',
+    action: 'destroy',
+  },
 
   /***************************************************************************
   *                                                                          *

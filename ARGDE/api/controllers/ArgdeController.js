@@ -70,26 +70,28 @@ module.exports = {
 								hourController.createPreHours(paramList);
 								dayController.createPreDays(paramList);
 
-								var interval = setInterval(function(){
-									if(Argde.precomputation['day'] == true
-									&&	Argde.precomputation['hour'] == true
-									&& Argde.precomputation['minute'] == true
-									&& Argde.precomputation['label'] == true
-									&& Argde.precomputation['sentiment'] == true
-									&& Argde.precomputation['damage'] == true
-									&& Argde.precomputation['image_relevancy'] == true)
-									{
-										clearInterval(interval);
-										req.session.collection = collection_name;
-										return res.redirect('/complete');
-									}
-								}, 100);
+								// var interval = setInterval(function(){
+								// 	if(Argde.precomputation['day'] == true
+								// 	&&	Argde.precomputation['hour'] == true
+								// 	&& Argde.precomputation['minute'] == true
+								// 	&& Argde.precomputation['label'] == true
+								// 	&& Argde.precomputation['sentiment'] == true
+								// 	&& Argde.precomputation['damage'] == true
+								// 	&& Argde.precomputation['image_relevancy'] == true)
+								// 	{
+								// 		clearInterval(interval);
+								// 		req.session.collection = collection_name;
+								// 		return res.redirect('/complete');
+								// 	}
+								// }, 100);
 							}
 						});
 					}
 				});
 			}
 		});
+		req.session.collection = collection_name;
+		res.redirect('/precomputation_progress');
 	},
 	precompute_done: function(req, res){
 		if(req.session.collection)
@@ -108,5 +110,41 @@ module.exports = {
 			req.session.flash = {err: noComputationInitiatedError};
 			return res.redirect('/precompute');
 		}
+	},
+	getProgress: function(req, res){
+		var count = 0;
+		var progress = 0;
+		if(Argde.precomputation['day'] == true)
+		{
+			count += 1;
+		}
+		if(Argde.precomputation['hour'] == true)
+		{
+			count += 1;
+		}
+		if(Argde.precomputation['minute'] == true)
+		{
+			count += 1;
+		}
+		if(Argde.precomputation['label'] == true)
+		{
+			count += 1;
+		}
+		if(Argde.precomputation['sentiment'] == true)
+		{
+			count += 1;
+		}
+		if(Argde.precomputation['damage'] == true)
+		{
+			count += 1;
+		}
+		if(Argde.precomputation['image_relevancy'] == true)
+		{
+			count += 1;
+		}
+		progress = (count/7)*100;
+		sails.log.info('Sending progress data');
+
+		return res.send({progress: progress});
 	},
 };

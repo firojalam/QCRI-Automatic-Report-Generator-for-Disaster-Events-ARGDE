@@ -1,0 +1,42 @@
+<% title = 'Edit' %>
+<link href="/css/precompute.css" rel="stylesheet">
+<div id="edit_page" class="container">
+<div class="card mb-3">
+  <div class="card-header">
+    <strong>Edit Admin Details</strong>
+  </div>
+  <div class="card-body">
+    <br>
+    <% if(flash && flash.err){ %>
+      <div class="alert alert-success alert-dismissible">
+        <% flash.err.forEach(function(error){ %>
+          <span>
+            <%= error.message %>
+          </span>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        <% }) %>
+      </div>
+    <% } %>
+    <form accept-charset="UTF-8" role="form" action="/edit" method="post">
+      <div class="form-group">
+        <h4><label for="name_field">Name</label></h4>
+        <input type="text" class="form-control" id="name_field" value="<%= req.session.User.name %>" name="name">
+      </div>
+      <div class="form-group">
+        <h4><label for="username_field">Username</label></h4>
+        <input type="text" class="form-control" id="username_field" value="<%= req.session.User.username %>" name="username" readonly>
+      </div>
+      <div class="form-group">
+        <h4><label for="email_field">Email</label></h4>
+        <input type="email" class="form-control" id="email_field" value="<%= req.session.User.email %>" name="email">
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="/"><button type="button" class="btn btn-secondary">Cancel</button></a>
+      <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+  </form>
+  <br>
+  </div>
+</div>
+</div>
