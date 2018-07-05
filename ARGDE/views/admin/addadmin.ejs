@@ -11,10 +11,10 @@
                     <form accept-charset="UTF-8" role="form" action="/add_admin" method="post" id="adduserform">
                         <fieldset>
                           <% if(flash && flash.err){ %>
-                            <div class="alert alert-success alert-dismissible">
-                              <% Object.keys(flash.err).forEach(function(error){ %>
+                            <div class="alert alert-danger alert-dismissible">
+                              <% flash.err.forEach(function(error){ %>
                                 <span>
-                                  <%= flash.err[error] %>
+                                  <%= error.message %>
                                 </span>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>

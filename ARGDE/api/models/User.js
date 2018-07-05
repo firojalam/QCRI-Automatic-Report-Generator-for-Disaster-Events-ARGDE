@@ -36,6 +36,7 @@ module.exports = {
     },
     super_admin: {
       type: 'boolean',
+      allowNull: false,
       columnName: 'super_admin',
     },
   },
