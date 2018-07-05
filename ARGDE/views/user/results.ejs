@@ -16,16 +16,7 @@
 </div>
 <script>
 var results = <%- JSON.stringify(collections) %>;
-function data()
-{
-  results.forEach(function(result){
-    let code = $('#results').html()+"<div style='display:flex;'><div style='flex:1; padding-top:0.5em;'><h4>"+prettycode(result.code)+"</h4></div><div style='flex:1;'><a href='/visualize/"+result.code+"'><button type='button' class='btn btn-secondary' style='float:right; margin-bottom: 0.5em;'>Visualize</button></a></div></div><hr><br>";
-    $('#results').html(code);
-  });
-}
-
-
-function pretycode(code){ 
+function prettycode(code){
   code = code.toLowerCase();
   var code_words = code.split("_");
   var codeNum = code_words[1];
@@ -35,14 +26,19 @@ function pretycode(code){
 
   return labelize(pretty_code);
 }
-
 function labelize(str) {
-   str = str.split("_").join(" ");
-   var splitStr = str.toLowerCase().split(" ");
-   for (var i = 0; i < splitStr.length; i++) {
-          splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-   }
-   return splitStr.join(' ');
+  str = str.split("_").join(" ");
+  var splitStr = str.toLowerCase().split(" ");
+  for (var i = 0; i < splitStr.length; i++) {
+    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+  return splitStr.join(' ');
 }
-
+function data()
+{
+  results.forEach(function(result){
+    let code = $('#results').html()+"<div style='display:flex;'><div style='flex:1; padding-top:0.5em;'><h4>"+prettycode(result.code)+"</h4></div><div style='flex:1;'><a href='/visualize/"+result.code+"'><button type='button' class='btn btn-secondary' style='float:right; margin-bottom: 0.5em;'>Visualize</button></a></div></div><hr><br>";
+    $('#results').html(code);
+  });
+}
 </script>

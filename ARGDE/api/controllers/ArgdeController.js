@@ -69,21 +69,6 @@ module.exports = {
 								labelController.createPreLabels(paramList);
 								hourController.createPreHours(paramList);
 								dayController.createPreDays(paramList);
-
-								// var interval = setInterval(function(){
-								// 	if(Argde.precomputation['day'] == true
-								// 	&&	Argde.precomputation['hour'] == true
-								// 	&& Argde.precomputation['minute'] == true
-								// 	&& Argde.precomputation['label'] == true
-								// 	&& Argde.precomputation['sentiment'] == true
-								// 	&& Argde.precomputation['damage'] == true
-								// 	&& Argde.precomputation['image_relevancy'] == true)
-								// 	{
-								// 		clearInterval(interval);
-								// 		req.session.collection = collection_name;
-								// 		return res.redirect('/complete');
-								// 	}
-								// }, 100);
 							}
 						});
 					}
