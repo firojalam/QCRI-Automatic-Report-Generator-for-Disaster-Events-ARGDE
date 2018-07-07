@@ -10,6 +10,8 @@
 }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
 <script src="/interface.js"></script>
 
       <div class="card mb-3">
@@ -270,7 +272,7 @@
         <div class="card-body">
           <div id="DamageChart"></div>
           <p>
-            <button class="btn btn-primary damage-data-button" type="button" data-toggle="collapse" data-target="#damage_tweets" aria-expanded="false" aria-controls="damage_tweets"><span class="badge badge-light damage-tweet-num"></span>
+            <button class="btn btn-primary damage-data-button" type="button" data-toggle="collapse" data-target="#damage_tweets" aria-expanded="false" aria-controls="damage_tweets">
               Tweets Data
             </button>
           </p>
@@ -289,15 +291,10 @@
               <div class="card-body">
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="damage_tweets_card" role="tabpanel" aria-labelledby="tweets-tab">
-                    <!-- <div class = "card-deck" id = "damage_tweets_load">
-                    </div> -->
 
 
-                    <table id="damage_table" class="table">
-                      
-                    </table>
-
-
+                    <div id = "damage_tweets_load">
+                    </div>
 
                     <br>
                     <nav aria-label="damage_tweets_card_pagination">
