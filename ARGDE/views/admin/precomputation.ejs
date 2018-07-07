@@ -12,7 +12,7 @@
     </div>
     <br>
     <% if(flash && flash.err){ %>
-      <div class="alert alert-success alert-dismissible">
+      <div class="alert alert-danger alert-dismissible">
         <% flash.err.forEach(function(error){ %>
           <span>
             <%= error.message %>
