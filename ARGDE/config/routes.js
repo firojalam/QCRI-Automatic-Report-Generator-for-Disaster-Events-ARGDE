@@ -43,6 +43,9 @@ module.exports.routes = {
   '/visualize/:name': {
     controller: 'DataController',
     action: 'retrieveAll',
+    locals: {
+      layout: 'Custom Layouts/onload_layout'
+    }
   },
   '/allAdmins': {
     controller: 'UserController',
@@ -88,10 +91,17 @@ module.exports.routes = {
   '/precomputation_progress': {
     controller: 'ArgdeController',
     action: 'precompute_done',
+    locals: {
+      layout: 'Custom Layouts/onload_layout'
+    },
   },
   '/progress': {
     controller: 'ArgdeController',
     action: 'getProgress',
+    locals: {
+      layout: 'Custom Layouts/onload_layout'
+    },
+
   },
   '/reset_password/:username': {
     controller: 'UserController',
