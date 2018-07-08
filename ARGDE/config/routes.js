@@ -44,7 +44,7 @@ module.exports.routes = {
     controller: 'DataController',
     action: 'retrieveAll',
     locals: {
-      layout: 'Custom Layouts/onload_layout'
+      layout: 'Layouts/onload_layout'
     }
   },
   '/allAdmins': {
@@ -92,14 +92,14 @@ module.exports.routes = {
     controller: 'ArgdeController',
     action: 'precompute_done',
     locals: {
-      layout: 'Custom Layouts/onload_layout'
+      layout: 'Layouts/onload_layout'
     },
   },
   '/progress': {
     controller: 'ArgdeController',
     action: 'getProgress',
     locals: {
-      layout: 'Custom Layouts/onload_layout'
+      layout: 'Layouts/onload_layout'
     },
 
   },
@@ -115,6 +115,9 @@ module.exports.routes = {
   'GET /search': {
     controller: 'UserController',
     action: 'search',
+    locals: {
+      layout: 'Layouts/onload_layout'
+    },
   },
   'GET /login': {
     controller: 'SessionController',

@@ -1,7 +1,7 @@
 <% title = 'Visualizations' %>
 
 <style>
-.i-role-exclude, .graphical-report__tooltip__exclude, {
+.i-role-exclude, .graphical-report__tooltip__exclude{
   display:none;
 }
 .frequency-data-button, .relevancy-data-button, .class-data-button, .damage-data-button, .sentiment-data-button{
@@ -428,3 +428,7 @@
         </div>
       </div>
     </div>
+
+    <script>
+      var queries = <%- JSON.stringify(queries) %>;
+    </script>
