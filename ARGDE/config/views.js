@@ -11,7 +11,7 @@
  * http://sailsjs.org/#!/documentation/concepts/Views
  */
 
-module.exports.views = {
+ module.exports.views = {
 
   /****************************************************************************
   *                                                                           *
@@ -75,7 +75,7 @@ module.exports.views = {
   *                                                                           *
   ****************************************************************************/
 
-  layout: 'Layouts/general_layout',
+  layout: 'layouts/general_layout',
 
   /****************************************************************************
   *                                                                           *

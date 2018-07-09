@@ -11,7 +11,7 @@
  *          - pass string to render specified view
  */
 
-module.exports = function created (data, options) {
+ module.exports = function created (data, options) {
 
   // Get access to `req`, `res`, & `sails`
   var req = this.req;

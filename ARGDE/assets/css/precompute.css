@@ -1,30 +1,30 @@
 #precompute_page {
-  padding-top: 3em;
-  padding-bottom: 3em;
+	padding-top: 3em;
+	padding-bottom: 3em;
 }
 
 #precompute_heading {
-  text-align: center;
+	text-align: center;
 }
 
 #gotoURL a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 #gotoURL a:hover{
-  text-decoration: none;
+	text-decoration: none;
 }
 
 #gotoURL a:link{
-  text-decoration: none;
+	text-decoration: none;
 }
 
 
 #gotoURL a:active{
-  text-decoration: none;
+	text-decoration: none;
 }
 
 
 #gotoURL a:visited{
-  text-decoration: none;
+	text-decoration: none;
 }

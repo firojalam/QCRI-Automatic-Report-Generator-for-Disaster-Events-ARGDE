@@ -562,6 +562,7 @@ generate.frequency = function(res)
     sockets.tweets.get(queries['tweets']+'?filter='+packet['filter']+'&resolution='+packet['resolution']+'&code='+packet['code']+'&res_value='+packet['res_value']+'&value='+packet['value'], function(data, json_obj){
       tweet_texts.frequency = data['texts'];
       tweet_images.frequency = data['images'];
+      $(".frequency-data-button").toggle();
       function show_tweets()
       {
         $(".frequency-data-button").show();
@@ -587,7 +588,7 @@ generate.frequency = function(res)
             let time = tweet_texts.frequency[i].time;
             $('#frequency_tweets_load').html($('#frequency_tweets_load').html()
              +"<table class='table'"+"id='ft_page"+current_page+"'>"
-              +'<tr>'
+              +'<tr >'
                 +'<th>#</th>'
                 +'<th>Tweet Text</th>'
                 +'<th>Time</th>'

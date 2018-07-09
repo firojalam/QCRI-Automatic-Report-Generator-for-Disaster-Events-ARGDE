@@ -25,37 +25,25 @@ module.exports = {
 		}
 
 		Argde.query("select min("+Argde.attributes.updatedAt.columnName+") from "+Argde.tableName+" where "
-		+Argde.attributes.code.columnName+"='"+collection_name+"';",
-		function(err, result){
-			if(err)
-			{
-				sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
-				return res.serverError(err);
-			}
-			else if(result.rows[0].min == null)
-			{
-				let invalidCollectionNameError = [{name: 'invalidCollectionName', message: 'Invalid code entered. Please enter a valid collection code.'}];
-				req.session.flash = {err: invalidCollectionNameError};
-				return res.redirect('/precompute');
-			}
-			else
-			{
-				min_date = new Date(result.rows[0].min);
-				Argde.query("select max("+Argde.attributes.updatedAt.columnName+") from "+Argde.tableName+" where "
-				+Argde.attributes.code.columnName+"='"+collection_name+"';",
-				function(err, result){
-					if(err)
-					{
-						sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
-						return res.serverError(err);
-					}
-					else
-					{
-						max_date = new Date(result.rows[0].max);
-						Argde.query("select date(max("+Argde.attributes.updatedAt.columnName+"))-date(min("
-						+Argde.attributes.updatedAt.columnName
-						+")) from "+Argde.tableName+" where "+Argde.attributes.code.columnName+"='"+req.param('collection')
-						+"';",function(err, result){
+			+Argde.attributes.code.columnName+"='"+collection_name+"';",
+			function(err, result){
+				if(err)
+				{
+					sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
+					return res.serverError(err);
+				}
+				else if(result.rows[0].min == null)
+				{
+					let invalidCollectionNameError = [{name: 'invalidCollectionName', message: 'Invalid code entered. Please enter a valid collection code.'}];
+					req.session.flash = {err: invalidCollectionNameError};
+					return res.redirect('/precompute');
+				}
+				else
+				{
+					min_date = new Date(result.rows[0].min);
+					Argde.query("select max("+Argde.attributes.updatedAt.columnName+") from "+Argde.tableName+" where "
+						+Argde.attributes.code.columnName+"='"+collection_name+"';",
+						function(err, result){
 							if(err)
 							{
 								sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
@@ -63,18 +51,30 @@ module.exports = {
 							}
 							else
 							{
-								date_diff = result.rows[0]['?column?'];
-								paramList={'min':min_date, 'max':max_date, 'diff':date_diff, 'collection': req.param('collection')};
-								minuteController.createPreMinutes(paramList);
-								labelController.createPreLabels(paramList);
-								hourController.createPreHours(paramList);
-								dayController.createPreDays(paramList);
+								max_date = new Date(result.rows[0].max);
+								Argde.query("select date(max("+Argde.attributes.updatedAt.columnName+"))-date(min("
+									+Argde.attributes.updatedAt.columnName
+									+")) from "+Argde.tableName+" where "+Argde.attributes.code.columnName+"='"+req.param('collection')
+									+"';",function(err, result){
+										if(err)
+										{
+											sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
+											return res.serverError(err);
+										}
+										else
+										{
+											date_diff = result.rows[0]['?column?'];
+											paramList={'min':min_date, 'max':max_date, 'diff':date_diff, 'collection': req.param('collection')};
+											minuteController.createPreMinutes(paramList);
+											labelController.createPreLabels(paramList);
+											hourController.createPreHours(paramList);
+											dayController.createPreDays(paramList);
+										}
+									});
 							}
 						});
-					}
-				});
-			}
-		});
+				}
+			});
 		req.session.collection = collection_name;
 		res.redirect('/precomputation_progress');
 	},

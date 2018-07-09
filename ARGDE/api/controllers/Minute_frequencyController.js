@@ -18,32 +18,32 @@ module.exports = {
 
 		var _date_without_time = String(start_year)+"-"+String(start_month)+"-"+String(start_day);
 		var _date = _date_without_time + " " + start_time;
-    var date_val;
+		var date_val;
 
 		var query_p1 = "select count("+Argde.attributes.updatedAt.columnName+") from "+Argde.tableName+" where "
 		+Argde.attributes.updatedAt.columnName+" >= timestamp '"+_date+"'+interval '";
 		var query_p2 = " and "+Argde.attributes.updatedAt.columnName+"< timestamp '"+_date+"'+interval '";
-    var sql_query;
+		var sql_query;
 
 		var iterations = ((end_date-new Date(start_year,start_month-1,start_day,start_hour,start_mins,0))/60000)+1;
 
-    for(let i=1; i<=iterations; i++)
-    {
-      sql_query = query_p1+(i-1)+" minutes'"+query_p2+i+" minutes' and "+Argde.attributes.code.columnName+"='"
+		for(let i=1; i<=iterations; i++)
+		{
+			sql_query = query_p1+(i-1)+" minutes'"+query_p2+i+" minutes' and "+Argde.attributes.code.columnName+"='"
 			+params['collection']+"';";
-      Argde.query(sql_query,function(err, result){
+			Argde.query(sql_query,function(err, result){
 				if(err)
 				{
 					sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 				}
-        else
-        {
+				else
+				{
 					let date_query = "select date(timestamp '"+_date+"'+interval '"+(i-1)+" minutes');";
-          Argde.query(date_query, function(_err, newDate){
-            if(err)
-            {
-              sails.log.error("Error name: "+_err.name+" 	"+"Error code: "+_err.code);
-            }
+					Argde.query(date_query, function(_err, newDate){
+						if(err)
+						{
+							sails.log.error("Error name: "+_err.name+" 	"+"Error code: "+_err.code);
+						}
 						else
 						{
 							let retDate = new Date(newDate.rows[0]['date']);
@@ -65,40 +65,40 @@ module.exports = {
 									sails.log.info("Writing to database, minute-wise for "+date_val+" "+_hour+":"+_minute+":00");
 
 									Minute_frequency.query("update "+Minute_frequency.tableName+" set "
-									+Minute_frequency.attributes.frequency.columnName+"="+result.rows[0].count+" where "
-									+Minute_frequency.attributes.date.columnName+"='"+date_val+"' and "
-									+Minute_frequency.attributes.hour.columnName+"='"+_hour+"' and "
-									+Minute_frequency.attributes.minute.columnName+"="+_minute+" and "
-									+Minute_frequency.attributes.code.columnName+"='"+params['collection']+"';insert into "
-									+Minute_frequency.tableName+" select'"+date_val+"','"+_hour+"',"+_minute+","
-									+result.rows[0].count+",'"+params['collection']+"' where not exists(select 1 from "
-									+Minute_frequency.tableName+" where "+Minute_frequency.attributes.date.columnName+"='"
-									+date_val+"' and "+Minute_frequency.attributes.hour.columnName+"='"+_hour+"' and "
-									+Minute_frequency.attributes.minute.columnName+"="+_minute+" and "
-									+Minute_frequency.attributes.code.columnName+"='"+params['collection']+"');",
-									function(err, retValue){
-										flag = false;
-										if(err)
-										{
-											sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
-										}
-										else
-										{
-											sails.log.info("Minute "+date_val+" "+_hour+":"+_minute+":00"+" OK");
-											count += 1;
-											if(count == iterations)
+										+Minute_frequency.attributes.frequency.columnName+"="+result.rows[0].count+" where "
+										+Minute_frequency.attributes.date.columnName+"='"+date_val+"' and "
+										+Minute_frequency.attributes.hour.columnName+"='"+_hour+"' and "
+										+Minute_frequency.attributes.minute.columnName+"="+_minute+" and "
+										+Minute_frequency.attributes.code.columnName+"='"+params['collection']+"';insert into "
+										+Minute_frequency.tableName+" select'"+date_val+"','"+_hour+"',"+_minute+","
+										+result.rows[0].count+",'"+params['collection']+"' where not exists(select 1 from "
+										+Minute_frequency.tableName+" where "+Minute_frequency.attributes.date.columnName+"='"
+										+date_val+"' and "+Minute_frequency.attributes.hour.columnName+"='"+_hour+"' and "
+										+Minute_frequency.attributes.minute.columnName+"="+_minute+" and "
+										+Minute_frequency.attributes.code.columnName+"='"+params['collection']+"');",
+										function(err, retValue){
+											flag = false;
+											if(err)
 											{
-												Argde.precomputation['minute'] = true;
-												sails.log.info("Minute-wise precomputation complete");
+												sails.log.error("Error name: "+err.name+"	 "+"Error code: "+err.code);
 											}
-										}
-									});
+											else
+											{
+												sails.log.info("Minute "+date_val+" "+_hour+":"+_minute+":00"+" OK");
+												count += 1;
+												if(count == iterations)
+												{
+													Argde.precomputation['minute'] = true;
+													sails.log.info("Minute-wise precomputation complete");
+												}
+											}
+										});
 								}
 							});
 						}
-          });
-        }
-      });
-    }
+					});
+				}
+			});
+		}
 	},
 };

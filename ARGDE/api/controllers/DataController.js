@@ -1,92 +1,92 @@
 module.exports = {
 	retrieveMinute: async function(req, res){
-			await Minute_frequency.find({
-				where: { code: req.param('collection'), },
-				sort: { date: 1, hour: 1, minute: 1,},
-				}).exec(function(err, records){
-				if(err)
+		await Minute_frequency.find({
+			where: { code: req.param('collection'), },
+			sort: { date: 1, hour: 1, minute: 1,},
+		}).exec(function(err, records){
+			if(err)
+			{
+				sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
+				return res.serverError(err);
+			}
+			else
+			{
+				sails.log.info("Minute data retrieved, passing to view");
+				for(i in records)
 				{
-					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
-					return res.serverError(err);
+					records[i].code = req.param('collection');
 				}
-				else
-				{
-					sails.log.info("Minute data retrieved, passing to view");
-					for(i in records)
-					{
-						records[i].code = req.param('collection');
-					}
-					res.send({minute_data: records});
-				}
-			});
+				res.send({minute_data: records});
+			}
+		});
 	},
 	retrieveHour: async function(req, res){
-			await Hour_frequency.find({
-				where: { code: req.param('collection'), },
-				sort: { date: 1, hour: 1,},
-			}).exec(function(err, records){
-				if(err)
+		await Hour_frequency.find({
+			where: { code: req.param('collection'), },
+			sort: { date: 1, hour: 1,},
+		}).exec(function(err, records){
+			if(err)
+			{
+				sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
+				return res.serverError(err);
+			}
+			else
+			{
+				sails.log.info("Hour data retrieved, passing to view");
+				for(i in records)
 				{
-					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
-					return res.serverError(err);
+					records[i].code = req.param('collection');
 				}
-				else
-				{
-					sails.log.info("Hour data retrieved, passing to view");
-					for(i in records)
-					{
-						records[i].code = req.param('collection');
-					}
-					res.send({hour_data: records});
-				}
-			});
+				res.send({hour_data: records});
+			}
+		});
 	},
 	retrieveDay: async function(req, res){
-			await Day_frequency.find({
-				where: { code: req.param('collection'), },
-				sort: { date: 1, },
-			}).exec(function(err, records){
-				if(err)
+		await Day_frequency.find({
+			where: { code: req.param('collection'), },
+			sort: { date: 1, },
+		}).exec(function(err, records){
+			if(err)
+			{
+				sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
+				return res.serverError(err);
+			}
+			else
+			{
+				sails.log.info("Day data retrieved, passing to view");
+				for(i in records)
 				{
-					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
-					return res.serverError(err);
+					records[i].code = req.param('collection');
 				}
-				else
-				{
-					sails.log.info("Day data retrieved, passing to view");
-					for(i in records)
-					{
-						records[i].code = req.param('collection');
-					}
-					res.send({day_data: records});
-				}
-			});
+				res.send({day_data: records});
+			}
+		});
 	},
 	retrieveLabel: async function(req, res){
-			await Label_frequency.find({
-				where: { code: req.param('collection'), },
-				sort: { date: 1, hour: 1, minute: 1,},
-			}).exec(function(err, records){
-				if(err)
+		await Label_frequency.find({
+			where: { code: req.param('collection'), },
+			sort: { date: 1, hour: 1, minute: 1,},
+		}).exec(function(err, records){
+			if(err)
+			{
+				sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
+				return res.serverError(err);
+			}
+			else
+			{
+				sails.log.info("Label data retrieved, passing to view");
+				for(i in records)
 				{
-					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
-					return res.serverError(err);
+					records[i].code = req.param('collection');
 				}
-				else
-				{
-					sails.log.info("Label data retrieved, passing to view");
-					for(i in records)
-					{
-						records[i].code = req.param('collection');
-					}
-					res.send({label_data: records});
-				}
-			});
+				res.send({label_data: records});
+			}
+		});
 	},
 	retrieveSentiment: function(req, res){
 		Argde.query("select distinct "+Argde.attributes.sentiment.columnName+" from "
-		+Argde.tableName+" where "+Argde.attributes.sentiment.columnName+" is not NULL;",
-		function(err, sentiments){
+			+Argde.tableName+" where "+Argde.attributes.sentiment.columnName+" is not NULL;",
+			function(err, sentiments){
 				if(err)
 				{
 					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
@@ -135,12 +135,12 @@ module.exports = {
 					});
 				}
 			}
-		);
+			);
 	},
 	retrieveClass: function(req, res){
 		Argde.query("select distinct "+Argde.attributes.aidr_class_label.columnName+" from "
-		+Argde.tableName+" where "+Argde.attributes.aidr_class_label.columnName+" is not NULL;",
-		function(err, classes){
+			+Argde.tableName+" where "+Argde.attributes.aidr_class_label.columnName+" is not NULL;",
+			function(err, classes){
 				if(err)
 				{
 					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
@@ -189,12 +189,12 @@ module.exports = {
 					});
 				}
 			}
-		);
+			);
 	},
 	retrieveDamage: function(req, res){
 		Argde.query("select distinct "+Argde.attributes.image_damage_class.columnName+" from "
-		+Argde.tableName+" where "+Argde.attributes.image_damage_class.columnName+" is not NULL;",
-		function(err, damage_classes){
+			+Argde.tableName+" where "+Argde.attributes.image_damage_class.columnName+" is not NULL;",
+			function(err, damage_classes){
 				if(err)
 				{
 					sails.log.error("Error name: "+err.name+"	"+"Error code: "+err.code);
@@ -243,7 +243,7 @@ module.exports = {
 					});
 				}
 			}
-		);
+			);
 	},
 	retrieveRelevancy: function(req, res){
 		var relevancy_values = ['ir_true', 'ir_false'];
@@ -297,49 +297,49 @@ module.exports = {
 		switch(filter)
 		{
 			case 'class':
-					query_text += Argde.attributes.aidr_class_label.columnName+"='"+filter_value+"' and ";
-					query_img += Argde.attributes.aidr_class_label.columnName+"='"+filter_value+"' and ";
-					break;
+			query_text += Argde.attributes.aidr_class_label.columnName+"='"+filter_value+"' and ";
+			query_img += Argde.attributes.aidr_class_label.columnName+"='"+filter_value+"' and ";
+			break;
 			case 'sentiment':
-					query_text += Argde.attributes.sentiment.columnName+"='"+filter_value+"' and ";
-					query_img += Argde.attributes.sentiment.columnName+"='"+filter_value+"' and ";
-					break;
+			query_text += Argde.attributes.sentiment.columnName+"='"+filter_value+"' and ";
+			query_img += Argde.attributes.sentiment.columnName+"='"+filter_value+"' and ";
+			break;
 			case 'relevancy':
-					query_text += Argde.attributes.image_relevancy.columnName+"='"+filter_value+"' and ";
-					query_img += Argde.attributes.image_relevancy.columnName+"='"+filter_value+"' and ";
-					break;
+			query_text += Argde.attributes.image_relevancy.columnName+"='"+filter_value+"' and ";
+			query_img += Argde.attributes.image_relevancy.columnName+"='"+filter_value+"' and ";
+			break;
 			case 'damage':
-					query_text += Argde.attributes.image_damage_class.columnName+"='"+filter_value+"' and ";
-					query_img += Argde.attributes.image_damage_class.columnName+"='"+filter_value+"' and ";
-					break;
+			query_text += Argde.attributes.image_damage_class.columnName+"='"+filter_value+"' and ";
+			query_img += Argde.attributes.image_damage_class.columnName+"='"+filter_value+"' and ";
+			break;
 			case 'frequency':
-					break;
+			break;
 			default:
-					break;
+			break;
 		}
 
 		switch(resolution)
 		{
 			case 'minute':
-					query_text += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
-					+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 minute'";
-					query_img += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
-					+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 minute'";
-					break;
+			query_text += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
+			+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 minute'";
+			query_img += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
+			+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 minute'";
+			break;
 			case 'hour':
-					query_text += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
-					+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 hour'";
-					query_img += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
-					+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 hour'";
-					break;
+			query_text += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
+			+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 hour'";
+			query_img += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
+			+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 hour'";
+			break;
 			case 'day':
-					query_text += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
-					+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 day'";
-					query_img += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
-					+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 day'";
-					break;
+			query_text += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
+			+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 day'";
+			query_img += Argde.attributes.updatedAt.columnName+">=timestamp '"+res_value+"' and "
+			+Argde.attributes.updatedAt.columnName+"<timestamp '"+res_value+"'+interval '1 day'";
+			break;
 			default:
-					break;
+			break;
 		}
 
 		query_text += " and "+Argde.attributes.code.columnName+"='"+collection+"' order by "+Argde.attributes.updatedAt.columnName+" asc;";
@@ -386,19 +386,19 @@ module.exports = {
 	retrieveAll: function(req, res){
 		let collection = req.param('name');
 		var queries = {
-		  minute: "/get_minute?collection="+collection,
+			minute: "/get_minute?collection="+collection,
 
-	    hour: "/get_hour?collection="+collection,
+			hour: "/get_hour?collection="+collection,
 
-	    day: "/get_day?collection="+collection,
+			day: "/get_day?collection="+collection,
 
-	    label: "/get_label?collection="+collection,
+			label: "/get_label?collection="+collection,
 
-	    class: "/get_class?collection="+collection,
+			class: "/get_class?collection="+collection,
 
-	    sentiment: "/get_sentiment?collection="+collection,
+			sentiment: "/get_sentiment?collection="+collection,
 
-	    damage: "/get_damage?collection="+collection,
+			damage: "/get_damage?collection="+collection,
 
 			relevancy: "/get_relevancy?collection="+collection,
 

@@ -1,8 +1,8 @@
 var bcrypt = require('bcrypt');
 module.exports = {
 	get_login: function(req, res){
-    return res.view('user/login');
-  },
+		return res.view('user/login');
+	},
 	login: function(req, res){
 		if(!req.param('username') || !req.param('password'))
 		{
@@ -37,8 +37,8 @@ module.exports = {
 					else
 					{
 						let now_date = new Date();
-					  let expiry_date = new Date(now_date.getTime() + 600000);
-					  req.session.cookie.expires = expiry_date;
+						let expiry_date = new Date(now_date.getTime() + 600000);
+						req.session.cookie.expires = expiry_date;
 						req.session.authenticated = true;
 						req.session.User = user;
 						delete req.session.User.encryptedPassword;

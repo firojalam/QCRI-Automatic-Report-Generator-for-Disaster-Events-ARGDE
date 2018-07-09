@@ -9,7 +9,7 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.http.html
  */
 
-module.exports.http = {
+ module.exports.http = {
 
   /****************************************************************************
   *                                                                           *
@@ -30,30 +30,30 @@ module.exports.http = {
   *                                                                          *
   ***************************************************************************/
 
-    refreshSessionCookie: function(req, res, next){
-      req.session._garbage = Date();
-      req.session.touch();
-      return next();
-    },
+  refreshSessionCookie: function(req, res, next){
+    req.session._garbage = Date();
+    req.session.touch();
+    return next();
+  },
 
-    order: [
-      'startRequestTimer',
-      'cookieParser',
-      'session',
-      'refreshSessionCookie',
-      'myRequestLogger',
-      'bodyParser',
-      'handleBodyParserError',
-      'compress',
-      'methodOverride',
-      'poweredBy',
-      '$custom',
-      'router',
-      'www',
-      'favicon',
-      '404',
-      '500'
-    ],
+  order: [
+  'startRequestTimer',
+  'cookieParser',
+  'session',
+  'refreshSessionCookie',
+  'myRequestLogger',
+  'bodyParser',
+  'handleBodyParserError',
+  'compress',
+  'methodOverride',
+  'poweredBy',
+  '$custom',
+  'router',
+  'www',
+  'favicon',
+  '404',
+  '500'
+  ],
 
   /****************************************************************************
   *                                                                           *

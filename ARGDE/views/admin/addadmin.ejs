@@ -1,51 +1,51 @@
 <% title = 'Add Admin' %>
 <div class ="content">
-<div class="container" id="adduser">
-    <div class="row vertical-offset-100">
-        <div class="col-lg-4 offset-md-4">
-            <div class="card">
-                <div class="card-header">
-                      <h3 class="card-title">Add new Admin</h3>
-                </div>
-                <div class="card-body">
-                    <form accept-charset="UTF-8" role="form" action="/add_admin" method="post" id="adduserform">
-                        <fieldset>
-                          <% if(flash && flash.err){ %>
-                            <div class="alert alert-danger alert-dismissible">
-                              <% flash.err.forEach(function(error){ %>
-                                <span>
-                                  <%= error.message %>
-                                </span>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              <% }) %>
-                            </div>
-                          <% } %>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Name" name="name" type="text"/>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Username" name="username" type="text"/>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Email" name="email" type="text"/>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Password (if blank, then default)" name="password" type="password"
-                                value=""/>
-                            </div>
-                            <div class="form-group form-check">
-                              <input name="super_admin" type="checkbox" class="form-check-input" id="superadmin">
-                              <label class="form-check-label" for="superadmin">Super Admin</label>
-                            </div>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Add Admin"/>
-                            <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-                        </fieldset>
-                    </form>
+    <div class="container" id="adduser">
+        <div class="row vertical-offset-100">
+            <div class="col-lg-4 offset-md-4">
+                <div class="card">
+                    <div class="card-header">
+                          <h3 class="card-title">Add new Admin</h3>
+                    </div>
+                    <div class="card-body">
+                        <form accept-charset="UTF-8" role="form" action="/add_admin" method="post" id="adduserform">
+                            <fieldset>
+                              <% if(flash && flash.err){ %>
+                                <div class="alert alert-danger alert-dismissible">
+                                  <% flash.err.forEach(function(error){ %>
+                                    <span>
+                                      <%= error.message %>
+                                    </span>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  <% }) %>
+                                </div>
+                              <% } %>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Name" name="name" type="text"/>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Username" name="username" type="text"/>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Email" name="email" type="text"/>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Password (if blank, then default)" name="password" type="password"
+                                    value=""/>
+                                </div>
+                                <div class="form-group form-check">
+                                  <input name="super_admin" type="checkbox" class="form-check-input" id="superadmin">
+                                  <label class="form-check-label" for="superadmin">Super Admin</label>
+                                </div>
+                                <input class="btn btn-lg btn-success btn-block" type="submit" value="Add Admin"/>
+                                <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>

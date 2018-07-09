@@ -10,7 +10,7 @@
  * http://sailsjs.org/#!/documentation/concepts/Logging
  */
 
-module.exports.log = {
+ module.exports.log = {
 
   /***************************************************************************
   *                                                                          *

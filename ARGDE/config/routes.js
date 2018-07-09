@@ -19,7 +19,7 @@
  * For more information on configuring custom routes, check out:
  * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
-module.exports.routes = {
+ module.exports.routes = {
 
   /***************************************************************************
   *                                                                          *
@@ -44,7 +44,7 @@ module.exports.routes = {
     controller: 'DataController',
     action: 'retrieveAll',
     locals: {
-      layout: 'Layouts/onload_layout'
+      layout: 'layouts/onload_layout'
     }
   },
   '/allAdmins': {
@@ -92,14 +92,14 @@ module.exports.routes = {
     controller: 'ArgdeController',
     action: 'precompute_done',
     locals: {
-      layout: 'Layouts/onload_layout'
+      layout: 'layouts/onload_layout'
     },
   },
   '/progress': {
     controller: 'ArgdeController',
     action: 'getProgress',
     locals: {
-      layout: 'Layouts/onload_layout'
+      layout: 'layouts/onload_layout'
     },
 
   },
