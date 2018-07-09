@@ -116,7 +116,7 @@
     controller: 'UserController',
     action: 'search',
     locals: {
-      layout: 'Layouts/onload_layout'
+      layout: 'layouts/onload_layout'
     },
   },
   'GET /login': {
