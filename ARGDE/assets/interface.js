@@ -285,6 +285,8 @@ generate.class = function(res)
       tweet_images.class = data['images'];
       function show_tweets()
       {
+        $(".class-data-button").empty();
+        $(".class-data-button").text('Tweets Data : '+packet['res_value']);
         $(".class-data-button").show();
         var tweet_count = 1;
         var current_page = 0;
@@ -562,10 +564,12 @@ generate.frequency = function(res)
     sockets.tweets.get(queries['tweets']+'?filter='+packet['filter']+'&resolution='+packet['resolution']+'&code='+packet['code']+'&res_value='+packet['res_value']+'&value='+packet['value'], function(data, json_obj){
       tweet_texts.frequency = data['texts'];
       tweet_images.frequency = data['images'];
-      $(".frequency-data-button").toggle();
       function show_tweets()
       {
+        $(".frequency-data-button").empty();
+        $(".frequency-data-button").text('Tweets Data : '+packet['res_value']);
         $(".frequency-data-button").show();
+
         var tweet_count = 1;
         var current_page = 0;
         var total_pages = 0;
@@ -848,7 +852,9 @@ generate.sentiment = function(res)
       tweet_texts.sentiment = data['texts'];
       tweet_images.sentiment = data['images'];
       function show_tweets()
-      {
+      {  
+        $(".sentiment-data-button").empty();
+        $(".sentiment-data-button").text('Tweets Data : '+packet['res_value']);
         $(".sentiment-data-button").show();
         var tweet_count = 1;
         var current_page = 0;
@@ -1131,6 +1137,8 @@ generate.damage = function(res)
       tweet_images.damage = data['images'];
       function show_tweets()
       {
+        $(".damage-data-button").empty();
+        $(".damage-data-button").text('Tweets Data : '+packet['res_value']);
         $(".damage-data-button").show();
         var tweet_count = 1;
         var current_page = 0;
@@ -1420,6 +1428,8 @@ generate.relevancy = function(res)
       tweet_images.relevancy = data['images'];
       function show_tweets()
       {
+        $(".relevancy-data-button").empty();
+        $(".relevancy-data-button").text('Tweets Data : '+packet['res_value']);
         $(".relevancy-data-button").show();
         var tweet_count = 1;
         var current_page = 0;
