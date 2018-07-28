@@ -322,7 +322,7 @@ generate.class = function(res)
                 +'<td>'+new Date(time)+'</td>'
                 +'<td><a href="'+tLink+'" target="_blank"><button type="button" class="btn btn-primary">View Tweet</button></a></td>'
               +'</tr>'
-            + "</table>");
+             +"</table>");
       
             let dom_id = "#ct_page"+current_page;
             $(dom_id).hide();
@@ -333,7 +333,7 @@ generate.class = function(res)
               let tLink = findTwitterLink(tweet);
               let card_id = "#ct_page"+current_page;
               $(card_id).html($(card_id).html()
-                 +'<tr>'
+                +'<tr>'
                   +'<td>'+(tweet_count++)+'</td>'
                   +'<td>'+tweet+'</td>'
                   +'<td>'+new Date(time)+'</td>'
@@ -604,7 +604,7 @@ generate.frequency = function(res)
                 +'<td>'+new Date(time)+'</td>'
                 +'<td><a href="'+tLink+'" target="_blank"><button type="button" class="btn btn-primary">View Tweet</button></a></td>'
               +'</tr>'
-            + "</table>");
+             +"</table>");
       
             let dom_id = "#ft_page"+current_page;
             $(dom_id).hide();
@@ -615,7 +615,7 @@ generate.frequency = function(res)
               let tLink = findTwitterLink(tweet);
               let card_id = "#ft_page"+current_page;
               $(card_id).html($(card_id).html()
-                 +'<tr>'
+                +'<tr>'
                   +'<td>'+(tweet_count++)+'</td>'
                   +'<td>'+tweet+'</td>'
                   +'<td>'+new Date(time)+'</td>'
@@ -890,7 +890,7 @@ generate.sentiment = function(res)
                 +'<td>'+new Date(time)+'</td>'
                 +'<td><a href="'+tLink+'" target="_blank"><button type="button" class="btn btn-primary">View Tweet</button></a></td>'
               +'</tr>'
-            + "</table>");
+             + "</table>");
       
             let dom_id = "#st_page"+current_page;
             $(dom_id).hide();
@@ -901,7 +901,7 @@ generate.sentiment = function(res)
               let tLink = findTwitterLink(tweet);
               let card_id = "#st_page"+current_page;
               $(card_id).html($(card_id).html()
-                 +'<tr>'
+                +'<tr>'
                   +'<td>'+(tweet_count++)+'</td>'
                   +'<td>'+tweet+'</td>'
                   +'<td>'+new Date(time)+'</td>'
@@ -1174,7 +1174,7 @@ generate.damage = function(res)
                 +'<td>'+new Date(time)+'</td>'
                 +'<td><a href="'+tLink+'" target="_blank"><button type="button" class="btn btn-primary">View Tweet</button></a></td>'
               +'</tr>'
-            + "</table>");
+             + "</table>");
       
             let dom_id = "#dt_page"+current_page;
             $(dom_id).hide();
@@ -1185,7 +1185,7 @@ generate.damage = function(res)
               let tLink = findTwitterLink(tweet);
               let card_id = "#dt_page"+current_page;
               $(card_id).html($(card_id).html()
-                 +'<tr>'
+                +'<tr>'
                   +'<td>'+(tweet_count++)+'</td>'
                   +'<td>'+tweet+'</td>'
                   +'<td>'+new Date(time)+'</td>'
@@ -1465,7 +1465,7 @@ generate.relevancy = function(res)
                 +'<td>'+new Date(time)+'</td>'
                 +'<td><a href="'+tLink+'" target="_blank"><button type="button" class="btn btn-primary">View Tweet</button></a></td>'
               +'</tr>'
-            + "</table>");
+             +"</table>");
       
             let dom_id = "#rt_page"+current_page;
             $(dom_id).hide();
@@ -1476,7 +1476,7 @@ generate.relevancy = function(res)
               let tLink = findTwitterLink(tweet);
               let card_id = "#rt_page"+current_page;
               $(card_id).html($(card_id).html()
-                 +'<tr>'
+                +'<tr>'
                   +'<td>'+(tweet_count++)+'</td>'
                   +'<td>'+tweet+'</td>'
                   +'<td>'+new Date(time)+'</td>'
