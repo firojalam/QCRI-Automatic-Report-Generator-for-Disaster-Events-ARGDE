@@ -28,9 +28,9 @@
   * Installed by default.                                                    *
   *                                                                          *
   ***************************************************************************/
-  localDiskDb: {
-    adapter: 'sails-disk'
-  },
+  // localDiskDb: {
+  //   adapter: 'sails-disk'
+  // },
 
   /***************************************************************************
   *                                                                          *
@@ -74,14 +74,14 @@
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  postgresServer: {
-    adapter: 'sails-postgresql',
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    password: 'postgres',
-    database: 'postgres',
-  },
+  // postgresServer: {
+  //   adapter: 'sails-postgresql',
+  //   host: 'localhost',
+  //   port: 5432,
+  //   user: 'postgres',
+  //   password: 'postgres',
+  //   database: 'postgres',
+  // },
 
 
   /***************************************************************************
