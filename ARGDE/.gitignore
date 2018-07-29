@@ -42,6 +42,8 @@
 #config/local.js
 #config/misc.js
 
+package-lock.json
+
 
 ################################################
 # Dependencies
