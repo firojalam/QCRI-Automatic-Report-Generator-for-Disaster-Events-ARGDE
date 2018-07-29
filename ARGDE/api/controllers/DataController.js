@@ -289,7 +289,7 @@ module.exports = {
 		var collection = req.param('code');
 		var query_text = "select "+Argde.attributes.tweet_text.columnName+", "
 		+Argde.attributes.createdAt.columnName+" from "+Argde.tableName+" where ";
-		var query_img = "select "+Argde.attributes.image_url.columnName+", "
+		var query_img = "select "+Argde.attributes.image_physical_location.columnName+", "
 		+Argde.attributes.createdAt.columnName+" from "+Argde.tableName+" where ";
 		var res_texts = [];
 		var res_imgs = [];
@@ -374,7 +374,7 @@ module.exports = {
 					{
 						for(i in tweet_images.rows)
 						{
-							let temp = {image: tweet_images.rows[i].image_url, time: tweet_images.rows[i].created_at};
+							let temp = {image: tweet_images.rows[i].image_physical_location, time: tweet_images.rows[i].created_at};
 							res_imgs.push(temp);
 						}
 					}
