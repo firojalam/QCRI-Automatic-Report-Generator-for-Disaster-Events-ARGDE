@@ -1,12 +1,12 @@
 <% title = 'Visualizations' %>
 
 <style>
-.i-role-exclude, .graphical-report__tooltip__exclude{
-  display:none;
-}
-.frequency-data-button, .relevancy-data-button, .class-data-button, .damage-data-button, .sentiment-data-button{
-  display: none;
-}
+  .i-role-exclude, .graphical-report__tooltip__exclude{
+    display:none;
+  }
+  .frequency-data-button, .relevancy-data-button, .class-data-button, .damage-data-button, .sentiment-data-button{
+    display: none;
+  }
 </style>
 
 
@@ -43,6 +43,7 @@
   <div class="card-body">
     <div id="FrequencyChart"></div>
     <p>
+      <br>
       <button class="btn btn-primary frequency-data-button" type="button" data-toggle="collapse" data-target="#frequency_tweets" aria-expanded="false" aria-controls="frequency_tweets">
         Tweets Data
       </button>
@@ -62,32 +63,22 @@
         <div class="card-body">
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="frequency_tweets_card" role="tabpanel" aria-labelledby="tweets-tab-frequency">
-
-              <div id = "frequency_tweets_load">
-              </div>
-
+              <div id = "frequency_tweets_load"></div>
               <br>
               <nav aria-label="frequency_tweets_card_pagination">
-                <ul class="pagination justify-content-center" id = "ft_paginator">
-                </ul>
+                <ul class="pagination justify-content-center" id = "ft_paginator"></ul>
                 <p id = "ft_numinator" style='text-align: center'></p>
               </nav>
               <br>
             </div>
             <div class="tab-pane fade" id="frequency_images_card" role="tabpanel" aria-labelledby="images-tab-frequency">
-              <div id="frequency_images_indicators" class="carousel slide" data-ride="carousel">
-                <ol id="frequency_images_indicator" class="carousel-indicators"></ol>
-                <div id="frequency_images_carousel" class="carousel-inner">
-                </div>
-                <a class="carousel-control-prev" href="#frequency_images_indicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#frequency_images_indicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
+              <div id = "frequency_images_load"></div>
+              <br>
+              <nav aria-label="frequency_images_card_pagination">
+                <ul class="pagination justify-content-center" id = "fi_paginator"></ul>
+                <p id = "fi_numinator" style='text-align: center'></p>
+              </nav>
+              <br>
             </div>
           </div>
         </div>
@@ -126,6 +117,7 @@
   <div class="card-body">
     <div id="SentimentChart"></div>
     <p>
+      <br>
       <button class="btn btn-primary sentiment-data-button" type="button" data-toggle="collapse" data-target="#sentiment_tweets" aria-expanded="false" aria-controls="sentiment_tweets">
         Tweets Data
       </button>
@@ -145,32 +137,22 @@
         <div class="card-body">
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="sentiment_tweets_card" role="tabpanel" aria-labelledby="tweets-tab-sentiment">
-
-              <div id = "sentiment_tweets_load">
-              </div>
-
+              <div id = "sentiment_tweets_load"></div>
               <br>
               <nav aria-label="sentiment_tweets_card_pagination">
-                <ul class="pagination justify-content-center" id = "st_paginator">
-                </ul>
+                <ul class="pagination justify-content-center" id = "st_paginator"></ul>
                 <p id = "st_numinator" style='text-align: center'></p>
               </nav>
               <br>
             </div>
             <div class="tab-pane fade" id="sentiment_images_card" role="tabpanel" aria-labelledby="images-tab-sentiment">
-              <div id="sentiment_images_indicators" class="carousel slide" data-ride="carousel">
-                <ol id="sentiment_images_indicator" class="carousel-indicators"></ol>
-                <div id="sentiment_images_carousel" class="carousel-inner">
-                </div>
-                <a class="carousel-control-prev" href="#sentiment_images_indicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#sentiment_images_indicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
+              <div id = "sentiment_images_load"></div>
+              <br>
+              <nav aria-label="sentiment_images_card_pagination">
+                <ul class="pagination justify-content-center" id = "si_paginator"></ul>
+                <p id = "si_numinator" style='text-align: center'></p>
+              </nav>
+              <br>
             </div>
           </div>
         </div>
@@ -209,6 +191,7 @@
   <div class="card-body">
     <div id="ClassChart"></div>
     <p>
+      <br>
       <button class="btn btn-primary class-data-button" type="button" data-toggle="collapse" data-target="#class_tweets" aria-expanded="false" aria-controls="class_tweets">
         Tweets Data
       </button>
@@ -228,32 +211,22 @@
         <div class="card-body">
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="class_tweets_card" role="tabpanel" aria-labelledby="tweets-tab-class">
-
-              <div id = "class_tweets_load">
-              </div>
-
+              <div id = "class_tweets_load"></div>
               <br>
               <nav aria-label="class_tweets_card_pagination">
-                <ul class="pagination justify-content-center" id = "ct_paginator">
-                </ul>
+                <ul class="pagination justify-content-center" id = "ct_paginator"></ul>
                 <p id = "ct_numinator" style='text-align: center'></p>
               </nav>
               <br>
             </div>
             <div class="tab-pane fade" id="class_images_card" role="tabpanel" aria-labelledby="images-tab-class">
-              <div id="class_images_indicators" class="carousel slide" data-ride="carousel">
-                <ol id="class_images_indicator" class="carousel-indicators"></ol>
-                <div id="class_images_carousel" class="carousel-inner">
-                </div>
-                <a class="carousel-control-prev" href="#class_images_indicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#class_images_indicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
+              <div id = "class_images_load"></div>
+              <br>
+              <nav aria-label="class_images_card_pagination">
+                <ul class="pagination justify-content-center" id = "ci_paginator"></ul>
+                <p id = "ci_numinator" style='text-align: center'></p>
+              </nav>
+              <br>
             </div>
           </div>
         </div>
@@ -292,6 +265,7 @@
   <div class="card-body">
     <div id="RelevancyChart"></div>
     <p>
+      <br>
       <button class="btn btn-primary relevancy-data-button" type="button" data-toggle="collapse" data-target="#relevancy_tweets" aria-expanded="false" aria-controls="relevancy_tweets">
         Tweets Data
       </button>
@@ -311,33 +285,22 @@
         <div class="card-body">
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="relevancy_tweets_card" role="tabpanel" aria-labelledby="tweets-tab-relevancy">
-
-
-              <div id = "relevancy_tweets_load">
-              </div>
-
+              <div id = "relevancy_tweets_load"></div>
               <br>
               <nav aria-label="relevancy_tweets_card_pagination">
-                <ul class="pagination justify-content-center" id = "rt_paginator">
-                </ul>
+                <ul class="pagination justify-content-center" id = "rt_paginator"></ul>
                 <p id = "rt_numinator" style='text-align: center'></p>
               </nav>
               <br>
             </div>
             <div class="tab-pane fade" id="relevancy_images_card" role="tabpanel" aria-labelledby="images-tab-relevancy">
-              <div id="relevancy_images_indicators" class="carousel slide" data-ride="carousel">
-                <ol id="relevancy_images_indicator" class="carousel-indicators"></ol>
-                <div id="relevancy_images_carousel" class="carousel-inner">
-                </div>
-                <a class="carousel-control-prev" href="#relevancy_images_indicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#relevancy_images_indicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
+              <div id = "relevancy_images_load"></div>
+              <br>
+              <nav aria-label="relevancy_images_card_pagination">
+                <ul class="pagination justify-content-center" id = "ri_paginator"></ul>
+                <p id = "ri_numinator" style='text-align: center'></p>
+              </nav>
+              <br>
             </div>
           </div>
         </div>
@@ -376,6 +339,7 @@
   <div class="card-body">
     <div id="DamageChart"></div>
     <p>
+      <br>
       <button class="btn btn-primary damage-data-button" type="button" data-toggle="collapse" data-target="#damage_tweets" aria-expanded="false" aria-controls="damage_tweets">
         Tweets Data
       </button>
@@ -395,33 +359,22 @@
         <div class="card-body">
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="damage_tweets_card" role="tabpanel" aria-labelledby="tweets-tab-damage">
-
-
-              <div id = "damage_tweets_load">
-              </div>
-
+              <div id = "damage_tweets_load"></div>
               <br>
               <nav aria-label="damage_tweets_card_pagination">
-                <ul class="pagination justify-content-center" id = "dt_paginator">
-                </ul>
+                <ul class="pagination justify-content-center" id = "dt_paginator"></ul>
                 <p id = "dt_numinator" style='text-align: center'></p>
               </nav>
               <br>
             </div>
             <div class="tab-pane fade" id="damage_images_card" role="tabpanel" aria-labelledby="images-tab-damage">
-              <div id="damage_images_indicators" class="carousel slide" data-ride="carousel">
-                <ol id="damage_images_indicator" class="carousel-indicators"></ol>
-                <div id="damage_images_carousel" class="carousel-inner">
-                </div>
-                <a class="carousel-control-prev" href="#damage_images_indicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#damage_images_indicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
+              <div id = "damage_images_load"></div>
+              <br>
+              <nav aria-label="damage_images_card_pagination">
+                <ul class="pagination justify-content-center" id = "di_paginator"></ul>
+                <p id = "di_numinator" style='text-align: center'></p>
+              </nav>
+              <br>
             </div>
           </div>
         </div>
