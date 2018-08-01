@@ -19,7 +19,7 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.connections.html
  */
 
-module.exports.connections = {
+ module.exports.connections = {
 
   /***************************************************************************
   *                                                                          *
@@ -28,9 +28,9 @@ module.exports.connections = {
   * Installed by default.                                                    *
   *                                                                          *
   ***************************************************************************/
-  localDiskDb: {
-    adapter: 'sails-disk'
-  },
+  // localDiskDb: {
+  //   adapter: 'sails-disk'
+  // },
 
   /***************************************************************************
   *                                                                          *
@@ -74,14 +74,14 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  postgresServer: {
-    adapter: 'sails-postgresql',
-    host: 'localhost',
-    post: 5432,
-    user: 'postgres',
-    password: 'postgres',
-    database: 'aidr',
-  },
+  // postgresServer: {
+  //   adapter: 'sails-postgresql',
+  //   host: 'localhost',
+  //   port: 5432,
+  //   user: 'postgres',
+  //   password: 'postgres',
+  //   database: 'postgres',
+  // },
 
 
   /***************************************************************************
